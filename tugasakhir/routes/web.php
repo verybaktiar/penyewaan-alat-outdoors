@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PenyewaanController;
 use App\Http\Controllers\OpenTripViewController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\KeranjangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,10 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::controller(HomeController::class)->group(function(){
+    Route::get('home', 'index');
+    Route::post('home', 'store')->name('home.store');
+});
 
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 
@@ -49,11 +53,7 @@ Route::get('/profil', function () {
     ]);
 });
 
-Route::get('/keranjang', function () {
-    return view('keranjang', [
-        "title" => "Keranjang"
-    ]);
-});
+Route::get('/keranjang', [KeranjangController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
@@ -88,8 +88,6 @@ Route::controller(AlatoutdoorController::class)->group(function () {
 // Route::controller(OpentripController::class)->group(function () {
 //     Route::get('/{opentrip}', 'show')->name('detailsopentrip.show');
 // });
-
-
 
 
 

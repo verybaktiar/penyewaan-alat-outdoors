@@ -48,27 +48,24 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr class="edd_cart_item" id="edd_cart_item_0_25" data-download-id="25">
-					<td class="edd_cart_item_name">
-						<div class="edd_cart_item_image">
-							<img width="25" height="25" src="home1/images/scorilo2-70x70.jpg" alt="">
-						</div>
-						<span class="edd_checkout_cart_item_title">Audio Item - Single License</span>
-					</td>
-					<td class="edd_cart_item_price">
-						 $11.99
-					</td>
-					<td class="edd_cart_actions">
-						<a class="edd_cart_remove_item_btn" href="/keranjang">Remove</a>
-					</td>
-				</tr>
+					@foreach($list_keranjang as $val_keranjang)
+					<tr class="edd_cart_item" id="edd_cart_item_0_25" data-download-id="25">
+						<td class="edd_cart_item_name">
+							<div class="edd_cart_item_image">
+								<img width="25" height="25" src="home1/images/scorilo2-70x70.jpg" alt="">  
+								<span class="edd_checkout_cart_item_title">{{ $val_keranjang->nama_alat }}</span>
+							</div>
+						</td>
+						<td class="edd_cart_item_price">
+							 {{ $val_keranjang->harga_sewa }}
+						</td>
+						<td class="edd_cart_actions">
+							<a class="edd_cart_remove_item_btn" href="/keranjang">Remove</a>
+						</td>
+					</tr>
+					@endforeach
 				</tbody>
 				<tfoot>
-				<tr class="edd_cart_footer_row">
-					<th colspan="5">
-						<a class="edd-cart-saving-button edd-submit button " id="edd-save-cart-button" href="#">Save Cart</a>
-					</th>
-				</tr>
 				<tr class="edd_cart_footer_row edd_cart_discount_row" style="display:none;">
 					<th colspan="5" class="edd_cart_discount">
 					</th>
