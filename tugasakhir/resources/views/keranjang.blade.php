@@ -48,21 +48,23 @@
 				</tr>
 				</thead>
 				<tbody>
+					<?php $total_harga = 0; ?>
 					@foreach($list_keranjang as $val_keranjang)
 					<tr class="edd_cart_item" id="edd_cart_item_0_25" data-download-id="25">
 						<td class="edd_cart_item_name">
 							<div class="edd_cart_item_image">
-								<img width="25" height="25" src="home1/images/scorilo2-70x70.jpg" alt="">  
+								<img width="25" height="25" src="alatoutdoor1/{{ $val_keranjang->image }}" alt="">  
 								<span class="edd_checkout_cart_item_title">{{ $val_keranjang->nama_alat }}</span>
 							</div>
 						</td>
 						<td class="edd_cart_item_price">
-							 {{ $val_keranjang->harga_sewa }}
+							Rp. {{ $val_keranjang->harga_sewa }}
 						</td>
 						<td class="edd_cart_actions">
 							<a class="edd_cart_remove_item_btn" href="/keranjang">Remove</a>
 						</td>
 					</tr>
+					<?php $total_harga += $val_keranjang->harga_sewa; ?>
 					@endforeach
 				</tbody>
 				<tfoot>
@@ -72,7 +74,7 @@
 				</tr>
 				<tr class="edd_cart_footer_row">
 					<th colspan="5" class="edd_cart_total">
-						 Total: <span class="edd_cart_amount" data-subtotal="11.99" data-total="11.99">$11.99</span>
+						 Total: <span class="edd_cart_amount">Rp. {{ $total_harga }}</span>
 					</th>
 				</tr>
 				</tfoot>

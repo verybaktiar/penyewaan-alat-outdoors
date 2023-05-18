@@ -41,18 +41,18 @@
 							{{ $alatoutdoor->spesifikasi }}
 						</p>
 						<p>
-							<a href="/keranjang" class="learn-more detailslearn"><i class="fa fa-shopping-cart"></i> Keranjang</a>
+							<a class="learn-more add-item-{{ $alatoutdoor }}" id-product="{{ $alatoutdoor->id_alatoutdoor }}"><i class="fa fa-shopping-cart"></i> Keranjang</a>
 							<a href="{{ route('details.show', $alatoutdoor->id_alatoutdoor) }}" class="learn-more detailslearn"><i class="fa fa-link"></i> Details</a>
 						</p>
 					</div>
-					<span class="maxproduct"><img src="{{ url('storage/alatoutdoor1/') }}/{{ $alatoutdoor->image }}" alt=""></span>
+					<span class="maxproduct"><img src="alatoutdoor1/{{ $alatoutdoor->image }}" alt=""></span>
 				</div>
 				<div class="product-details">
 					<a href="{{ route('details.show', $alatoutdoor->id_alatoutdoor) }}">
 					<h1>{{ $alatoutdoor->nama_alat }}</h1>
 					</a>
 					<span class="price">
-					<span class="edd_price"> {{ $alatoutdoor->harga_sewa }}</span>
+					<span class="edd_price"> Rp. {{ $alatoutdoor->harga_sewa }}</span>
 					</span>
 				</div>
 			</div>

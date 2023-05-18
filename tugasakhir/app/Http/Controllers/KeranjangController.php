@@ -25,6 +25,7 @@ class KeranjangController extends Controller
         $arr_data['list_keranjang'] = DB::table('keranjangs')
             ->join('alatoutdoors', 'alatoutdoors.id_alatoutdoor', '=', 'keranjangs.id_alatoutdoor')
             ->select('alatoutdoors.nama_alat', 'alatoutdoors.harga_sewa', 'alatoutdoors.image')
+            ->where(['id_pelanggan'=>$id_pelanggan])
             ->get();
 
         return view('keranjang', $arr_data);

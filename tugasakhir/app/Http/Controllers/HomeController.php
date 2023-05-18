@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alatoutdoor;
 use App\Models\Keranjang;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class HomeController extends Controller
 
         $arr_data = array();
         $arr_data['title'] = 'Home';
+        $arr_data['sample_alatoutdoor'] = Alatoutdoor::take(3)->get();
 
         if(!empty(Auth::user()->id_user)){
             $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->get('id_pelanggan');

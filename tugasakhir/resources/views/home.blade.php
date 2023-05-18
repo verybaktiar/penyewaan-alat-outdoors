@@ -74,86 +74,37 @@
 
 		<div class="row">
 
-			<!-- /.productbox -->
-			<div class="col-md-4">
-				<div class="productbox">
-					<div class="fadeshop">
-						<div class="captionshop text-center" style="display: none;">
-							<h3>Tenda</h3>
-							<p>
-							   TENDA CAMPING KAPASITAS 4 - 5 ORANG DOUBLE LAYER 
-							</p>
-							<p>
-								<a class="learn-more add-item-1" id-product="KD01"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-								<a class="learn-more view-item-1" id-product="KD01"><i class="fa fa-link"></i> Details</a>
-							</p>
-						</div>
-						<span class="maxproduct"><img src="home1/images/tenda.jpg" alt=""></span>
-					</div>
-					<div class="product-details">
-						<a href="/details">
-						<h1>TENDA</h1>
-						</a>
-						<span class="price">
-						<span class="edd_price">30.000</span>
-						</span>
-					</div>
-				</div>
-			</div>
+			@foreach($sample_alatoutdoor as $alatoutdoor)
 
 			<!-- /.productbox -->
 			<div class="col-md-4">
 				<div class="productbox">
 					<div class="fadeshop">
 						<div class="captionshop text-center" style="display: none;">
-							<h3>Carrier 80L</h3>
+							<h3>{{$alatoutdoor->nama_alat}}</h3>
 							<p>
-								 Carrier Eiger 80L
+							   {{$alatoutdoor->spesifikasi}}
 							</p>
 							<p>
-								<a class="learn-more add-item-2" id-product="KD2"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-								<a class="learn-more view-item-2" id-product="KD2"><i class="fa fa-link"></i> Details</a>
+								<a class="learn-more add-item-{{ $alatoutdoor }}" id-product="{{ $alatoutdoor->id_alatoutdoor }}"><i class="fa fa-shopping-cart"></i> Keranjang</a>
+								<a class="learn-more view-item-{{ $alatoutdoor }}" id-product="{{ $alatoutdoor->id_alatoutdoor }}"><i class="fa fa-link"></i> Details</a>
 							</p>
 						</div>
-						<span class="maxproduct"><img src="home1/images/carrier.jpg" alt=""></span>
+						<span class="maxproduct"><img src="alatoutdoor1/{{ $alatoutdoor->image }}" alt=""></span>
 					</div>
 					<div class="product-details">
 						<a href="/details">
-						<h1>Carrier 80L</h1>
+						<h1>{{$alatoutdoor->nama_alat}}</h1>
 						</a>
 						<span class="price">
-						<span class="edd_price">20.000</span>
+						<span class="edd_price">{{$alatoutdoor->harga_sewa}}</span>
 						</span>
 					</div>
 				</div>
 			</div>
 
-			<!-- /.productbox -->
-			<div class="col-md-4">
-				<div class="productbox">
-					<div class="fadeshop">
-						<div class="captionshop text-center" style="display: none;">
-							<h3>Sepatu Safety</h3>
-							<p>
-								 Sepatu hiking size 39 - 34
-							</p>
-							<p>
-								<a class="learn-more add-item-3" id-product="KD3"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-								<a class="learn-more view-item-3" id-product="KD3"><i class="fa fa-link"></i> Details</a>
-							</p>
-						</div>
-						<span class="maxproduct"><img src="home1/images/sepatu.jpg" alt=""></span>
-					</div>
-					<div class="product-details">
-						<a href="/details">
-						<h1>Sepatu Safety</h1>
-						</a>
-						<span class="price">
-						<span class="edd_price">15.000</span>
-						</span>
-					</div>
-				</div>
-			</div>
+			@endforeach
+
 		</div>
 	</div>
 </div>
