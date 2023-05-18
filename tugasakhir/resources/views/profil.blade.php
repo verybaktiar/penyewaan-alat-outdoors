@@ -1,22 +1,21 @@
 @extends('layouts.main')
-<title>Profile</title>
 @section( 'container')
-<header>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<div class="text-pageheader">
-				<div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
-					 Profil
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="text-pageheader">
+					<div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
+						 Profil
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
+	</div>
 </header>
-<!-- CONTENT =============================-->
 
+<!-- CONTENT =============================-->
 <section class="item content">
 <div class="container toparea">
 	<p>

@@ -1,6 +1,5 @@
 @extends('layouts.main')
-<title>Sewa</title>
-@section( 'container')
+@section('container')
 
 	<div class="container">
 		<div class="row">

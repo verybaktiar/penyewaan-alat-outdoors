@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Alatoutdoor;
+use App\Models\Keranjang;
+use App\Models\Pelanggan;
 
 class PenyewaanController extends Controller
 {
@@ -14,8 +17,18 @@ class PenyewaanController extends Controller
      */
     public function index()
     {
-        $alatoutdoors = Alatoutdoor::paginate(9);
-        return view('sewa', compact('alatoutdoors'));
+        $arr_data = array();
+        $arr_data['title'] = 'Sewa';
+        $arr_data['alatoutdoors'] = Alatoutdoor::paginate(9);
+
+        if(!empty(Auth::user()->id_user)){
+            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->get('id_pelanggan');
+            $id_pelanggan = $get_pelanggan[0]->id_pelanggan;
+
+            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$id_pelanggan])->get()->count();
+        }
+
+        return view('sewa', $arr_data);
     }
 
     /**

@@ -5,20 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Keranjang;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function index()
     {
 
-        $id_pelanggan = 'PLG14';
-
         $arr_data = array();
         $arr_data['title'] = 'Home';
-        $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$id_pelanggan])->get()->count();
+
+        if(!empty(Auth::user()->id_user)){
+            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->get('id_pelanggan');
+            $id_pelanggan = $get_pelanggan[0]->id_pelanggan;
+
+            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$id_pelanggan])->get()->count();
+        }
 
         return view('home', $arr_data);
     }

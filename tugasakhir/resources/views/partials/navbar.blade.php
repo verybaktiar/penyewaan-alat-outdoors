@@ -26,7 +26,7 @@
 						<li class="dropdown-item nav-link" ><a href="#">Something else here</a></li>
 					  </div>	
 					<li>
-						<a href="/keranjang"><i class="fa fa-shopping-cart"> <div class="badge cart-badge">{{ $total_keranjang }}</div></i></a>
+						<a href="/keranjang"><i class="fa fa-shopping-cart"> <div class="badge cart-badge">{{ !empty($total_keranjang) ? $total_keranjang : 0 }}</div></i></a>
 					</li>
 				@else
 					<li class="propClone"><a href="/login">Login</a></li>
