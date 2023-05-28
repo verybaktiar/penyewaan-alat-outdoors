@@ -61,7 +61,7 @@
 							Rp. {{ $val_keranjang->harga_sewa }}
 						</td>
 						<td class="edd_cart_actions">
-							<a class="edd_cart_remove_item_btn" href="/keranjang">Remove</a>
+							<a class="edd_cart_remove_item_btn" id-keranjang="{{ $val_keranjang->id_keranjang }}">Remove</a>
 						</td>
 					</tr>
 					<?php $total_harga += $val_keranjang->harga_sewa; ?>
@@ -81,6 +81,9 @@
 				</table>
 			</div>
 		</form>
+
+		@if(!empty($total_keranjang))
+
 		<div id="edd_checkout_form_wrap" class="edd_clearfix">
 			<form id="edd_purchase_form" class="edd_form" action="#" method="POST">
 				<fieldset id="edd_checkout_user_info">
@@ -88,31 +91,89 @@
 					<p id="edd-email-wrap">
 						<label class="edd-label" for="edd-email">
 						Email Address <span class="edd-required-indicator">*</span></label>
-						<input class="edd-input required" type="email" name="edd_email" placeholder="Email address" id="edd-email" value="">
+						<input class="edd-input required" type="email" name="email" placeholder="Email address" id="edd-email" value="{{ $get_pelanggan->email }}" required>
 					</p>
-					<p id="edd-first-name-wrap">
-						<label class="edd-label" for="edd-first">
-						First Name <span class="edd-required-indicator">*</span>
+					<p id="edd-fullname-wrap">
+						<label class="edd-label" for="edd-fullname">
+						Fullname <span class="edd-required-indicator">*</span>
 						</label>
-						<input class="edd-input required" type="text" name="edd_first" placeholder="First name" id="edd-first" value="" required="">
+						<input class="edd-input required" type="text" name="fullname" placeholder="Full Name" id="edd-fullname" value="{{ $get_pelanggan->nama_pelanggan }}" required>
 					</p>
-					<p id="edd-last-name-wrap">
-						<label class="edd-label" for="edd-last">
-						Last Name </label>
-						<input class="edd-input" type="text" name="edd_last" id="edd-last" placeholder="Last name" value="">
+					<p id="edd-address-wrap">
+						<label class="edd-label" for="edd-address">
+						Address <span class="edd-required-indicator">*</span></label>
+						<input class="edd-input required" type="text" name="address" placeholder="Address" id="edd-address" value="{{ $get_pelanggan->alamat }}" required>
+					</p>
+					<p id="edd-nophone-wrap">
+						<label class="edd-label" for="edd-nophone">
+						No Phone <span class="edd-required-indicator">*</span></label>
+						<input class="edd-input required" type="text" name="nophone" placeholder="No. Phone" id="edd-nophone" value="{{ $get_pelanggan->no_telepon }}" required>
 					</p>
 				</fieldset>
-				<fieldset id="edd_purchase_submit">
-					<p id="edd_final_total_wrap">
-						<strong>Purchase Total:</strong>
-						<span class="edd_cart_amount" data-subtotal="11.99" data-total="11.99">$11.99</span>
-					</p>
+				<fieldset>
+					<div class="container mt-5 mb-5 d-flex justify-content-center">
+						<div class="card p-5">
+						  	<div>
+						    	<h4 class="heading">Payment Details</h4>
+						    	<p class="text">Please make the payment as soon as possible</p>
+						    </div>
+						    <span class="detail mt-5">Metode Transfer</span>
+							    <div class="col-md-12">
+									<div class="d-flex flex-row align-items-center">
+										<div class="d-flex flex-column">
+											<div class="col-md-1"><img src="https://www.bca.co.id/-/media/Feature/Card/List-Card/2022/BCA-Union-Pay-Card-Final-Front.png?v=1" class="rounded" width="70"></div>
+											<div class="col-md-3"><span class="business">( <b> BCA </b> ) <b>A.N</b> Bambang GG</span></div>
+											<div class="col-md-8"><span class="plan">1234 5678 9011 1234</span></div>
+										</div>
+									</div>
+							    </div>
+							    <div class="col-md-12">
+									<div class="d-flex flex-row align-items-center">
+										<div class="d-flex flex-column">
+											<div class="col-md-1"><img src="https://www.bni.co.id/portals/3/BNI/CreditCard/Produk/Images/kartu-kredit-bni-visa-infinite-v1.jpg" class="rounded" width="70"></div>
+											<div class="col-md-3"><span class="business">( <b> BNI </b> ) <b>A.N</b> Bambang GG</span></div>
+											<div class="col-md-8"><span class="plan">1234 5678 9011 1234</span></div>
+										</div>
+									</div>
+							    </div>
+							</span>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset class="text-center">
 					<input type="hidden" name="edd_action" value="purchase">
 					<input type="hidden" name="edd-gateway" value="manual">
-					<input type="submit" class="edd-submit button" id="edd-purchase-button" name="edd-purchase" value="Purchase">
+					<input type="submit" class="edd-submit button" id="edd-purchase-button" name="edd-purchase" value="Purchase" data-toggle="modal" data-target="#modal-upload-payment">
 				</fieldset>
 			</form>
 		</div>
+
+		@else
+		<fieldset class="text-center">
+			<b>You dont have any items !</b>
+		</fieldset>
+		@endif
+
+		<div id="modal-upload-payment" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Upload Proof of Payment</h4>
+				</div>
+		      	<div class="modal-body">
+			        <form id="edd_form_upload_payment" class="edd_form" method="POST" enctype="multipart/form-data">
+			        	@csrf
+			        	<div class="body">
+				    	    <div>Select file : <input type="file" name="file_upload_payment" id="file_upload_payment" class="form-control"></div><br>
+				         	<div class="text-center"><button type="submit" class="btn btn-info" id="btn_upload">Upload</button></div>
+				        </div>
+			        </form>
+		      	</div>
+		    </div>
+		  </div>
+		</div>
+
 	</div>
 </div>
 </section>

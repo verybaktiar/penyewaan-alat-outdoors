@@ -97,7 +97,7 @@
 						<h1>{{$alatoutdoor->nama_alat}}</h1>
 						</a>
 						<span class="price">
-						<span class="edd_price">{{$alatoutdoor->harga_sewa}}</span>
+						<span class="edd_price">Rp. {{$alatoutdoor->harga_sewa}}</span>
 						</span>
 					</div>
 				</div>

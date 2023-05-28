@@ -13,6 +13,7 @@ use App\Http\Controllers\PenyewaanController;
 use App\Http\Controllers\OpenTripViewController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,7 @@ use App\Http\Controllers\KeranjangController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -47,13 +46,13 @@ Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 Route::get('/sewa', [PenyewaanController::class, 'index']);
 Route::get('/opentripview', [OpenTripViewController::class, 'index']);
 
-Route::get('/profil', function () {
-    return view('profil', [
-        "title" => "Profile"
-    ]);
-});
+Route::get('/profil', [ProfileController::class, 'index']);
 
-Route::get('/keranjang', [KeranjangController::class, 'index']);
+Route::controller(KeranjangController::class)->group(function(){
+    Route::get('keranjang', 'index');
+    Route::post('keranjang/upload_payment', 'upload_payment')->name('keranjang.upload_payment');
+    Route::post('keranjang/delete_item', 'delete_item')->name('keranjang.delete_item');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
