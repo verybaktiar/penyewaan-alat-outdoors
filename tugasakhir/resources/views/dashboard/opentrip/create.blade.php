@@ -18,7 +18,7 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="font-weight-bold">Id Open Trip</label>
-                                <input type="text" class="form-control" readonly value="{{ 'OP'.$id_opentripbaru }}" name="id_opentrip" >
+                                <input type="text" class="form-control" value="{{ 'OP'.$id_opentrip }}" name="id_opentrip" readonly>
                             </div>
                             <div class="mb-3">
                                 <label class="font-weight-bold">Nama Open Trip</label>

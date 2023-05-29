@@ -7,11 +7,6 @@ use App\Models\Kategori;
 
 class KategoriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $kategori = Kategori::get();
@@ -19,30 +14,24 @@ class KategoriController extends Controller
         return view('dashboard.kategori.index', ['kategori' => $kategori]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('dashboard.kategori.create');
+        // Get ID kategori
+        $get_id_kategori=Kategori::orderBy('id_kategori', 'DESC')->first();
+        if(!empty($get_id_kategori)){
+            $id_kategori=(int)substr($get_id_kategori->id_kategori,2)+(int)1;
+        }else{
+            $id_kategori=1;
+        }
+
+        return view('dashboard.kategori.create', compact('id_kategori'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
-        $id_kategori=Kategori::orderBy('id_kategori', 'DESC')->first();
-        $id_kategoribaru=(int)substr($id_kategori->id_kategori,2)+(int)1;
-
         Kategori::create([
-            'id_kategori'=> 'KT'.$id_kategoribaru,
+            'id_kategori'=> $request->id_kategori,
             'nama_kategori'=> $request->nama_kategori
 
         ]);

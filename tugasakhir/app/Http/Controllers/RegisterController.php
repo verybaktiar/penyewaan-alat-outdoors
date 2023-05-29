@@ -38,7 +38,7 @@ class RegisterController extends Controller
         
            if($id_pelanggan){
             $pelanggan=Pelanggan::create([
-                'id_pelanggan' => 'PLG1'.(int)substr($id_pelanggan->id_pelanggan,4)+(int)1,
+                'id_pelanggan' => 'PLG'.(int)substr($id_pelanggan->id_pelanggan,3)+(int)1,
                 'id_user' => 'USR'.$id_userbaru,
                 'nama_pelanggan' => $request->nama_pelanggan,
                 'alamat' => $request->alamat,
@@ -48,7 +48,7 @@ class RegisterController extends Controller
            }
            else{
            $pelanggan=Pelanggan::create([
-            'id_pelanggan' => 'PLG'.(int)substr($id_pelanggan->id_pelanggan,3)+(int)1,
+            'id_pelanggan' => 'PLG1',
             'id_user' => 'USR'.$id_userbaru,
             'nama_pelanggan' => $request->nama_pelanggan,
             'alamat' => $request->alamat,

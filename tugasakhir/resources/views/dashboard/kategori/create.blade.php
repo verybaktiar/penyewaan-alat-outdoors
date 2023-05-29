@@ -18,7 +18,7 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="font-weight-bold">Id Kategori</label>
-                                <input type="text" class="form-control" name="id_kategori" >
+                                <input type="text" class="form-control" name="id_kategori" value="{{ 'KT'.$id_kategori }}" readonly>
                             </div>
                             <div class="mb-3">
                                 <label class="font-weight-bold">Nama Kategori</label>

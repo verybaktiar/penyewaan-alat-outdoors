@@ -20,7 +20,7 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label class="font-weight-bold">Id kategori</label>
-                                <input type="text" class="form-control" readonly="" name="id_kategori" value="{{ old('id_kategori', $kategori->id_kategori) }}" placeholder="Id Kategori">
+                                <input type="text" class="form-control" name="id_kategori" value="{{ old('id_kategori', $kategori->id_kategori) }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Kategori</label>

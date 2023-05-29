@@ -19,7 +19,7 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="font-weight-bold">Id Alat Outdoor</label>
-                                <input type="text" readonly value="{{ 'KD'.$kd }}"class="form-control" name="id_alatoutdoor" >
+                                <input type="text" value="{{ 'KD'.$id_alatoutdoor }}"class="form-control" name="id_alatoutdoor" readonly>
                             </div>
                             <div class="mb-3">
                                 <label class="font-weight-bold">Nama Alat Outdoor</label>

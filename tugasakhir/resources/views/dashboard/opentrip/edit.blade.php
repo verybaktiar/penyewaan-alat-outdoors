@@ -20,7 +20,7 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label class="font-weight-bold">Id Open Trip</label>
-                                <input type="text" class="form-control" readonly="" name="id_opentrip" value="{{ old('id_opentrip', $opentrip->id_opentrip) }}" placeholder="Id Open Trip">
+                                <input type="text" class="form-control" name="id_opentrip" value="{{ old('id_opentrip', $opentrip->id_opentrip) }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Open Trip</label>

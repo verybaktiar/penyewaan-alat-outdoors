@@ -41,7 +41,7 @@ class KeranjangController extends Controller
         // Validasi
         $validated = $request->validate([
             'file_upload_payment' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'file_upload_payment' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file_upload_jaminan' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'jaminan' => 'required'
         ]);
 

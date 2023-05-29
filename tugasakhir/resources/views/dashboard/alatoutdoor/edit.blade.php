@@ -20,7 +20,7 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label class="font-weight-bold">Id Alat Outdoor</label>
-                                <input type="text" class="form-control" readonly="" name="id_alatoutdoor" value="{{ old('id_alatoutdoor', $alatoutdoor->id_alatoutdoor) }}" placeholder="Id Alat Outdoor">
+                                <input type="text" class="form-control" name="id_alatoutdoor" value="{{ old('id_alatoutdoor', $alatoutdoor->id_alatoutdoor) }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Alat Outdoor</label>

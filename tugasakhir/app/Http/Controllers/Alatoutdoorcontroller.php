@@ -12,34 +12,26 @@ class Alatoutdoorcontroller extends Controller
 {
     //get data alat outdoor
     public function index(){
-    $alatoutdoor = Alatoutdoor::latest()->simplePaginate(5);
+        $alatoutdoor = Alatoutdoor::latest()->simplePaginate(5);
 
-    //render view with data alat outdoor
-    return view('dashboard.alatoutdoor.index', compact('alatoutdoor'));
-}
+        //render view with data alat outdoor
+        return view('dashboard.alatoutdoor.index', compact('alatoutdoor'));
+    }
 
     public function create(){
 
         $kategori = Kategori::get();
-
         $alatoutdoor = Alatoutdoor::all();
 
-            $q = DB::table('alatoutdoors')->select(DB::raw('MAX(RIGHT(id_alatoutdoor,1)) as kode'));
-            $kd ="";
-            if($q->count()>0)
-            {
-                foreach($q->get() as $k)
-                {
-                    $tmp = ((int)$k->kode)+1;
-                    $kd = sprintf("%01s", $tmp);
-                }
-            }
-            else
-            {
-                $kd = "1";
-            }
+        // Get ID alatoutdoor
+        $get_id_alatoutdoor=Alatoutdoor::orderBy('id_alatoutdoor', 'DESC')->first();
+        if(!empty($get_id_alatoutdoor)){
+            $id_alatoutdoor=(int)substr($get_id_alatoutdoor->id_alatoutdoor,2)+(int)1;
+        }else{
+            $id_alatoutdoor=1;
+        }
 
-        return view('dashboard.alatoutdoor.create', ['kategori' => $kategori], compact('alatoutdoor','kd'));
+        return view('dashboard.alatoutdoor.create', ['kategori' => $kategori], compact('alatoutdoor','id_alatoutdoor'));
     }
 
     public function store(Request $request)
@@ -62,8 +54,6 @@ class Alatoutdoorcontroller extends Controller
         $imageName = time() . '.' . $image->getClientOriginalName();
         $image->move('alatoutdoor1', $imageName);
 
-        // $id_alatoutdoor=Alatoutdoor::orderBy('id_alatoutdoor', 'DESC')->first();
-        // $id_alatoutdoorbaru=(int)substr($id_alatoutdoor->id_alatoutdoor,2)+(int)1;
         //create post
         Alatoutdoor::create([
             'id_alatoutdoor'=>$request->id_alatoutdoor,

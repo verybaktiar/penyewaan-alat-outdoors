@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Bulan Mei 2023 pada 10.50
+-- Waktu pembuatan: 29 Bulan Mei 2023 pada 11.57
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -70,9 +70,9 @@ CREATE TABLE `alatoutdoors` (
 --
 
 INSERT INTO `alatoutdoors` (`id_alatoutdoor`, `nama_alat`, `id_kategori`, `spesifikasi`, `deskripsi`, `stok`, `harga_sewa`, `merk`, `image`, `created_at`, `updated_at`) VALUES
-('KD1', 'Sepatu Gunung', 'KT3', 'Everest Catcher', 'Sepatu 123', '100', '15000', 'Vans', '1684442675.sepatu.jpg', '2023-05-18 13:44:35', '2023-05-18 13:44:35'),
-('KD2', 'Tas Carrier', 'KT2', 'Carrier of life', 'Menampung seperti kantong doraemonn', '2000', '20000', 'Paris Hilton', '1684442784.carrier.jpg', '2023-05-18 13:46:24', '2023-05-18 13:46:24'),
-('KD3', 'Sleeping Bag', 'KT1', 'Sleeping like a cocoon', 'Kehangantan seperti pelukan doi :(', '3000', '30000', 'Vindland Sleeping bag', '1684442920.sleepingbag.jpeg', '2023-05-18 13:48:40', '2023-05-18 13:48:40');
+('KD1', 'Sepatu Gunung', 'KT4', 'Everest Catcher', 'Sepatu 123', '100', '15000', 'Vans', '1684442675.sepatu.jpg', '2023-05-18 13:44:35', '2023-05-18 13:44:35'),
+('KD2', 'Tas Carrier', 'KT3', 'Carrier of life', 'Menampung seperti kantong doraemonn', '2000', '20000', 'Paris Hilton', '1684442784.carrier.jpg', '2023-05-18 13:46:24', '2023-05-18 13:46:24'),
+('KD3', 'Sleeping Bag', 'KT2', 'Sleeping like a cocoon', 'Kehangantan seperti pelukan doi :(', '3000', '30000', 'Vindland Sleeping bag', '1684442920.sleepingbag.jpeg', '2023-05-18 13:48:40', '2023-05-18 13:48:40');
 
 -- --------------------------------------------------------
 
@@ -108,10 +108,10 @@ CREATE TABLE `kategoris` (
 --
 
 INSERT INTO `kategoris` (`id_kategori`, `nama_kategori`, `created_at`, `updated_at`) VALUES
-('01', 'Matras', '2023-04-23 21:39:18', '2023-04-23 21:39:33'),
-('KT1', 'Sleeping Bag', '2023-04-24 07:15:17', '2023-04-24 07:15:17'),
-('KT2', 'Tas Carrier', '2023-04-24 07:15:27', '2023-04-24 07:15:27'),
-('KT3', 'Sepatu', '2023-04-24 07:15:37', '2023-04-24 07:15:37');
+('KT1', 'Matras', '2023-04-23 21:39:18', '2023-04-23 21:39:33'),
+('KT2', 'Sleeping Bag', '2023-04-24 07:15:17', '2023-04-24 07:15:17'),
+('KT3', 'Tas Carrier', '2023-04-24 07:15:27', '2023-04-24 07:15:27'),
+('KT4', 'Sepatu', '2023-04-24 07:15:37', '2023-04-24 07:15:37');
 
 -- --------------------------------------------------------
 
@@ -136,8 +136,8 @@ CREATE TABLE `keranjangs` (
 --
 
 INSERT INTO `keranjangs` (`id_keranjang`, `id_pelanggan`, `id_alatoutdoor`, `mulai_sewa`, `akhir_sewa`, `total_sewa`, `status_checkout`, `created_at`, `updated_at`) VALUES
-('KRJ1', 'PLG14', 'KD2', '2023-05-29', '2023-06-02', '1', 'N', '2023-05-28 20:05:12', '2023-05-28 22:58:29'),
-('KRJ2', 'PLG14', 'KD1', '2023-05-30', '2023-05-31', '1', 'N', '2023-05-28 22:41:12', '2023-05-28 22:58:29');
+('KRJ1', 'PLG5', 'KD2', '2023-05-29', '2023-06-02', '1', 'N', '2023-05-28 20:05:12', '2023-05-28 22:58:29'),
+('KRJ2', 'PLG5', 'KD1', '2023-05-30', '2023-05-31', '1', 'N', '2023-05-28 22:41:12', '2023-05-28 22:58:29');
 
 -- --------------------------------------------------------
 
@@ -191,9 +191,9 @@ CREATE TABLE `opentrips` (
 --
 
 INSERT INTO `opentrips` (`id_opentrip`, `nm_opentrip`, `deskripsi`, `fasilitas`, `harga`, `image`, `created_at`, `updated_at`) VALUES
-('OP001', 'Gunung Bromo', 'Gunung Bromo adalah salah satu gunung api yang masih aktif di Indonesia. Gunung yang memiliki ketinggian 2.392 meter di atas permukaan laut ini merupakan destinasi andalan Jawa Timur.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'oUujwPjWNlpjbCOweqbUrjjv9c8cv2kvANHK3IRw.png', '2023-04-24 06:51:00', '2023-04-24 06:51:00'),
-('OP1', 'Gunung Prau', 'Gunung Prau berada di kawasan Dataran Tinggi Dieng, Jawa Tengah dan merupakan tapal batas antara empat kabupaten.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'yqQkOsjloZuEJZ5P9g9k2LZBa98QYuP5FeCJrDLu.jpg', '2023-04-24 06:29:47', '2023-04-24 06:29:47'),
-('OP2', 'Gunung Lawu', 'Gunung lawu adalah adalah sebuah gunung berapi non-aktif yang terletak di Pulau Jawa, tepatnya di perbatasan Jawa Tengah dan Jawa Timur, Indonesia. Gunung Lawu memiliki ketinggian sekitar 3.265 mdpl.', '-Tiket simaksi -Porter', 'Rp 250.000', 'W7MIXAzfioHIeS4uTpLWyL8ctYUWVIgV1X9hBgrQ.jpg', '2023-04-24 06:27:30', '2023-04-24 06:27:30');
+('OP1', 'Gunung Bromo', 'Gunung Bromo adalah salah satu gunung api yang masih aktif di Indonesia. Gunung yang memiliki ketinggian 2.392 meter di atas permukaan laut ini merupakan destinasi andalan Jawa Timur.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'oUujwPjWNlpjbCOweqbUrjjv9c8cv2kvANHK3IRw.png', '2023-04-24 06:51:00', '2023-04-24 06:51:00'),
+('OP2', 'Gunung Prau', 'Gunung Prau berada di kawasan Dataran Tinggi Dieng, Jawa Tengah dan merupakan tapal batas antara empat kabupaten.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'yqQkOsjloZuEJZ5P9g9k2LZBa98QYuP5FeCJrDLu.jpg', '2023-04-24 06:29:47', '2023-04-24 06:29:47'),
+('OP3', 'Gunung Lawu', 'Gunung lawu adalah adalah sebuah gunung berapi non-aktif yang terletak di Pulau Jawa, tepatnya di perbatasan Jawa Tengah dan Jawa Timur, Indonesia. Gunung Lawu memiliki ketinggian sekitar 3.265 mdpl.', '-Tiket simaksi -Porter', 'Rp 250.000', 'W7MIXAzfioHIeS4uTpLWyL8ctYUWVIgV1X9hBgrQ.jpg', '2023-04-24 06:27:30', '2023-04-24 06:27:30');
 
 -- --------------------------------------------------------
 
@@ -230,10 +230,10 @@ CREATE TABLE `pelanggans` (
 
 INSERT INTO `pelanggans` (`id_pelanggan`, `id_user`, `nama_pelanggan`, `alamat`, `no_telepon`, `jenis_kelamin`, `created_at`, `updated_at`) VALUES
 ('PLG1', 'USR3', 'rida', NULL, '085749252096', 'perempuan', '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
-('PLG11', 'USR4', 'Sulis', NULL, NULL, NULL, '2023-04-23 21:28:44', '2023-04-23 21:28:44'),
-('PLG12', 'USR5', 'deka', NULL, NULL, NULL, '2023-04-24 07:16:29', '2023-04-24 07:16:29'),
-('PLG13', 'USR6', 'Firman', NULL, NULL, NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
-('PLG14', 'USR7', 'ucup', NULL, NULL, NULL, '2023-05-18 12:42:33', '2023-05-18 12:42:33');
+('PLG2', 'USR4', 'Sulis', NULL, NULL, NULL, '2023-04-23 21:28:44', '2023-04-23 21:28:44'),
+('PLG3', 'USR5', 'deka', NULL, NULL, NULL, '2023-04-24 07:16:29', '2023-04-24 07:16:29'),
+('PLG4', 'USR6', 'Firman', NULL, NULL, NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
+('PLG5', 'USR7', 'ucup', NULL, NULL, NULL, '2023-05-18 12:42:33', '2023-05-18 12:42:33');
 
 -- --------------------------------------------------------
 
