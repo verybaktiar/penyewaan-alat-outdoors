@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Bulan Mei 2023 pada 07.59
+-- Waktu pembuatan: 29 Bulan Mei 2023 pada 10.50
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -136,8 +136,8 @@ CREATE TABLE `keranjangs` (
 --
 
 INSERT INTO `keranjangs` (`id_keranjang`, `id_pelanggan`, `id_alatoutdoor`, `mulai_sewa`, `akhir_sewa`, `total_sewa`, `status_checkout`, `created_at`, `updated_at`) VALUES
-('KRJ2', 'PLG14', 'KD2', '2023-05-29', '2023-06-02', '1', 'Y', '2023-05-28 20:05:12', '2023-05-28 22:58:29'),
-('KRJ3', 'PLG14', 'KD1', '2023-05-30', '2023-05-31', '1', 'Y', '2023-05-28 22:41:12', '2023-05-28 22:58:29');
+('KRJ1', 'PLG14', 'KD2', '2023-05-29', '2023-06-02', '1', 'N', '2023-05-28 20:05:12', '2023-05-28 22:58:29'),
+('KRJ2', 'PLG14', 'KD1', '2023-05-30', '2023-05-31', '1', 'N', '2023-05-28 22:41:12', '2023-05-28 22:58:29');
 
 -- --------------------------------------------------------
 
@@ -255,14 +255,6 @@ CREATE TABLE `penyewaans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `penyewaans`
---
-
-INSERT INTO `penyewaans` (`id_sewa`, `id_pelanggan`, `id_keranjang`, `tgl_ambil`, `jaminan`, `foto_jaminan`, `total_bayar`, `bukti_bayar`, `status_bayar`, `status_sewa`, `created_at`, `updated_at`) VALUES
-('SWA0', 'PLG14', 'KRJ3', NULL, 'KTP', '1685339909.media-2.png', '15000', '1685339909.media-3.png', 'Belum', 'Belum', NULL, NULL),
-('SWA1', 'PLG14', 'KRJ2', NULL, 'KTP', '1685339909.media-2.png', '20000', '1685339909.media-3.png', 'Belum', 'Belum', NULL, NULL);
 
 -- --------------------------------------------------------
 
