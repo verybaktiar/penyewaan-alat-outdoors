@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Bulan Mei 2023 pada 11.57
+-- Waktu pembuatan: 29 Bulan Mei 2023 pada 15.57
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -111,7 +111,8 @@ INSERT INTO `kategoris` (`id_kategori`, `nama_kategori`, `created_at`, `updated_
 ('KT1', 'Matras', '2023-04-23 21:39:18', '2023-04-23 21:39:33'),
 ('KT2', 'Sleeping Bag', '2023-04-24 07:15:17', '2023-04-24 07:15:17'),
 ('KT3', 'Tas Carrier', '2023-04-24 07:15:27', '2023-04-24 07:15:27'),
-('KT4', 'Sepatu', '2023-04-24 07:15:37', '2023-04-24 07:15:37');
+('KT4', 'Sepatu Ganas', '2023-04-24 07:15:37', '2023-05-29 06:21:43'),
+('KT5', 'Cooking Set', '2023-05-29 06:22:07', '2023-05-29 06:22:07');
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,7 @@ CREATE TABLE `opentrips` (
 INSERT INTO `opentrips` (`id_opentrip`, `nm_opentrip`, `deskripsi`, `fasilitas`, `harga`, `image`, `created_at`, `updated_at`) VALUES
 ('OP1', 'Gunung Bromo', 'Gunung Bromo adalah salah satu gunung api yang masih aktif di Indonesia. Gunung yang memiliki ketinggian 2.392 meter di atas permukaan laut ini merupakan destinasi andalan Jawa Timur.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'oUujwPjWNlpjbCOweqbUrjjv9c8cv2kvANHK3IRw.png', '2023-04-24 06:51:00', '2023-04-24 06:51:00'),
 ('OP2', 'Gunung Prau', 'Gunung Prau berada di kawasan Dataran Tinggi Dieng, Jawa Tengah dan merupakan tapal batas antara empat kabupaten.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'yqQkOsjloZuEJZ5P9g9k2LZBa98QYuP5FeCJrDLu.jpg', '2023-04-24 06:29:47', '2023-04-24 06:29:47'),
-('OP3', 'Gunung Lawu', 'Gunung lawu adalah adalah sebuah gunung berapi non-aktif yang terletak di Pulau Jawa, tepatnya di perbatasan Jawa Tengah dan Jawa Timur, Indonesia. Gunung Lawu memiliki ketinggian sekitar 3.265 mdpl.', '-Tiket simaksi -Porter', 'Rp 250.000', 'W7MIXAzfioHIeS4uTpLWyL8ctYUWVIgV1X9hBgrQ.jpg', '2023-04-24 06:27:30', '2023-04-24 06:27:30');
+('OP3', 'Gunung Lawu', 'Gunung lawu adalah adalah sebuah gunung berapi non-aktif yang terletak di Pulau Jawa, tepatnya di perbatasan Jawa Tengah dan Jawa Timur, Indonesia. Gunung Lawu memiliki ketinggian sekitar 3.265 mdpl.', '-Tiket simaksi -Porter', 'Rp 250.000', 'W7MIXAzfioHIeS4uTpLWyL8ctYUWVIgV1X9hBgrQ.jpeg', '2023-04-24 06:27:30', '2023-04-24 06:27:30');
 
 -- --------------------------------------------------------
 

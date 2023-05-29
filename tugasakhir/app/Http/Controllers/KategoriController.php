@@ -39,24 +39,11 @@ class KategoriController extends Controller
         return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
-   
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Kategori $kategori)
     {
         return view('dashboard.kategori.edit', compact('kategori'));
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Kategori $kategori)
     {
         //validate form
@@ -72,13 +59,6 @@ class KategoriController extends Controller
         return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Kategori $kategori)
     {
         //delete post
