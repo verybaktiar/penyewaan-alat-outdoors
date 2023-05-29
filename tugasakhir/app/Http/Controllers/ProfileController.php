@@ -13,21 +13,13 @@ class ProfileController extends Controller
     public function index()
     {
         $arr_data = array();
-        $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();
 
-        $arr_data['title'] = 'Keranjang';
-        $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])->get()->count();
-        $arr_data['get_pelanggan'] = DB::table('pelanggans')
-            ->join('users', 'pelanggans.id_user', '=', 'users.id_user')
-            ->select('users.email', 'pelanggans.nama_pelanggan', 'pelanggans.alamat', 'pelanggans.no_telepon')
-            ->where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])
-            ->first();
+        $arr_data['title'] = 'Profil';
 
-        $arr_data['list_keranjang'] = DB::table('keranjangs')
-            ->join('alatoutdoors', 'alatoutdoors.id_alatoutdoor', '=', 'keranjangs.id_alatoutdoor')
-            ->select('alatoutdoors.nama_alat', 'alatoutdoors.harga_sewa', 'alatoutdoors.image')
-            ->where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])
-            ->get();
+        if(!empty(Auth::user()->id_user)){
+            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();
+            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan,'status_checkout'=>'N'])->get()->count();
+        }
 
         return view('profil', $arr_data);
     }

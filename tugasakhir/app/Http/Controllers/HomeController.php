@@ -14,14 +14,13 @@ class HomeController extends Controller
     {
 
         $arr_data = array();
+
         $arr_data['title'] = 'Home';
         $arr_data['sample_alatoutdoor'] = Alatoutdoor::take(3)->get();
-
+        
         if(!empty(Auth::user()->id_user)){
-            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->get('id_pelanggan');
-            $id_pelanggan = $get_pelanggan[0]->id_pelanggan;
-
-            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$id_pelanggan])->get()->count();
+            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();
+            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan,'status_checkout'=>'N'])->get()->count();
         }
 
         return view('home', $arr_data);
@@ -30,7 +29,9 @@ class HomeController extends Controller
     public function store(Request $request) 
     {
         $data = $request->validate([
-            'id_alatoutdoor' => 'required'
+            'id_alatoutdoor' => 'required',
+            'mulai_sewa' => 'required',
+            'akhir_sewa' => 'required'
         ]);
 
 
@@ -54,8 +55,10 @@ class HomeController extends Controller
                 'id_keranjang' => 'KRJ'. $id_keranjang,
                 'id_pelanggan' => $id_pelanggan,
                 'id_alatoutdoor' => $request->post('id_alatoutdoor'),
-                'jml_sewa' => 1,
+                'mulai_sewa' => $request->post('mulai_sewa'),
+                'akhir_sewa' => $request->post('akhir_sewa'),
                 'total_sewa' => $get_total_sewa,
+                'status_checkout' => 'Y'
             ];
 
             if(Keranjang::create($keranjang)){

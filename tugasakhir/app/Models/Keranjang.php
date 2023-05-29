@@ -14,7 +14,8 @@ class Keranjang extends Model
         'id_keranjang',
         'id_pelanggan',
         'id_alatoutdoor',
-        'jml_sewa',
+        'mulai_sewa',
+        'akhir_sewa',
         'total_sewa' 
     ];
    

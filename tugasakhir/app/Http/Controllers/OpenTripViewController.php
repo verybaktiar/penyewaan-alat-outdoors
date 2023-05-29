@@ -18,14 +18,13 @@ class OpenTripViewController extends Controller
     public function index()
     {
         $arr_data = array();
+
         $arr_data['title'] = 'Open Trip';
         $arr_data['opentrips'] = Opentrip::paginate(9);
 
         if(!empty(Auth::user()->id_user)){
-            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->get('id_pelanggan');
-            $id_pelanggan = $get_pelanggan[0]->id_pelanggan;
-
-            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$id_pelanggan])->get()->count();
+            $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();
+            $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan,'status_checkout'=>'N'])->get()->count();
         }
 
         return view('opentripview', $arr_data);

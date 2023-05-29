@@ -18,10 +18,10 @@ class Alatoutdoor extends Model
         'deskripsi',
         'stok',
         'harga_sewa',
-        'merk',
+        'merk', 
         'image'
     ];
-
+   
     protected $primaryKey = 'id_alatoutdoor';
     protected $keyType = 'string';
 

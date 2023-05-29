@@ -12,40 +12,43 @@ jQuery(document).ready(function ($) {
 
 	$('[class*=add-item-]').click(function() {
 		var idAlatOutdoor = $(this).attr('id-product');
+		$('.attr-id').val(idAlatOutdoor);
 
+		$('#modal-rental-period').modal('toggle');
+	});
+
+	$('.input-to-cart').click(function(){
+		var itemData = $('#rental-period').serialize();
 		$.ajax({
 	        url: "{{ route('home.store') }}" ,
 	        type: 'POST',
-	        data: {
-	        	_token: '{{csrf_token()}}',
-	        	id_alatoutdoor:idAlatOutdoor,
-	        },
+	        data: itemData,
 	        success: function (response) {
     			if(response.status == 'success'){
     				var cartTotal = parseInt($('.cart-badge').html());
                     Swal.fire('Berhasil !', response.message, response.status);
+                    
                     $('.cart-badge').html(cartTotal + 1);
+                    $('#modal-rental-period').modal('toggle');
                 }else{
                     Swal.fire('Gagal !',response.message, response.status);
                 }
 	        },
-	        error: function(response, jqXHR, textStatus, errorThrown) {
-	        	Swal.fire('Gagal !', response.message, response.status);
-	        	console.log(jqXHR, textStatus, errorThrown);
+	        error: function(xhr, status, error) {
+	        	Swal.fire('Gagal !', 'Terjadi Kesalahan', 'error');
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
 	        }
 	    });
-	});
+	})
 
-	 $('#edd_form_upload_payment').on('submit', function(e){
+	 $('#checkout-button').on('submit', function(e){
 	 	e.preventDefault();
 
  		$.ajax({
 	        url: "{{ route('keranjang.upload_payment') }}" ,
 	        method: 'POST',
-            dataType: 'JSON',
-            contentType: false,
-            cache: false,
-            processData: false,
 	        data: new FormData(this),
 	        success: function (response) {
     			if(response.status == 'success'){
@@ -69,9 +72,10 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 	        url: "{{ route('keranjang.delete_item') }}" ,
 	        type: 'POST',
+	        dataType: 'JSON',
 	        data: {
-	        	_token: '{{csrf_token()}}',
-	        	id_keranjang:idKeranjang,
+	        	_token : '{{csrf_token()}}',
+	        	id_keranjang : idKeranjang
 	        },
 	        success: function (response) {
     			if(response.status == 'success'){

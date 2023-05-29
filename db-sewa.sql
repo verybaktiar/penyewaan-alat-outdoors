@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Bulan Mei 2023 pada 23.47
+-- Waktu pembuatan: 29 Bulan Mei 2023 pada 07.59
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -123,11 +123,21 @@ CREATE TABLE `keranjangs` (
   `id_keranjang` varchar(7) NOT NULL,
   `id_pelanggan` varchar(6) NOT NULL,
   `id_alatoutdoor` varchar(8) NOT NULL,
-  `jml_sewa` varchar(3) NOT NULL,
-  `total_sewa` varchar(6) NOT NULL,
+  `mulai_sewa` date NOT NULL,
+  `akhir_sewa` date NOT NULL,
+  `total_sewa` varchar(10) NOT NULL,
+  `status_checkout` enum('Y','N') NOT NULL DEFAULT 'N',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `keranjangs`
+--
+
+INSERT INTO `keranjangs` (`id_keranjang`, `id_pelanggan`, `id_alatoutdoor`, `mulai_sewa`, `akhir_sewa`, `total_sewa`, `status_checkout`, `created_at`, `updated_at`) VALUES
+('KRJ2', 'PLG14', 'KD2', '2023-05-29', '2023-06-02', '1', 'Y', '2023-05-28 20:05:12', '2023-05-28 22:58:29'),
+('KRJ3', 'PLG14', 'KD1', '2023-05-30', '2023-05-31', '1', 'Y', '2023-05-28 22:41:12', '2023-05-28 22:58:29');
 
 -- --------------------------------------------------------
 
@@ -235,19 +245,24 @@ CREATE TABLE `penyewaans` (
   `id_sewa` varchar(7) NOT NULL,
   `id_pelanggan` varchar(6) NOT NULL,
   `id_keranjang` varchar(7) NOT NULL,
-  `detail_alatoutdoor` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`detail_alatoutdoor`)),
-  `masa_sewa` varchar(10) NOT NULL,
-  `tgl_penyewaan` date NOT NULL,
-  `tgl_ambil` date NOT NULL,
-  `tgl_haruskembali` date NOT NULL,
-  `status_sewa` varchar(15) NOT NULL,
+  `tgl_ambil` date DEFAULT NULL,
   `jaminan` enum('KTP','SIM') NOT NULL,
-  `foto_jaminan` blob NOT NULL,
-  `total` varchar(10) NOT NULL,
-  `bukti_bayar` blob NOT NULL,
+  `foto_jaminan` varchar(50) NOT NULL,
+  `total_bayar` varchar(10) NOT NULL,
+  `bukti_bayar` varchar(50) NOT NULL,
+  `status_bayar` enum('Belum','Sudah') NOT NULL DEFAULT 'Belum',
+  `status_sewa` enum('Belum','Berjalan','Berakhir') NOT NULL DEFAULT 'Belum',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `penyewaans`
+--
+
+INSERT INTO `penyewaans` (`id_sewa`, `id_pelanggan`, `id_keranjang`, `tgl_ambil`, `jaminan`, `foto_jaminan`, `total_bayar`, `bukti_bayar`, `status_bayar`, `status_sewa`, `created_at`, `updated_at`) VALUES
+('SWA0', 'PLG14', 'KRJ3', NULL, 'KTP', '1685339909.media-2.png', '15000', '1685339909.media-3.png', 'Belum', 'Belum', NULL, NULL),
+('SWA1', 'PLG14', 'KRJ2', NULL, 'KTP', '1685339909.media-2.png', '20000', '1685339909.media-3.png', 'Belum', 'Belum', NULL, NULL);
 
 -- --------------------------------------------------------
 

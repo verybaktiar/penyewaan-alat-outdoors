@@ -50,7 +50,7 @@ Route::get('/profil', [ProfileController::class, 'index']);
 
 Route::controller(KeranjangController::class)->group(function(){
     Route::get('keranjang', 'index');
-    Route::post('keranjang/upload_payment', 'upload_payment')->name('keranjang.upload_payment');
+    Route::post('keranjang', 'upload_payment')->name('keranjang.upload_payment');
     Route::post('keranjang/delete_item', 'delete_item')->name('keranjang.delete_item');
 });
 

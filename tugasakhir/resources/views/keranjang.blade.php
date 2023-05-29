@@ -15,12 +15,18 @@
 </div>
 </header>
 
+@if (session('status_checkout'))
+    <div class="alert alert-success">
+        {{ session('status_checkout') }}
+    </div>
+@endif
+
 <!-- CONTENT =============================-->
 <section class="item content">
 <div class="container toparea">
 	<div class="underlined-title">
 		<div class="editContent">
-			<h1 class="text-center latestitems">MAKE PAYMENT</h1>
+			<h1 class="text-center latestitems">Buat Pembayaran</h1>
 		</div>
 		<div class="wow-hr type_short">
 			<span class="wow-hr-h">
@@ -36,15 +42,11 @@
 				<table id="edd_checkout_cart" class="ajaxed">
 				<thead>
 				<tr class="edd_cart_header_row">
-					<th class="edd_cart_item_name">
-						 Item Name
-					</th>
-					<th class="edd_cart_item_price">
-						 Item Price
-					</th>
-					<th class="edd_cart_actions">
-						 Actions
-					</th>
+					<th class="edd_cart_item_name">Nama Barang</th>
+					<th class="edd_cart_item_price">Harga Sewa (/hari)</th>
+					<th class="edd_cart_rental_period">Masa Sewa</th>
+					<th class="edd_cart_total_price">Total Harga</th>
+					<th class="edd_cart_actions">Actions</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -60,11 +62,22 @@
 						<td class="edd_cart_item_price">
 							Rp. {{ $val_keranjang->harga_sewa }}
 						</td>
+						<td class="edd_cart_rental_period">
+							<?php
+								$mulai_sewa = new DateTime($val_keranjang->mulai_sewa);
+								$akhir_sewa = new DateTime($val_keranjang->akhir_sewa);
+								$datediff = $mulai_sewa->diff($akhir_sewa);
+							?>
+							<b>{{ $datediff->d }} Hari</b>
+						</td>
+						<td class="edd_cart_total_price">
+							Rp. {{ $datediff->d * $val_keranjang->harga_sewa }}
+						</td>
 						<td class="edd_cart_actions">
-							<a class="edd_cart_remove_item_btn" id-keranjang="{{ $val_keranjang->id_keranjang }}">Remove</a>
+							<button class="btn btn-danger edd_cart_remove_item_btn" id-keranjang="{{ $val_keranjang->id_keranjang }}"><i class="fa fa-trash"></i> Hapus</button>
 						</td>
 					</tr>
-					<?php $total_harga += $val_keranjang->harga_sewa; ?>
+					<?php $total_harga += $datediff->d * $val_keranjang->harga_sewa; ?>
 					@endforeach
 				</tbody>
 				<tfoot>
@@ -73,7 +86,7 @@
 					</th>
 				</tr>
 				<tr class="edd_cart_footer_row">
-					<th colspan="5" class="edd_cart_total">
+					<th colspan="5" class="edd_cart_total_price">
 						 Total: <span class="edd_cart_amount">Rp. {{ $total_harga }}</span>
 					</th>
 				</tr>
@@ -114,7 +127,7 @@
 					<div class="container mt-5 mb-5 d-flex justify-content-center">
 						<div class="card p-5">
 						  	<div>
-						    	<h4 class="heading">Payment Details</h4>
+						    	<h4 class="heading">Detail Pembayaran</h4>
 						    	<p class="text">Please make the payment as soon as possible</p>
 						    </div>
 						    <span class="detail mt-5">Metode Transfer</span>
@@ -143,7 +156,9 @@
 				<fieldset class="text-center">
 					<input type="hidden" name="edd_action" value="purchase">
 					<input type="hidden" name="edd-gateway" value="manual">
-					<input type="submit" class="edd-submit button" id="edd-purchase-button" name="edd-purchase" value="Purchase" data-toggle="modal" data-target="#modal-upload-payment">
+					<button class="btn btn-primary" id="checkout-button" data-toggle="modal" data-target="#modal-upload-payment">
+						<i class="fa fa-check-square"></i> Checkout 
+					</button>
 				</fieldset>
 			</form>
 		</div>
@@ -159,16 +174,35 @@
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Upload Proof of Payment</h4>
+					<h4 class="modal-title">Upload Data</h4>
 				</div>
 		      	<div class="modal-body">
-			        <form id="edd_form_upload_payment" class="edd_form" method="POST" enctype="multipart/form-data">
-			        	@csrf
-			        	<div class="body">
-				    	    <div>Select file : <input type="file" name="file_upload_payment" id="file_upload_payment" class="form-control"></div><br>
-				         	<div class="text-center"><button type="submit" class="btn btn-info" id="btn_upload">Upload</button></div>
+
+	        		<form id="edd_form_upload_payment" class="edd_form" method="POST" enctype="multipart/form-data">
+	        			@csrf
+				        <div class="form-group">
+				        	<label for="file_upload_payment">Bukti Pembayaran</label> *
+				            <input type="file" name="file_upload_payment" id="file_upload_payment" class="form-control">
+				            <small id="emailHelp" class="form-text text-muted">Data mu aman bersama kami !</small>
 				        </div>
-			        </form>
+
+				        <div class="form-group">
+				        	<label for="jaminan">Jaminan</label> *
+				            <select class="form-control select2" name="jaminan">
+				            	<option value="KTP">KTP</option>
+				            	<option value="SIM">SIM</option>
+				            </select>
+				        </div>
+
+				        <div class="form-group">
+				        	<label for="file_upload_jaminan">Foto Jaminan</label> *
+				            <input type="file" name="file_upload_jaminan" id="file_upload_jaminan" class="form-control">
+				            <small id="emailHelp" class="form-text text-muted">Data mu aman bersama kami !</small>
+				        </div>
+
+				        <button type="submit" class="btn btn-info" id="btn_upload">Upload</button>
+    		      	</form>
+    		      	
 		      	</div>
 		    </div>
 		  </div>

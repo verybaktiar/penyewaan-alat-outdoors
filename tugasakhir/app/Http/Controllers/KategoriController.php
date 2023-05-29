@@ -50,7 +50,7 @@ class KategoriController extends Controller
         return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
-
+   
     /**
      * Show the form for editing the specified resource.
      *
@@ -77,7 +77,7 @@ class KategoriController extends Controller
         ]);
         $kategori->update([
             'nama_kategori'=>$request->nama_kategori,
-
+           
         ]);
         //redirect to index
         return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Diubah!']);
