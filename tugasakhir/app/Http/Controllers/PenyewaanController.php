@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Penyewaan;
 use App\Models\Alatoutdoor;
 use App\Models\Keranjang;
 use App\Models\Pelanggan;
@@ -12,6 +13,15 @@ class PenyewaanController extends Controller
 {
 
     public function index()
+    {
+        //get posts
+        $penyewaan = Penyewaan::latest()->simplePaginate(50);
+
+        //render view with posts
+        return view('dashboard.penyewaan.index', compact('penyewaan'));
+    }
+
+    public function sewa()
     {
         $arr_data = array();
         

@@ -106,7 +106,7 @@
 					    <div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Masa Sewa mau sampai kapan ?</h4>
+								<h4 class="modal-title">Mau sewa sampai kapan ?</h4>
 							</div>
 					      	<div class="modal-body">
 						        <form id="rental-period" class="form" method="POST" enctype="multipart/form-data">

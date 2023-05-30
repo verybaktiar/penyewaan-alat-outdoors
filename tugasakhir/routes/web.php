@@ -41,10 +41,8 @@ Route::controller(HomeController::class)->group(function(){
 });
 
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
-
-Route::get('/sewa', [PenyewaanController::class, 'index']);
+Route::get('/sewa', [PenyewaanController::class, 'sewa']);
 Route::get('/opentripview', [OpenTripViewController::class, 'index']);
-
 Route::get('/profil', [ProfileController::class, 'index']);
 
 Route::controller(KeranjangController::class)->group(function(){
@@ -53,20 +51,16 @@ Route::controller(KeranjangController::class)->group(function(){
     Route::post('keranjang/delete_item', 'delete_item')->name('keranjang.delete_item');
 });
 
+Route::resource('/alatoutdoor', Alatoutdoorcontroller::class);
+Route::resource('/opentrip', OpentripController::class);
+Route::resource('/kategori', KategoriController::class);
+Route::resource('/penyewaan', PenyewaanController::class);
+Route::resource('/datauser', UserController::class);
+
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
 
-Route::resource('/alatoutdoor', Alatoutdoorcontroller::class);
-Route::resource('/opentrip', OpentripController::class);
-Route::resource('/kategori', KategoriController::class);
-Route::resource('/datauser', UserController::class);
-
-Route::get('/penyewaan', function () {
-    return view('dashboard.penyewaan.index', [
-        "title" => "penyewaan"
-    ]);
-});
 Route::get('/pengembalian', function () {
     return view('dashboard.pengembalian.index', [
         "title" => "pengembalian"
@@ -78,27 +72,9 @@ Route::get('/logtransaksi', function () {
     ]);
 });
 
-
 Route::controller(AlatoutdoorController::class)->group(function () {
     Route::get('/{alatoutdoor}', 'show')->name('details.show');
 });
 
-// Route::controller(OpentripController::class)->group(function () {
-//     Route::get('/{opentrip}', 'show')->name('detailsopentrip.show');
-// });
-
-
-
 Route::get('opentrip/{opentrip}', [OpentripController::class, 'show'])->name('detailsopentrip.show');
 
-// Route::get('/opentripview', function () {
-//     return view('opentripview', [
-//         "title" => "Open Trip"
-//     ]);
-// });
-
-//  Route::get('/details', function () {
-//      return view('details', [
-//          "title" => "Detail"
-//      ]);
-//  });

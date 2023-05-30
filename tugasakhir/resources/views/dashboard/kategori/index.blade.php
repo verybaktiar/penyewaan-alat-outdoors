@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <a href="{{ route('kategori.create') }}" class="btn btn-md btn-success mb-3">TAMBAH DATA</a>
+                        <a href="{{ route('kategori.create') }}" class="btn btn-md btn-success mb-3"><i class="fa fa-plus"></i> Tambah Data</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -33,11 +33,11 @@
                                     <td>{{ $item->id_kategori }}</td>
                                     <td>{{ $item->nama_kategori }}</td>
                                     <td>
-                                        <a class="btn btn-sm btn-warning" href="{{ route('kategori.edit', $item) }}">Edit</a>
+                                        <a class="btn btn-sm btn-warning" href="{{ route('kategori.edit', $item) }}"><i class="fa fa-pencil"></i> Edit</a>
                                         <form method="POST" action="{{ route('kategori.destroy', $item) }}" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')"><i class="fa fa-trash"></i> Delete</button>
                                         </form>
                                     </td>
                                 </tr>

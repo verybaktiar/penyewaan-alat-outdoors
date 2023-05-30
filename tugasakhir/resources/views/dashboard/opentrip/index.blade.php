@@ -30,7 +30,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <a href="{{ route('opentrip.create') }}" class="btn btn-md btn-success mb-3">TAMBAH DATA</a>
+                        <a href="{{ route('opentrip.create') }}" class="btn btn-md btn-success mb-3"><i class="fa fa-plus"></i> Tambah Data</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -52,14 +52,18 @@
                                     <td>{{ $item->fasilitas }}</td>
                                     <td>{{ $item->harga }}</td>
                                     <td class="text-center">
-                                        <div class="box"><img src="opentrip1/{{ $item->image }}" class="rounded" style="width: 150px"></div>
+                                        <div class="box">
+                                            <a class="pop" attr-value="{{ $item->id_opentrip }}">
+                                                <img id="imgToPreview-{{ $item->id_opentrip }}" src="opentrip1/{{ $item->image }}" class="rounded" style="width: 150px">
+                                            </a>
+                                        </div>
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-warning" href="{{ route('opentrip.edit', $item) }}">Edit</a>
+                                        <a class="btn btn-sm btn-warning" href="{{ route('opentrip.edit', $item) }}"><i class="fa fa-pencil"></i> Edit</a>
                                         <form method="POST" action="{{ route('opentrip.destroy', $item) }}" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')"><i class="fa fa-trash"></i> Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -76,10 +80,40 @@
             </div>
         </div>
     </div>
+
+    <!-- Images Preview -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="modal-title" id="myModalLabel">Image preview</h5>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                 <div class="modal-body">
+                    <img src="" id="imagepreview" style="width: 600px; height: 400px;" >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        $('.pop').on('click', function() {
+            $('#imagepreview').attr('src', $('#imgToPreview-' + $(this).attr('attr-value')).attr('src'));
+            $('#imagemodal').modal('show');
+        });
+    </script>
+
     <script>
         //message with toastr
         @if(session()->has('success'))
