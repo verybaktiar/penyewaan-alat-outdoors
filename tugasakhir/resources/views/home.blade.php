@@ -27,7 +27,7 @@
 					<span class="numberstep"><i class="fa fa-shopping-cart"></i></span>
                     <h3 class="numbertext">Bakool Outdoor</h3>
 					<p>
-						 Menyediakan perlengkapan alat camping/kemah outdoor terlengkap dengan berbagai jenis dan kondisi yang baik. Booking alat outdoor yang anda inginkan dan tentukan waktu pengambilan sendiri
+						 Menyediakan perlengkapan alat camping/kemah outdoor terlengkap dengan berbagai jenis dan kondisi yang baik. Booking alat outdoor yang anda inginkan dan tentukan waktu pengambilan sendiri. Kami adalah solusi yang tepat untuk anda
 					</p>
 				</div>
 				<!-- /.col-md-4 -->
@@ -49,7 +49,7 @@
 					<span class="numberstep"><i class="fa fa-download"></i></span>
 					<h3 class="numbertext">Booking Sewa Alat Outdoor</h3>
 					<p>
-						 Booking penyewaan alat outdoor dengan cepat dan mudah, cek update ketersediaan stok produk alat outdoor pada website. Bagi Anda yang ingin menghabiskan waktu liburan Anda untuk hiking namun bingung ingin menyewa perlengkapan camping. Kami adalah solusi yang tepat untuk anda
+						 Booking penyewaan alat outdoor dengan cepat dan mudah, cek update ketersediaan stok produk alat outdoor pada website. Bagi Anda yang ingin menghabiskan waktu liburan Anda untuk hiking namun bingung ingin menyewa perlengkapan.
 				</div>
 			</div>
 		</div>
@@ -61,7 +61,7 @@
 	<div class="container">
 		<div class="underlined-title">
 			<div class="editContent">
-				<h1 class="text-center latestitems">OUR PRODUCTS</h1>
+				<h1 class="text-center latestitems">PRODUK UNGGULAN KAMI</h1>
 			</div>
 			<div class="wow-hr type_short">
 				<span class="wow-hr-h">
@@ -143,7 +143,7 @@
 <!-- BUTTON =============================-->
 <div class="item content">
 	<div class="container text-center">
-		<a href="/sewa" class="homebrowseitems">Browse All Products
+		<a href="/sewa" class="homebrowseitems">Lihat Semua Produk
 		<div class="homebrowseitemsicon">
 			<i class="fa fa-star fa-spin"></i>
 		</div>
@@ -174,10 +174,10 @@
 				<div class="infoareawrap">
 					<h1 class="text-center subtitle">Alat - alat pilihan</h1>
 					<p>
-						 Alat - alat outdoor yang kami sewakan merupakan alat yang sudah terpilih dalam pengujian kualitas layak pemakaian dan layak keamanan.  
+						 Alat - alat outdoor yang kami sewakan merupakan alat yang sudah terpilih dalam pengujian kualitas layak pemakaian dan layak keamanan. Jadi tunggu apa lagi ? pesan sekarang !
 					</p>
 					<p class="text-center">
-						<a href="#">- Select Theme -</a>
+						<a href="/sewa">- Go To Open Alatoutdoor -</a>
 					</p>
 				</div>
 			</div>
@@ -185,12 +185,12 @@
 			<div class="col-md-4">
 				<i class="fa fa-bullhorn infoareaicon"></i>
 				<div class="infoareawrap">
-					<h1 class="text-center subtitle">Hire Us</h1>
+					<h1 class="text-center subtitle">Berpetualang tanpa batas !</h1>
 					<p>
-						 If you wish to change an element to look or function differently than shown in the demo, we will be glad to assist you. This is a paid service due to theme support requests solved with priority.
+						 Alih-alih mencoba membuat hidupmu sempurna, berikan dirimu kebebasan untuk menjadikannya sebuah petualangan. Lakukan perjalanan kemana saja mulai dari sekarang !
 					</p>
 					<p class="text-center">
-						<a href="#">- Get in Touch -</a>
+						<a href="/opentripview">- Go To Open Trip -</a>
 					</p>
 				</div>
 			</div>
