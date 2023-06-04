@@ -60,24 +60,24 @@
 							</div>
 						</td>
 						<td class="edd_cart_item_price">
-							Rp. {{ $val_keranjang->harga_sewa }}
+							{{ ke_rupiah($val_keranjang->harga_sewa) }}
 						</td>
 						<td class="edd_cart_rental_period">
 							<?php
 								$mulai_sewa = new DateTime($val_keranjang->mulai_sewa);
 								$akhir_sewa = new DateTime($val_keranjang->akhir_sewa);
-								$datediff = $mulai_sewa->diff($akhir_sewa);
+								$lama_sewa = $mulai_sewa->diff($akhir_sewa)->d;
 							?>
-							<b>{{ $datediff->d }} Hari</b>
+							<b>{{ $lama_sewa }} Hari</b>
 						</td>
 						<td class="edd_cart_total_price">
-							Rp. {{ $datediff->d * $val_keranjang->harga_sewa }}
+							{{ ke_rupiah($lama_sewa * $val_keranjang->harga_sewa) }}
 						</td>
 						<td class="edd_cart_actions">
 							<button class="btn btn-danger edd_cart_remove_item_btn" id-keranjang="{{ $val_keranjang->id_keranjang }}"><i class="fa fa-trash"></i> Hapus</button>
 						</td>
 					</tr>
-					<?php $total_harga += $datediff->d * $val_keranjang->harga_sewa; ?>
+					<?php $total_harga += $lama_sewa * $val_keranjang->harga_sewa; ?>
 					@endforeach
 				</tbody>
 				<tfoot>
@@ -87,7 +87,7 @@
 				</tr>
 				<tr class="edd_cart_footer_row">
 					<th colspan="5" class="edd_cart_total_price">
-						 Total: <span class="edd_cart_amount">Rp. {{ $total_harga }}</span>
+						 Total: <span class="edd_cart_amount">{{ ke_rupiah($total_harga) }}</span>
 					</th>
 				</tr>
 				</tfoot>

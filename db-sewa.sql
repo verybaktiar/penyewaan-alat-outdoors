@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Bulan Mei 2023 pada 15.57
+-- Waktu pembuatan: 04 Jun 2023 pada 11.29
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -132,14 +132,6 @@ CREATE TABLE `keranjangs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `keranjangs`
---
-
-INSERT INTO `keranjangs` (`id_keranjang`, `id_pelanggan`, `id_alatoutdoor`, `mulai_sewa`, `akhir_sewa`, `total_sewa`, `status_checkout`, `created_at`, `updated_at`) VALUES
-('KRJ1', 'PLG5', 'KD2', '2023-05-29', '2023-06-02', '1', 'N', '2023-05-28 20:05:12', '2023-05-28 22:58:29'),
-('KRJ2', 'PLG5', 'KD1', '2023-05-30', '2023-05-31', '1', 'N', '2023-05-28 22:41:12', '2023-05-28 22:58:29');
-
 -- --------------------------------------------------------
 
 --
@@ -192,9 +184,9 @@ CREATE TABLE `opentrips` (
 --
 
 INSERT INTO `opentrips` (`id_opentrip`, `nm_opentrip`, `deskripsi`, `fasilitas`, `harga`, `image`, `created_at`, `updated_at`) VALUES
-('OP1', 'Gunung Bromo', 'Gunung Bromo adalah salah satu gunung api yang masih aktif di Indonesia. Gunung yang memiliki ketinggian 2.392 meter di atas permukaan laut ini merupakan destinasi andalan Jawa Timur.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'oUujwPjWNlpjbCOweqbUrjjv9c8cv2kvANHK3IRw.png', '2023-04-24 06:51:00', '2023-04-24 06:51:00'),
-('OP2', 'Gunung Prau', 'Gunung Prau berada di kawasan Dataran Tinggi Dieng, Jawa Tengah dan merupakan tapal batas antara empat kabupaten.', '- Tiket Simaksi - Jodoh Bila Beruntung', 'Rp 300.000', 'yqQkOsjloZuEJZ5P9g9k2LZBa98QYuP5FeCJrDLu.jpg', '2023-04-24 06:29:47', '2023-04-24 06:29:47'),
-('OP3', 'Gunung Lawu', 'Gunung lawu adalah adalah sebuah gunung berapi non-aktif yang terletak di Pulau Jawa, tepatnya di perbatasan Jawa Tengah dan Jawa Timur, Indonesia. Gunung Lawu memiliki ketinggian sekitar 3.265 mdpl.', '-Tiket simaksi -Porter', 'Rp 250.000', 'W7MIXAzfioHIeS4uTpLWyL8ctYUWVIgV1X9hBgrQ.jpeg', '2023-04-24 06:27:30', '2023-04-24 06:27:30');
+('OP1', 'Gunung Bromo', 'Gunung Bromo adalah salah satu gunung api yang masih aktif di Indonesia. Gunung yang memiliki ketinggian 2.392 meter di atas permukaan laut ini merupakan destinasi andalan Jawa Timur.', '- Tiket Simaksi - Jodoh Bila Beruntung', '300000', 'oUujwPjWNlpjbCOweqbUrjjv9c8cv2kvANHK3IRw.png', '2023-04-24 06:51:00', '2023-04-24 06:51:00'),
+('OP2', 'Gunung Prau', 'Gunung Prau berada di kawasan Dataran Tinggi Dieng, Jawa Tengah dan merupakan tapal batas antara empat kabupaten.', '- Tiket Simaksi - Jodoh Bila Beruntung', '300000', 'yqQkOsjloZuEJZ5P9g9k2LZBa98QYuP5FeCJrDLu.jpg', '2023-04-24 06:29:47', '2023-04-24 06:29:47'),
+('OP3', 'Gunung Lawu', 'Gunung lawu adalah adalah sebuah gunung berapi non-aktif yang terletak di Pulau Jawa, tepatnya di perbatasan Jawa Tengah dan Jawa Timur, Indonesia. Gunung Lawu memiliki ketinggian sekitar 3.265 mdpl.', '-Tiket simaksi -Porter', '300000', 'W7MIXAzfioHIeS4uTpLWyL8ctYUWVIgV1X9hBgrQ.jpeg', '2023-04-24 06:27:30', '2023-04-24 06:27:30');
 
 -- --------------------------------------------------------
 
@@ -247,11 +239,8 @@ CREATE TABLE `penyewaans` (
   `id_pelanggan` varchar(6) NOT NULL,
   `id_keranjang` varchar(7) NOT NULL,
   `tgl_ambil` date DEFAULT NULL,
-  `jaminan` enum('KTP','SIM') NOT NULL,
-  `foto_jaminan` varchar(50) NOT NULL,
-  `total_bayar` varchar(10) NOT NULL,
-  `bukti_bayar` varchar(50) NOT NULL,
-  `status_bayar` enum('Belum','Sudah') NOT NULL DEFAULT 'Belum',
+  `tgl_kembali` date DEFAULT NULL,
+  `harga_item` varchar(20) NOT NULL,
   `status_sewa` enum('Belum','Berjalan','Berakhir') NOT NULL DEFAULT 'Belum',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -295,6 +284,25 @@ CREATE TABLE `rekaps` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `transaksis`
+--
+
+CREATE TABLE `transaksis` (
+  `id_transaksi` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_pelanggan` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `list_id_keranjang` text NOT NULL,
+  `jaminan` enum('KTP','SIM') NOT NULL DEFAULT 'KTP',
+  `foto_jaminan` varchar(50) NOT NULL,
+  `total_bayar` varchar(20) NOT NULL,
+  `bukti_bayar` varchar(50) NOT NULL,
+  `status_bayar` enum('Sudah','Belum') NOT NULL DEFAULT 'Belum',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -417,6 +425,13 @@ ALTER TABLE `rekaps`
   ADD KEY `rekaps_id_admin_foreign` (`id_admin`);
 
 --
+-- Indeks untuk tabel `transaksis`
+--
+ALTER TABLE `transaksis`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_pelanggan` (`id_pelanggan`);
+
+--
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
@@ -489,6 +504,12 @@ ALTER TABLE `rekaps`
   ADD CONSTRAINT `rekaps_id_admin_foreign` FOREIGN KEY (`id_admin`) REFERENCES `admins` (`id_admin`) ON DELETE CASCADE,
   ADD CONSTRAINT `rekaps_id_alatoutdoor_foreign` FOREIGN KEY (`id_alatoutdoor`) REFERENCES `alatoutdoors` (`id_alatoutdoor`) ON DELETE CASCADE,
   ADD CONSTRAINT `rekaps_id_pelanggan_foreign` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggans` (`id_pelanggan`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `transaksis`
+--
+ALTER TABLE `transaksis`
+  ADD CONSTRAINT `transaksis_id_pelanggan_foreign` FOREIGN KEY (`id_pelanggan`) REFERENCES `keranjangs` (`id_pelanggan`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

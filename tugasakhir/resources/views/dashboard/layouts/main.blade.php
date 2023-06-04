@@ -103,7 +103,6 @@
     <!-- ChartistJS -->
     <script src="admin1/plugins/chartist/js/chartist.min.js"></script>
     <script src="admin1/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
-    <script src="admin1/js/dashboard/dashboard-1.js"></script>
 
 </body>
 

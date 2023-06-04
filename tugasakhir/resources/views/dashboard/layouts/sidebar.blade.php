@@ -38,11 +38,6 @@
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Pengembalian</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/logtransaksi" aria-expanded="false">
-                            <i class="icon-badge menu-icon"></i><span class="nav-text">Log Transaksi</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>

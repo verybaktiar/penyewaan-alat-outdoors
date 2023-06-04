@@ -44,7 +44,7 @@
 							<a href="{{ route('detailsopentrip.show', $opentrip->id_opentrip) }}" class="learn-more detailslearn"><i class="fa fa-link"></i> Details</a>
 						</p>
 					</div>
-					<span class="maxproduct"><img src="{{ url('storage/opentrip1/') }}/{{ $opentrip->image }}" alt=""></span>
+					<span class="maxproduct"><img src="opentrip1/{{ $opentrip->image }}" alt=""></span>
 				</div>
 				<div class="product-details">
 					<a href="{{ route('detailsopentrip.show', $opentrip->id_opentrip) }}">

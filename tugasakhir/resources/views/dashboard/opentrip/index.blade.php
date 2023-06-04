@@ -25,7 +25,7 @@
 </head>
 <body style="background: lightgray">
 
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
@@ -48,9 +48,9 @@
                                 <tr>
                                     <td>{{ $item->id_opentrip }}</td>
                                     <td>{{ $item->nm_opentrip }}</td>
-                                    <td>{{ $item->deskripsi}}</td>
+                                    <td><?php echo implode('<br>', str_split($item->deskripsi, 60)) ?></td>
                                     <td>{{ $item->fasilitas }}</td>
-                                    <td>{{ $item->harga }}</td>
+                                    <td>{{ ke_rupiah($item->harga) }}</td>
                                     <td class="text-center">
                                         <div class="box">
                                             <a class="pop" attr-value="{{ $item->id_opentrip }}">

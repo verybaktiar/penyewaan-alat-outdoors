@@ -23,16 +23,87 @@
                             <thead>
                               <tr>
                                 <th scope="col">Nama Pelanggan</th>
-                                <th scope="col">Masa Sewa</th>
-                                <th scope="col">Mulai Sewa</th>
-                                <th scope="col">Tgl Kembali</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Denda</th>
-                                <th scope="col">Status Sewa</th>
+                                <th scope="col">Total Harga</th>
+                                <th scope="col">Total Denda</th>
+                                <th scope="col">Action</th>
                               </tr>
                             </thead>
-                          </table>  
+                            <tbody>
+                            @forelse ($pengembalian as $item)
+                                <tr>
+                                    <td>{{ $item->nama_pelanggan }} <b>({{ $item->id_pelanggan }})</b></td>
+                                    <td>{{ ke_rupiah($item->total_bayar) }}</td>
+                                    <td>{{ ke_rupiah($item->total_bayar) }}</td>
+                                    <td>
+                                        <?php if($item->status_bayar == 'Belum'){ ?>
+                                        <button class="btn btn-sm btn-primary confirm-trans" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-check"></i> Confirm</button>
+                                        <?php } ?>
+                                        <button class="btn btn-sm btn-warning list-item-trans" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-eye"></i> Item Kembali</button>
+                                    </td>
+                                </tr>
+                            @empty
+                                  <div class="alert alert-danger">
+                                      Data Post belum Tersedia.
+                                  </div>
+                            @endforelse
+                            </tbody>
+                          </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="modal-title" id="myModalLabel">Image preview</h5>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                 <div class="modal-body">
+                    <img src="" id="imagepreview" style="width: 600px; height: 400px;" >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- List Item -->
+    <div class="modal fade" id="modal-list-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="modal-title" id="myModalLabel">List Item Pelanggan</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nama Item</th>
+                            <th scope="col">Lama Sewa</th>
+                            <th scope="col">Lama Denda</th>
+                            <th scope="col">Bayar Denda (Hari)</th>
+                            <th scope="col">Total Bayar Denda</th>
+                            <th scope="col">Tanggal Kembali</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list-data"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary simpan-kembali-item" data-dismiss="modal" attr-value=""><i class="fa fa-save"></i> Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                 </div>
             </div>
         </div>
@@ -41,6 +112,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        var bayarDenda = 20000;  // Bayar denda per hari
+
+        $('.list-item-trans').on('click',function(){
+            var idTransaksi = $(this).attr('attr-value');
+
+            $.ajax({
+                url: "{{ route('pengembalian.list_item_kembali') }}" ,
+                type: 'POST',
+                data: {
+                    _token : '{{csrf_token()}}',
+                    id_transaksi : idTransaksi
+                },
+                success: function (response) {
+                    var output = '';
+                    $.each(response, function (index,value) {
+
+                        var tanggalKembali = !!value.tgl_kembali ? 
+                            '<td>'+ value.tgl_kembali +'</td>' : // Jika item telah kembali
+                            '<td><input type="date" class="form-control datepicker tanggal-kembali-' + index +'" attr-index="'+ index + '" />'
+                            '<input type="hidden" class="akhir-sewa-' + index +'" /></td>'; // Jika item belum kembali
+
+                        var lamaSewa = getDateDiff(value.akhir_sewa,value.mulai_sewa);
+
+                        //  Jika tgl kembali SUDAH ada
+                        var lamaDenda = ''; var totalBayarDenda = '';
+                        if(!!value.tgl_kembali){
+                            lamaDenda = getDateDiff(value.tgl_kembali,value.akhir_sewa);
+                            totalBayarDenda = lamaDenda * bayarDenda;
+                        }
+
+                        output += '<tr>';
+                        output += '<td>'+ value.nama_alat +'</td>';
+                        output += '<td>'+ lamaSewa +' Hari</td>';
+                        output += '<td>'+ lamaDenda +' Hari</td>';
+                        output += '<td>'+ formatRupiah(bayarDenda.toString(),',') +'</td>';
+                        output += '<td>'+ formatRupiah(totalBayarDenda.toString(),',') +'</td>';
+                        output +=  tanggalKembali;
+                        output += '</tr>';
+
+                        $('.akhir-sewa-' + index).val(index);
+
+                        if(!!value.tgl_kembali){
+                            $('.simpan-kembali-item').hide();
+                        }else{
+                            $('.simpan-kembali-item').show();
+                        }
+                    });
+
+                    $('.list-data').html(output);
+                    $('.simpan-kembali-item').attr('attr-value',idTransaksi);
+
+                    //  Jika tgl kembali BELUM ada
+                    $('[class*=tanggal-kembali-]').on('change',function(){
+                        var akhirSewa = $('akhir-sewa-' + $(this).attr('attr-index')).val();
+                        var tglKembali = $(this).val();
+
+                        hitungDenda(akhirSewa,tglKembali);
+                    })
+
+                    $('#modal-list-item').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        })
+
+        $('.simpan-kembali-item').on('click',function(){
+            var idTransaksi = $(this).attr('attr-value');
+
+            $.ajax({
+                url: "{{ route('pengembalian.kembalikan_item') }}" ,
+                type: 'POST',
+                data: {
+                    _token : '{{csrf_token()}}',
+                    id_transaksi : idTransaksi
+                },
+                success: function (response) {
+                   Swal.fire('Berhasil !', 'Tanggal kembali berhasil tersimpan !', 'success');
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        })
+
+        function formatRupiah(angka, prefix) {
+
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                    split   = number_string.split(','),
+                    sisa    = split[0].length % 3,
+                    rupiah  = split[0].substr(0, sisa),
+                    ribuan  = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        function getDateDiff(date1,date2){
+            let akhirSewa = new Date(date1);
+            let mulaiSewa = new Date(date2);
+
+            let difference = akhirSewa.getTime() - mulaiSewa.getTime();
+            let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+            return TotalDays;
+        }
+
+    })
+    </script>
 
     <script>
         //message with toastr

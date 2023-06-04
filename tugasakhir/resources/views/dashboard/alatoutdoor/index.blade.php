@@ -25,7 +25,7 @@
 </head>
 <body style="background: lightgray">
 
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
@@ -54,8 +54,8 @@
                                     <td>{{ $item->kategori->nama_kategori }}</td>
                                     <td>{{ $item->spesifikasi }}</td>
                                     <td>{{ $item->deskripsi }}</td>
-                                    <td>{{ $item->stok }}</td>
-                                    <td>{{ $item->harga_sewa }}</td>
+                                    <td>{{ rem_zero_val($item->stok) }}</td>
+                                    <td>{{ ke_rupiah($item->harga_sewa) }}</td>
                                     <td>{{ $item->merk }}</td>
                                     <td class="text-center">
                                         <div class="box">

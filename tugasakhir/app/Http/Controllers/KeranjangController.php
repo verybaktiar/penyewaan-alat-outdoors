@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Keranjang;
 use App\Models\Pelanggan;
+use App\Models\Transaksi;
 use App\Models\Penyewaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use DateTime;
 
 class KeranjangController extends Controller
 {
@@ -66,26 +69,42 @@ class KeranjangController extends Controller
             $img_payment->move('payment1', $img_payment_name);
             $img_jaminan->move('jaminan1', $img_jaminan_name);
 
+            // Set Variabel ID Keranjang &  Pelanggan
+            $id_pelanggan = ''; $list_id_keranjang = '';$total_harga = 0;
+
             $list_item_sewa = [];
             foreach($get_keranjang as $idx_keranjang => $row_keranjang){
+
+                // Set Variabel ID Keranjang &  Pelanggan
+                $id_pelanggan = $row_keranjang->id_pelanggan;
+                if($idx_keranjang != (count($get_keranjang) - 1) ){
+                    $list_id_keranjang .= $row_keranjang->id_keranjang . ',';
+                }else{
+                    $list_id_keranjang .= $row_keranjang->id_keranjang;
+                }
 
                 // Get ID Sewa
                 $get_id_sewa=Penyewaan::orderBy('id_sewa', 'DESC')->first();
                 if(!empty($get_id_sewa)){
-                    $id_sewa=(int)substr($get_id_sewa->id_sewa,3)+(int)1;
+                    $id_sewa=(int)substr($get_id_sewa->id_sewa,3) + (int)1 + $idx_keranjang;
                 }else{
                     $id_sewa=$idx_keranjang + 1;
                 }
+
+                // Get Lama sewa
+                $mulai_sewa = new DateTime($row_keranjang->mulai_sewa);
+                $akhir_sewa = new DateTime($row_keranjang->akhir_sewa);
+                $lama_sewa = $mulai_sewa->diff($akhir_sewa)->d;
+
+                // Set Total Harga
+                $total_harga += (int)$row_keranjang->harga_sewa * (int)$lama_sewa;
 
                 // Data Sewa yang akan di input
                 $list_item_sewa[$idx_keranjang] = [
                     'id_sewa' => 'SWA'. $id_sewa,
                     'id_pelanggan' => $row_keranjang->id_pelanggan,
                     'id_keranjang' => $row_keranjang->id_keranjang,
-                    'jaminan' => $request->post('jaminan'),
-                    'foto_jaminan' => $img_jaminan_name,
-                    'total_bayar' => $row_keranjang->harga_sewa * $row_keranjang->total_sewa,
-                    'bukti_bayar' => $img_payment_name
+                    'harga_item' => $row_keranjang->harga_sewa * $lama_sewa
                 ];
 
                 // Ubah status checkout di keranjang
@@ -94,8 +113,30 @@ class KeranjangController extends Controller
                 ];
             }
 
+            // Get ID Transaksi
+            $get_id_trans=Transaksi::orderBy('id_transaksi', 'DESC')->first();
+            if(!empty($get_id_trans)){
+                $id_trans=(int)substr($get_id_trans->id_transaksi,4)+(int)1;
+            }else{
+                $id_trans= 1;
+            }
+
+            // Data Sewa masuk ke table transaksi
+            $item_transaksi = [
+                'id_transaksi' => 'TRNS'. $id_trans,
+                'id_pelanggan' => $id_pelanggan,
+                'list_id_keranjang' => $list_id_keranjang,
+                'jaminan' => $request->post('jaminan'),
+                'foto_jaminan'=> $img_jaminan_name,
+                'total_bayar'=> $total_harga,
+                'bukti_bayar' => $img_payment_name
+            ];
+
             // Insert data & validasi jika ada error
-            if(Penyewaan::insert($list_item_sewa) && Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])->update($checkout_item)){
+            if(Penyewaan::insert($list_item_sewa) && 
+                Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])->update($checkout_item) &&
+                Transaksi::insert($item_transaksi) 
+            ){
                 return redirect('/keranjang')->with('status_checkout', 'Berhasil Checkout !');;
             }
 

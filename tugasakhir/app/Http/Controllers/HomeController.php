@@ -58,7 +58,7 @@ class HomeController extends Controller
                 'mulai_sewa' => $request->post('mulai_sewa'),
                 'akhir_sewa' => $request->post('akhir_sewa'),
                 'total_sewa' => $get_total_sewa,
-                'status_checkout' => 'Y'
+                'status_checkout' => 'N'
             ];
 
             if(Keranjang::create($keranjang)){

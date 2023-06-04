@@ -52,7 +52,7 @@
 					<h1>{{ $alatoutdoor->nama_alat }}</h1>
 					</a>
 					<span class="price">
-					<span class="edd_price"> Rp. {{ $alatoutdoor->harga_sewa }} / Hari</span>
+					<span class="edd_price">{{ ke_rupiah($alatoutdoor->harga_sewa)  }} / Hari</span>
 					</span>
 				</div>
 			</div>
