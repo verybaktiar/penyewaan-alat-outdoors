@@ -25,4 +25,12 @@ class OpenTripViewController extends Controller
 
         return view('opentripview', $arr_data);
     }
+
+    public function get_opentrip(Request $request)
+    {
+        $id_opentrip = $request->post('id_opentrip');
+        $get_opentrip = Opentrip::where(['id_opentrip'=>$id_opentrip])->first();
+
+        return response()->json($get_opentrip);
+    }
 }

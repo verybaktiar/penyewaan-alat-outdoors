@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jun 2023 pada 11.29
+-- Waktu pembuatan: 05 Jun 2023 pada 08.23
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -335,6 +335,20 @@ INSERT INTO `users` (`id_user`, `username`, `email`, `email_verified_at`, `passw
 ('USR6', 'firmanadi', 'firmanadi@gmail.com', NULL, '$2y$10$G2Mfnc/m8QAPzBTWBw7/yewSkDlVTm8ql9IZF8swGVRrk3k5z1t2C', 'pelanggan', NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
 ('USR7', 'ucup99', 'ucup@email.com', NULL, '$2y$10$fMaN1x9GmWX6UjocdeUhx.yIqAT0j9Gl2.nJxUOwLb5TzrvVPMz8.', 'pelanggan', NULL, '2023-05-18 12:42:33', '2023-05-18 12:42:33');
 
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user_comments`
+--
+
+CREATE TABLE `user_comments` (
+  `id_comment` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_pelanggan` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message_comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -440,6 +454,13 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indeks untuk tabel `user_comments`
+--
+ALTER TABLE `user_comments`
+  ADD PRIMARY KEY (`id_comment`),
+  ADD KEY `FK1` (`id_pelanggan`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -510,6 +531,12 @@ ALTER TABLE `rekaps`
 --
 ALTER TABLE `transaksis`
   ADD CONSTRAINT `transaksis_id_pelanggan_foreign` FOREIGN KEY (`id_pelanggan`) REFERENCES `keranjangs` (`id_pelanggan`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `user_comments`
+--
+ALTER TABLE `user_comments`
+  ADD CONSTRAINT `FK1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggans` (`id_pelanggan`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -40,6 +40,14 @@ class PenyewaanController extends Controller
         return view('sewa', $arr_data);
     }
 
+    public function get_alatoutdoor(Request $request)
+    {
+        $id_alatoutdoor = $request->post('id_alatoutdoor');
+        $get_alatoutdoor = Alatoutdoor::where(['id_alatoutdoor'=>$id_alatoutdoor])->first();
+
+        return response()->json($get_alatoutdoor);
+    }
+
     public function confirm_payment(Request $request)
     {
         $id_transaksi = $request->post('id_transaksi');

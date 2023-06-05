@@ -42,8 +42,17 @@ Route::controller(HomeController::class)->group(function(){
 });
 
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
-Route::get('/opentripview', [OpenTripViewController::class, 'index']);
 Route::get('/profil', [ProfileController::class, 'index']);
+
+Route::controller(OpenTripViewController::class)->group(function(){
+    Route::get('opentripview', 'index');
+    Route::post('get_opentrip', 'get_opentrip')->name('opentripview.get_opentrip');
+});
+
+Route::controller(ProfileController::class)->group(function(){
+    Route::get('profile', 'index');
+    Route::post('user_comment', 'user_comment')->name('profile.user_comment');
+});
 
 Route::controller(KeranjangController::class)->group(function(){
     Route::get('keranjang', 'index');
@@ -54,6 +63,7 @@ Route::controller(KeranjangController::class)->group(function(){
 Route::controller(PenyewaanController::class)->group(function(){
     Route::get('penyewaan', 'index');
     Route::get('sewa', 'sewa');
+    Route::post('get_alatoutdoor', 'get_alatoutdoor')->name('penyewaan.get_alatoutdoor');
     Route::post('list_item', 'list_item')->name('penyewaan.list_item');
     Route::post('ambil_item', 'ambil_item')->name('penyewaan.ambil_item');
     Route::post('confirm_payment', 'confirm_payment')->name('penyewaan.confirm_payment');
@@ -79,10 +89,4 @@ Route::get('/logtransaksi', function () {
         "title" => "transaksi"
     ]);
 });
-
-Route::controller(AlatoutdoorController::class)->group(function () {
-    Route::get('/{alatoutdoor}', 'show')->name('details.show');
-});
-
-Route::get('opentrip/{opentrip}', [OpentripController::class, 'show'])->name('detailsopentrip.show');
 

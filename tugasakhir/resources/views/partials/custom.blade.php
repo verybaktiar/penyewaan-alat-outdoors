@@ -12,9 +12,65 @@ jQuery(document).ready(function ($) {
 
 	$('[class*=add-item-]').click(function() {
 		var idAlatOutdoor = $(this).attr('id-product');
-		$('.attr-id').val(idAlatOutdoor);
+		$('.attr-id-rental').val(idAlatOutdoor);
 
 		$('#modal-rental-period').modal('toggle');
+	});
+
+	$('[class*=detail-item-]').click(function() {
+		var idAlatOutdoor = $(this).attr('id-product');
+
+		$.ajax({
+	        url: "{{ route('penyewaan.get_alatoutdoor') }}" ,
+	        type: 'POST',
+	        dataType: 'JSON',
+	        data: {
+	        	_token : '{{csrf_token()}}',
+	        	id_alatoutdoor : idAlatOutdoor
+	        },
+	        success: function (response) {
+	        	$('.nama-item').text(response.nama_alat);
+	        	$('.spesifikasi-item').text(response.spesifikasi);
+	        	$('.harga-item').html(formatRupiah(response.harga_sewa,',') + '<b> / Hari </b>');
+	        	$('.deskripsi-item').text(response.deskripsi);
+
+    			$('#modal-detail-item').modal('toggle');
+	        },
+	        error: function(xhr, status, error) {
+	        	Swal.fire('Gagal !', 'Terjadi Kesalahan', 'error');
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+	        }
+	    });
+	});
+
+	$('[class*=detail-opentrip-]').click(function() {
+		var idOpentrip = $(this).attr('id-product');
+
+		$.ajax({
+	        url: "{{ route('opentripview.get_opentrip') }}" ,
+	        type: 'POST',
+	        dataType: 'JSON',
+	        data: {
+	        	_token : '{{csrf_token()}}',
+	        	id_opentrip : idOpentrip
+	        },
+	        success: function (response) {
+	        	$('.nama-item').text(response.nm_opentrip);
+	        	$('.fasilitas-item').text(response.fasilitas);
+	        	$('.harga-item').html(formatRupiah(response.harga,',') + '<b> / Trip </b>');
+	        	$('.deskripsi-item').text(response.deskripsi);
+
+    			$('#modal-detail-opentrip').modal('toggle');
+	        },
+	        error: function(xhr, status, error) {
+	        	Swal.fire('Gagal !', 'Terjadi Kesalahan', 'error');
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+	        }
+	    });
 	});
 
 	$('.input-to-cart').click(function(){
@@ -93,5 +149,22 @@ jQuery(document).ready(function ($) {
 			}
 	    });
 	});
+
+	function formatRupiah(angka, prefix) {
+
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split   = number_string.split(','),
+                sisa    = split[0].length % 3,
+                rupiah  = split[0].substr(0, sisa),
+                ribuan  = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
 });
 </script>
