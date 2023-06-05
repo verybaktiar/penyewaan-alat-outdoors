@@ -22,22 +22,19 @@
                         <table class="table table-bordered">
                             <thead>
                               <tr>
+                                <th scope="col">Id Transaksi</th>
                                 <th scope="col">Nama Pelanggan</th>
                                 <th scope="col">Total Harga</th>
-                                <th scope="col">Total Denda</th>
                                 <th scope="col">Action</th>
                               </tr>
                             </thead>
                             <tbody>
                             @forelse ($pengembalian as $item)
                                 <tr>
+                                    <td><b>{{ $item->id_transaksi }}</b></td>
                                     <td>{{ $item->nama_pelanggan }} <b>({{ $item->id_pelanggan }})</b></td>
                                     <td>{{ ke_rupiah($item->total_bayar) }}</td>
-                                    <td>{{ ke_rupiah($item->total_bayar) }}</td>
                                     <td>
-                                        <?php if($item->status_bayar == 'Belum'){ ?>
-                                        <button class="btn btn-sm btn-primary confirm-trans" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-check"></i> Confirm</button>
-                                        <?php } ?>
                                         <button class="btn btn-sm btn-warning list-item-trans" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-eye"></i> Item Kembali</button>
                                     </td>
                                 </tr>
@@ -87,19 +84,21 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th scope="col">Nama Item</th>
-                            <th scope="col">Lama Sewa</th>
-                            <th scope="col">Lama Denda</th>
-                            <th scope="col">Bayar Denda (Hari)</th>
-                            <th scope="col">Total Bayar Denda</th>
-                            <th scope="col">Tanggal Kembali</th>
-                          </tr>
-                        </thead>
-                        <tbody class="list-data"></tbody>
-                    </table>
+                    <form method="POST" id="form-kembali-item">
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">Nama Item</th>
+                                <th scope="col">Lama Sewa</th>
+                                <th scope="col">Lama Denda</th>
+                                <th scope="col">Bayar Denda (Hari)</th>
+                                <th scope="col">Total Bayar Denda</th>
+                                <th scope="col">Tanggal Kembali</th>
+                              </tr>
+                            </thead>
+                            <tbody class="list-data"></tbody>
+                        </table>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary simpan-kembali-item" data-dismiss="modal" attr-value=""><i class="fa fa-save"></i> Simpan</button>
@@ -113,6 +112,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -134,8 +134,8 @@
                     $.each(response, function (index,value) {
 
                         var tanggalKembali = !!value.tgl_kembali ? 
-                            '<td>'+ value.tgl_kembali +'</td>' : // Jika item telah kembali
-                            '<td><input type="date" class="form-control datepicker tanggal-kembali-' + index +'" attr-index="'+ index + '" />'
+                            '<td>'+ moment(value.tgl_kembali).format('D-MMM-YYYY') +'</td>' : // Jika item telah kembali
+                            '<td><input type="date" class="form-control datepicker tanggal-kembali-' + index +'" attr-index="'+ index + '" name="tgl_kembali-'+ index +'" />'
                             '<input type="hidden" class="akhir-sewa-' + index +'" /></td>'; // Jika item belum kembali
 
                         var lamaSewa = getDateDiff(value.akhir_sewa,value.mulai_sewa);
@@ -168,14 +168,6 @@
                     $('.list-data').html(output);
                     $('.simpan-kembali-item').attr('attr-value',idTransaksi);
 
-                    //  Jika tgl kembali BELUM ada
-                    $('[class*=tanggal-kembali-]').on('change',function(){
-                        var akhirSewa = $('akhir-sewa-' + $(this).attr('attr-index')).val();
-                        var tglKembali = $(this).val();
-
-                        hitungDenda(akhirSewa,tglKembali);
-                    })
-
                     $('#modal-list-item').modal('show');
                 },
                 error: function(xhr, status, error) {
@@ -188,16 +180,18 @@
 
         $('.simpan-kembali-item').on('click',function(){
             var idTransaksi = $(this).attr('attr-value');
+            var formTglKembali = $('#form-kembali-item').serialize();
 
             $.ajax({
                 url: "{{ route('pengembalian.kembalikan_item') }}" ,
                 type: 'POST',
                 data: {
                     _token : '{{csrf_token()}}',
-                    id_transaksi : idTransaksi
+                    id_transaksi : idTransaksi,
+                    data_form : formTglKembali
                 },
                 success: function (response) {
-                   Swal.fire('Berhasil !', 'Tanggal kembali berhasil tersimpan !', 'success');
+                    Swal.fire('Berhasil !', 'Tanggal kembali berhasil tersimpan !', 'success');
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr);

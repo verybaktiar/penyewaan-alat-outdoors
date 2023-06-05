@@ -56,8 +56,8 @@ Route::controller(ProfileController::class)->group(function(){
 
 Route::controller(KeranjangController::class)->group(function(){
     Route::get('keranjang', 'index');
-    Route::post('keranjang', 'upload_payment')->name('keranjang.upload_payment');
-    Route::post('keranjang/delete_item', 'delete_item')->name('keranjang.delete_item');
+    Route::post('upload_payment', 'upload_payment')->name('keranjang.upload_payment');
+    Route::post('delete_cart_item', 'delete_cart_item')->name('keranjang.delete_cart_item');
 });
 
 Route::controller(PenyewaanController::class)->group(function(){

@@ -34,6 +34,7 @@
                         <table class="table table-bordered">
                             <thead>
                               <tr>
+                                <th scope="col">Id Transaksi</th>
                                 <th scope="col">Pelanggan</th>
                                 <th scope="col">Total Item</th>
                                 <th scope="col">Jaminan</th>
@@ -46,6 +47,7 @@
                             <tbody>
                             @forelse ($penyewaan as $item)
                                 <tr>
+                                    <td><b>{{ $item->id_transaksi }}</b></td>
                                     <td>{{ $item->nama_pelanggan }} <b>({{ $item->id_pelanggan }})</b></td>
                                     <td>
                                         <?php $total_id_keranjang = count(explode(',', $item->list_id_keranjang)); ?>
@@ -122,17 +124,19 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th scope="col">Nama Item</th>
-                            <th scope="col">Mulai Sewa</th>
-                            <th scope="col">Akhir Sewa</th>
-                            <th scope="col">Harga Item(Hari)</th>
-                            <th scope="col">Tanggal Ambil</th>
-                          </tr>
-                        </thead>
-                        <tbody class="list-data"></tbody>
+                    <form method="POST" id="form-ambil-item">
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">Nama Item</th>
+                                <th scope="col">Mulai Sewa</th>
+                                <th scope="col">Akhir Sewa</th>
+                                <th scope="col">Harga Item(Hari)</th>
+                                <th scope="col">Tanggal Ambil</th>
+                              </tr>
+                            </thead>
+                            <tbody class="list-data"></tbody>
+                        </form>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -147,6 +151,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -176,13 +181,13 @@
                     $.each(response, function (index,value) {
 
                         var tanggalAmbil = !!value.tgl_ambil ? 
-                            '<td>'+ value.tgl_ambil +'</td>' : // Jika item telah diambil
-                            '<td><input type="date" class="form-control datepicker tanggal-ambil" /></td>'; // Jika item belum diambil
+                            '<td>'+ moment(value.tgl_ambil).format('D-MMM-YYYY') +'</td>' : // Jika item telah diambil
+                            '<td><input type="date" class="form-control datepicker tanggal-ambil" name="tgl_ambil-'+ index +'" /></td>'; // Jika item belum diambil
 
                         output += '<tr>';
                         output += '<td>'+ value.nama_alat +'</td>';
-                        output += '<td>'+ value.mulai_sewa +'</td>';
-                        output += '<td>'+ value.akhir_sewa +'</td>';
+                        output += '<td>'+ moment(value.mulai_sewa).format('D-MMM-YYYY') +'</td>';
+                        output += '<td>'+ moment(value.akhir_sewa).format('D-MMM-YYYY') +'</td>';
                         output += '<td>'+ formatRupiah(value.harga_sewa,',') +'</td>';
                         output +=  tanggalAmbil;
                         output += '</tr>';
@@ -232,16 +237,18 @@
 
         $('.simpan-ambil-item').on('click',function(){
             var idTransaksi = $(this).attr('attr-value');
+            var formTglAmbil = $('#form-ambil-item').serialize();
 
             $.ajax({
                 url: "{{ route('penyewaan.ambil_item') }}" ,
                 type: 'POST',
                 data: {
                     _token : '{{csrf_token()}}',
-                    id_transaksi : idTransaksi
+                    id_transaksi : idTransaksi,
+                    data_form : formTglAmbil
                 },
                 success: function (response) {
-                   Swal.fire('Berhasil !', 'Tanggal ambil berhasil tersimpan !', 'success');
+                    Swal.fire('Berhasil !', 'Tanggal ambil berhasil tersimpan !', 'success');
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr);

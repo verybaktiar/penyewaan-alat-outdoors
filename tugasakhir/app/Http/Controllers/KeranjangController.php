@@ -146,7 +146,7 @@ class KeranjangController extends Controller
         return response()->json(['status'=>'error','message'=>'Terjadi kesalahan : Validasi Gagal']);
     }
 
-    public function delete_item(Request $request) 
+    public function delete_cart_item(Request $request) 
     {
         $data = $request->validate([
             'id_keranjang' => 'required'

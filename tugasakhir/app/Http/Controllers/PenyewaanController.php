@@ -78,10 +78,16 @@ class PenyewaanController extends Controller
         $id_transaksi = $request->post('id_transaksi');
         $get_transaksi = Transaksi::where(['id_transaksi'=>$id_transaksi])->first();
 
-        $arr_data = array();
+        $data_form = $request->all();
+        $value_form =  array();
+        parse_str($data_form['data_form'], $value_form);
+
         $list_keranjang = explode(',',$get_transaksi->list_id_keranjang);
-        foreach($list_keranjang as $val_id){
-            Penyewaan::where(['id_keranjang'=>$val_id])->update(['tgl_ambil' => '2023-06-03','status_sewa' => 'Berjalan']);
+        foreach($list_keranjang as $keranjang_id){
+            Penyewaan::where(['id_keranjang'=>$keranjang_id])->update([
+                'tgl_ambil' => $value_form['tgl_ambil-'.$keranjang_id],
+                'status_sewa' => 'Berjalan'
+            ]);
         }
     }
 }
