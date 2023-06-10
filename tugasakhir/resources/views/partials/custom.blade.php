@@ -1,6 +1,17 @@
 <!-- CUSTOMSCRIPTS =============================-->
 <script>  
 jQuery(document).ready(function ($) {
+	$('.select2').select2();
+
+	$('#filterKategori').on('select2:select', function (e) {
+		if($(this).val() != 'ALL'){
+			$("[data-kategori]").hide();
+	    	$("[data-kategori*='"+ $(this).val() + "']").show();
+		}else{
+			$("[data-kategori]").show();
+		}
+	});
+
 	$('.fadeshop').hover(
 		function(){
 			$(this).find('.captionshop').fadeIn(150);

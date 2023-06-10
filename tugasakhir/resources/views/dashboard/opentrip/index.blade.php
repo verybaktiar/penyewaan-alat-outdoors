@@ -48,7 +48,23 @@
                                 <tr>
                                     <td>{{ $item->id_opentrip }}</td>
                                     <td>{{ $item->nm_opentrip }}</td>
-                                    <td><?php echo implode('<br>', str_split($item->deskripsi, 60)) ?></td>
+                                    <td>
+                                        <?php 
+                                            $deskripsi = explode(' ',$item->deskripsi);
+                                            $param_increment = 10;
+                                            $output_string = '';
+                                            foreach($deskripsi as $idx => $val){
+                                                if(($idx+1) == $param_increment){
+                                                    $param_increment += 10;
+                                                    $output_string .= $val . ' ' . '<br>';
+                                                }else{
+                                                    $output_string .= $val . ' '; 
+                                                }
+                                            }
+
+                                            echo $output_string;
+                                        ?>
+                                    </td>
                                     <td>{{ $item->fasilitas }}</td>
                                     <td>{{ ke_rupiah($item->harga) }}</td>
                                     <td class="text-center">

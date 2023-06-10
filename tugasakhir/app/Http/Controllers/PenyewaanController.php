@@ -10,6 +10,7 @@ use App\Models\Alatoutdoor;
 use App\Models\Keranjang;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
+use App\Models\Kategori;
 
 class PenyewaanController extends Controller
 {
@@ -30,7 +31,11 @@ class PenyewaanController extends Controller
         $arr_data = array();
         
         $arr_data['title'] = 'Sewa';
-        $arr_data['alatoutdoors'] = Alatoutdoor::paginate(9);
+        $arr_data['kategoris'] = Kategori::all();
+        $arr_data['alatoutdoors'] = DB::table('alatoutdoors')
+                                    ->select('alatoutdoors.*', 'kategoris.nama_kategori')
+                                    ->join('kategoris', 'kategoris.id_kategori', '=', 'alatoutdoors.id_kategori')
+                                    ->get();
 
         if(!empty(Auth::user()->id_user)){
             $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();

@@ -50,6 +50,9 @@
 					<a>
 					<h1>{{ $opentrip->nm_opentrip }}</h1>
 					</a>
+					<span class="price">
+					<span class="edd_price">{{ ke_rupiah($opentrip->harga)  }} / Trip</span>
+					</span>
 				</div>
 			</div>
 		</div>
@@ -90,6 +93,12 @@
 		 </div>
 	</div>
 
+	<div class="row text-center">
+		<div class="col-md-12"><h2>Kontak Kami</h2></div>
+		<div class="col-md-12">
+			<a href="https://wa.me/+6281234567890"><i class="fa fa-whatsapp"> Whatsapp </i></a>
+		</div>
+	</div>
 </div>
 </div>
 </section>
