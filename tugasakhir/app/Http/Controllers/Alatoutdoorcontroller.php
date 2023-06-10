@@ -13,9 +13,10 @@ class Alatoutdoorcontroller extends Controller
     //get data alat outdoor
     public function index(){
         $alatoutdoor = Alatoutdoor::latest()->simplePaginate(5);
+        $navbar = 'active';
 
         //render view with data alat outdoor
-        return view('dashboard.alatoutdoor.index', compact('alatoutdoor'));
+        return view('dashboard.alatoutdoor.index', compact('alatoutdoor','navbar'));
     }
 
     public function create(){

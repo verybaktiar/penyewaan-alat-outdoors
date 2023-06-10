@@ -13,9 +13,10 @@ class OpentripController extends Controller
     {
         //get posts
         $opentrip = Opentrip::latest()->simplePaginate(5);
+        $navbar = 'active';
 
         //render view with posts
-        return view('dashboard.opentrip.index', compact('opentrip'));
+        return view('dashboard.opentrip.index', compact('opentrip','navbar'));
     }
 
     public function create()

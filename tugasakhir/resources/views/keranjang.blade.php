@@ -15,12 +15,6 @@
 </div>
 </header>
 
-@if (session('status_checkout'))
-    <div class="alert alert-success">
-        {{ session('status_checkout') }}
-    </div>
-@endif
-
 <!-- CONTENT =============================-->
 <section class="item content">
 <div class="container toparea">
@@ -36,7 +30,13 @@
 			</span>
 		</div>
 	</div>
-	<div id="edd_checkout_wrap" class="col-md-8 col-md-offset-2">
+	<div id="edd_checkout_wrap" class="col-md-12">
+
+		@if (session('status_checkout'))
+		    <div class="alert alert-success">
+		        {{ session('status_checkout') }}
+		    </div>
+		@endif
 
 		@if(!empty($total_keranjang))
 
@@ -46,6 +46,8 @@
 				<tr class="edd_cart_header_row">
 					<th class="edd_cart_item_name">Nama Barang</th>
 					<th class="edd_cart_item_price">Harga Sewa (/hari)</th>
+					<th class="edd_cart_rental_start">Mulai Sewa</th>
+					<th class="edd_cart_rental_end">Akhir Sewa</th>
 					<th class="edd_cart_rental_period">Masa Sewa</th>
 					<th class="edd_cart_total_price">Total Harga</th>
 					<th class="edd_cart_actions">Actions</th>
@@ -63,6 +65,12 @@
 						</td>
 						<td class="edd_cart_item_price">
 							{{ ke_rupiah($val_keranjang->harga_sewa) }}
+						</td>
+						<td class="edd_cart_rental_start">
+							{{ date('d-m-Y',strtotime($val_keranjang->mulai_sewa)) }}
+						</td>
+						<td class="edd_cart_rental_end">
+							{{ date('d-m-Y',strtotime($val_keranjang->akhir_sewa)) }}
 						</td>
 						<td class="edd_cart_rental_period">
 							<?php
