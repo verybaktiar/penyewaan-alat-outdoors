@@ -96,7 +96,7 @@
 					</th>
 				</tr>
 				<tr class="edd_cart_footer_row">
-					<th colspan="5" class="edd_cart_total_price">
+					<th colspan="7" class="edd_cart_total_price">
 						 Total: <span class="edd_cart_amount">{{ ke_rupiah($total_harga) }}</span>
 					</th>
 				</tr>

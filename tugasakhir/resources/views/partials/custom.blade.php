@@ -5,10 +5,10 @@ jQuery(document).ready(function ($) {
 
 	$('#filterKategori').on('select2:select', function (e) {
 		if($(this).val() != 'ALL'){
-			$("[data-kategori]").hide();
-	    	$("[data-kategori*='"+ $(this).val() + "']").show();
+			$("[data-kategori]").fadeOut();
+	    	$("[data-kategori*='"+ $(this).val() + "']").fadeIn();
 		}else{
-			$("[data-kategori]").show();
+			$("[data-kategori]").fadeIn();
 		}
 	});
 

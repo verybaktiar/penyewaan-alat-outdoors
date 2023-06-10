@@ -25,7 +25,7 @@
 </head>
 <body style="background: lightgray">
 
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
@@ -182,7 +182,7 @@
 
                         var tanggalAmbil = !!value.tgl_ambil ? 
                             '<td>'+ moment(value.tgl_ambil).format('D-MMM-YYYY') +'</td>' : // Jika item telah diambil
-                            '<td><input type="date" class="form-control datepicker tanggal-ambil" name="tgl_ambil-'+ index +'" /></td>'; // Jika item belum diambil
+                            '<td><input type="text" class="form-control datepicker tanggal-ambil" name="tgl_ambil-'+ index +'" /></td>'; // Jika item belum diambil
 
                         output += '<tr>';
                         output += '<td>'+ value.nama_alat +'</td>';
@@ -201,6 +201,15 @@
 
                     $('.list-data').html(output);
                     $('.simpan-ambil-item').attr('attr-value',idTransaksi);
+
+                    $('.datepicker').datepicker({
+                        dateFormat : 'dd-mm-yy',
+                        setDate : new Date(),
+                        minDate : 0,
+                        autoclose : true
+                    });
+
+                    $('.tanggal-ambil').datepicker('setDate','today');
 
                     $('#modal-list-item').modal('show');
                 },

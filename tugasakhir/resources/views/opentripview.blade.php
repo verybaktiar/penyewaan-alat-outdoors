@@ -96,7 +96,7 @@
 	<div class="row text-center">
 		<div class="col-md-12"><h2>Kontak Kami</h2></div>
 		<div class="col-md-12">
-			<a href="https://wa.me/+6281234567890"><i class="fa fa-whatsapp"> Whatsapp </i></a>
+			<a target="blank" href="https://wa.me/+6281234567890"><i class="fa fa-whatsapp"> Whatsapp </i></a>
 		</div>
 	</div>
 </div>

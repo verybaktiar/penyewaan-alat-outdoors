@@ -17,6 +17,9 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="admin1/plugins/chartist/css/chartist.min.css">
     <link rel="stylesheet" href="admin1/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="admin1/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="admin1/plugins/jqueryui/css/jquery-ui.min.css">
     <!-- Custom Stylesheet -->
     <link href="admin1/css/style.css" rel="stylesheet">
 
@@ -103,6 +106,9 @@
     <!-- ChartistJS -->
     <script src="admin1/plugins/chartist/js/chartist.min.js"></script>
     <script src="admin1/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    <!-- Datepicker -->
+    <script src="admin1/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="admin1/plugins/jqueryui/js/jquery-ui.min.js"></script>
 
 </body>
 

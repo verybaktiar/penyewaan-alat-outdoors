@@ -44,7 +44,7 @@
                                   </div>
                             @endforelse
                             </tbody>
-                          </table>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -89,10 +89,11 @@
                             <thead>
                               <tr>
                                 <th scope="col">Nama Item</th>
+                                <th scope="col">Akhir Sewa</th>
                                 <th scope="col">Lama Sewa</th>
                                 <th scope="col">Lama Denda</th>
                                 <th scope="col">Bayar Denda (Hari)</th>
-                                <th scope="col">Total Bayar Denda</th>
+                                <th scope="col">Subtotal Bayar Denda</th>
                                 <th scope="col">Tanggal Kembali</th>
                               </tr>
                             </thead>
@@ -117,8 +118,6 @@
     <script type="text/javascript">
     $(document).ready(function() {
 
-        var bayarDenda = 20000;  // Bayar denda per hari
-
         $('.list-item-trans').on('click',function(){
             var idTransaksi = $(this).attr('attr-value');
 
@@ -130,28 +129,34 @@
                     id_transaksi : idTransaksi
                 },
                 success: function (response) {
-                    var output = '';
+                    var output = ''; var totalBayarDenda = '';
                     $.each(response, function (index,value) {
 
                         var tanggalKembali = !!value.tgl_kembali ? 
                             '<td>'+ moment(value.tgl_kembali).format('D-MMM-YYYY') +'</td>' : // Jika item telah kembali
-                            '<td><input type="date" class="form-control datepicker tanggal-kembali-' + index +'" attr-index="'+ index + '" name="tgl_kembali-'+ index +'" />'
+                            '<td><input type="text" class="form-control datepicker tanggal-kembali" attr-index="'+ index + '" name="tgl_kembali-'+ index +'" />'
                             '<input type="hidden" class="akhir-sewa-' + index +'" /></td>'; // Jika item belum kembali
 
                         var lamaSewa = getDateDiff(value.akhir_sewa,value.mulai_sewa);
 
                         //  Jika tgl kembali SUDAH ada
-                        var lamaDenda = ''; var totalBayarDenda = '';
+                        var lamaDenda = '';
                         if(!!value.tgl_kembali){
                             lamaDenda = getDateDiff(value.tgl_kembali,value.akhir_sewa);
-                            totalBayarDenda = lamaDenda * bayarDenda;
+                            totalBayarDenda = lamaDenda * value.harga_sewa;
+                        }
+
+                        if(lamaDenda < 0){
+                            lamaDenda = 0;
+                            totalBayarDenda = 0;
                         }
 
                         output += '<tr>';
                         output += '<td>'+ value.nama_alat +'</td>';
+                        output += '<td>'+ moment(value.akhir_sewa).format('D-MMM-YYYY') +'</td>';
                         output += '<td>'+ lamaSewa +' Hari</td>';
                         output += '<td>'+ lamaDenda +' Hari</td>';
-                        output += '<td>'+ formatRupiah(bayarDenda.toString(),',') +'</td>';
+                        output += '<td>'+ formatRupiah(value.harga_sewa,',') +'</td>';
                         output += '<td>'+ formatRupiah(totalBayarDenda.toString(),',') +'</td>';
                         output +=  tanggalKembali;
                         output += '</tr>';
@@ -167,6 +172,18 @@
 
                     $('.list-data').html(output);
                     $('.simpan-kembali-item').attr('attr-value',idTransaksi);
+
+                    $('.datepicker').datepicker({
+                        dateFormat : 'dd-mm-yy',
+                        setDate : new Date(),
+                        minDate : 0,
+                        autoclose : true
+                    });
+
+                    $('.tanggal-kembali').datepicker('setDate','today');
+
+                    var outputTotalDenda = '<tr><th colspan="5" class="text-right">Total Bayar Denda</th><td colspan="2">'+ formatRupiah(totalBayarDenda.toString(),',') +'</td></tr>';
+                    $('.list-data').append(outputTotalDenda);
 
                     $('#modal-list-item').modal('show');
                 },

@@ -57,7 +57,7 @@ class PengembalianController extends Controller
         $list_keranjang = explode(',',$get_transaksi->list_id_keranjang);
         foreach($list_keranjang as $keranjang_id){
             Penyewaan::where(['id_keranjang'=>$keranjang_id])->update([
-                'tgl_kembali' => $value_form['tgl_kembali-'.$keranjang_id],
+                'tgl_kembali' => date('Y-m-d',strtotime($value_form['tgl_kembali-'.$keranjang_id])),
                 'status_sewa' => 'Berakhir'
             ]);
         }

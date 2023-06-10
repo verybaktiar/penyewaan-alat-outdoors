@@ -90,7 +90,7 @@ class PenyewaanController extends Controller
         $list_keranjang = explode(',',$get_transaksi->list_id_keranjang);
         foreach($list_keranjang as $keranjang_id){
             Penyewaan::where(['id_keranjang'=>$keranjang_id])->update([
-                'tgl_ambil' => $value_form['tgl_ambil-'.$keranjang_id],
+                'tgl_ambil' => date('Y-m-d',strtotime($value_form['tgl_ambil-'.$keranjang_id])),
                 'status_sewa' => 'Berjalan'
             ]);
         }

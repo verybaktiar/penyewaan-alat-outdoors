@@ -50,19 +50,23 @@
                                     <td>{{ $item->nm_opentrip }}</td>
                                     <td>
                                         <?php 
-                                            $deskripsi = explode(' ',$item->deskripsi);
-                                            $param_increment = 10;
-                                            $output_string = '';
-                                            foreach($deskripsi as $idx => $val){
-                                                if(($idx+1) == $param_increment){
-                                                    $param_increment += 10;
-                                                    $output_string .= $val . ' ' . '<br>';
-                                                }else{
-                                                    $output_string .= $val . ' '; 
+                                            if(!empty($item->deskripsi)){
+                                                $deskripsi = explode(' ',$item->deskripsi);
+                                                $param_increment = 10;
+                                                $output_string = '';
+                                                foreach($deskripsi as $idx => $val){
+                                                    if(($idx+1) == $param_increment){
+                                                        $param_increment += 10;
+                                                        $output_string .= $val . ' ' . '<br>';
+                                                    }else{
+                                                        $output_string .= $val . ' '; 
+                                                    }
                                                 }
-                                            }
 
-                                            echo $output_string;
+                                                echo $output_string;
+                                            }else{
+                                                echo '';
+                                            }
                                         ?>
                                     </td>
                                     <td>{{ $item->fasilitas }}</td>
