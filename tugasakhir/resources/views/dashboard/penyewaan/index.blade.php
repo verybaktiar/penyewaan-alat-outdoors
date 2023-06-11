@@ -170,48 +170,67 @@
             var idTransaksi = $(this).attr('attr-value');
 
             $.ajax({
-                url: "{{ route('penyewaan.list_item') }}" ,
+                url: "{{ route('penyewaan.check_confirm') }}" ,
                 type: 'POST',
                 data: {
                     _token : '{{csrf_token()}}',
                     id_transaksi : idTransaksi
                 },
                 success: function (response) {
-                    var output = '';
-                    $.each(response, function (index,value) {
+                    if(response.status_bayar != 'Belum'){ // Jika sudah Terkonfirmasi
+                        $.ajax({
+                            url: "{{ route('penyewaan.list_item') }}" ,
+                            type: 'POST',
+                            data: {
+                                _token : '{{csrf_token()}}',
+                                id_transaksi : idTransaksi
+                            },
+                            success: function (response) {
+                                var output = '';
+                                $.each(response, function (index,value) {
 
-                        var tanggalAmbil = !!value.tgl_ambil ? 
-                            '<td>'+ moment(value.tgl_ambil).format('D-MMM-YYYY') +'</td>' : // Jika item telah diambil
-                            '<td><input type="text" class="form-control datepicker tanggal-ambil" name="tgl_ambil-'+ index +'" /></td>'; // Jika item belum diambil
+                                    var tanggalAmbil = !!value.tgl_ambil ? 
+                                        '<td>'+ moment(value.tgl_ambil).format('D-MMM-YYYY') +'</td>' : // Jika item telah diambil
+                                        '<td><input type="text" class="form-control datepicker tanggal-ambil" name="tgl_ambil-'+ index +'" /></td>'; // Jika item belum diambil
 
-                        output += '<tr>';
-                        output += '<td>'+ value.nama_alat +'</td>';
-                        output += '<td>'+ moment(value.mulai_sewa).format('D-MMM-YYYY') +'</td>';
-                        output += '<td>'+ moment(value.akhir_sewa).format('D-MMM-YYYY') +'</td>';
-                        output += '<td>'+ formatRupiah(value.harga_sewa,',') +'</td>';
-                        output +=  tanggalAmbil;
-                        output += '</tr>';
+                                    output += '<tr>';
+                                    output += '<td>'+ value.nama_alat +'</td>';
+                                    output += '<td>'+ moment(value.mulai_sewa).format('D-MMM-YYYY') +'</td>';
+                                    output += '<td>'+ moment(value.akhir_sewa).format('D-MMM-YYYY') +'</td>';
+                                    output += '<td>'+ formatRupiah(value.harga_sewa,',') +'</td>';
+                                    output +=  tanggalAmbil;
+                                    output += '</tr>';
 
-                        if(!!value.tgl_ambil){
-                            $('.simpan-ambil-item').hide();
-                        }else{
-                            $('.simpan-ambil-item').show();
-                        }
-                    });
+                                    if(!!value.tgl_ambil){
+                                        $('.simpan-ambil-item').hide();
+                                    }else{
+                                        $('.simpan-ambil-item').show();
+                                    }
+                                });
 
-                    $('.list-data').html(output);
-                    $('.simpan-ambil-item').attr('attr-value',idTransaksi);
+                                $('.list-data').html(output);
+                                $('.simpan-ambil-item').attr('attr-value',idTransaksi);
 
-                    $('.datepicker').datepicker({
-                        dateFormat : 'dd-mm-yy',
-                        setDate : new Date(),
-                        minDate : 0,
-                        autoclose : true
-                    });
+                                $('.datepicker').datepicker({
+                                    dateFormat : 'dd-mm-yy',
+                                    setDate : new Date(),
+                                    minDate : 0,
+                                    autoclose : true
+                                });
 
-                    $('.tanggal-ambil').datepicker('setDate','today');
+                                $('.tanggal-ambil').datepicker('setDate','today');
 
-                    $('#modal-list-item').modal('show');
+                                $('#modal-list-item').modal('show');
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(error);
+                            }
+                        });
+                    }else{
+                        Swal.fire('Gagal !', 'Anda harus konfirmasi transaksi terlebih dahulu !', 'error'); // Jika belum Terkonfirmasi
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr);

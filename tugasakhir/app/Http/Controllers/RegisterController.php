@@ -22,44 +22,41 @@ class RegisterController extends Controller
             'password_confirm' => 'required|same:password'
         ]);
 
-        $id_user=User::orderBy('id_user', 'DESC')->first();
-        $id_userbaru=(int)substr($id_user->id_user,3)+(int)1;
+        $id_user = User::orderBy('id_user', 'DESC')->first();
+        $id_userbaru = (int)substr($id_user->id_user,3)+(int)1;
         
-        $user=User::create([
+        $user = User::create([
             'id_user' => 'USR'.$id_userbaru,
             'username' => $request->username,
             'email' => $request->email,
             'role' => 'pelanggan',
-            'password' => bcrypt($request->password),
+            'password' => bcrypt($request->password)
         ]);
 
         if($user){
-           $id_pelanggan=Pelanggan::orderBy('id_pelanggan', 'DESC')->first();
+           $id_pelanggan = Pelanggan::orderBy('id_pelanggan', 'DESC')->first();
         
-           if($id_pelanggan){
-            $pelanggan=Pelanggan::create([
-                'id_pelanggan' => 'PLG'.(int)substr($id_pelanggan->id_pelanggan,3)+(int)1,
-                'id_user' => 'USR'.$id_userbaru,
-                'nama_pelanggan' => $request->nama_pelanggan,
-                'alamat' => $request->alamat,
-                'no_telepon' => $request->no_telepon,
-                'jenis_kelamin'=>$request->jenis_kelamin,
-               ]);
-           }
-           else{
-           $pelanggan=Pelanggan::create([
-            'id_pelanggan' => 'PLG1',
-            'id_user' => 'USR'.$id_userbaru,
-            'nama_pelanggan' => $request->nama_pelanggan,
-            'alamat' => $request->alamat,
-            'no_telepon' => $request->no_telepon,
-            'jenis_kelamin'=>$request->jenis_kelamin,
-           
-           ]);
+            if($id_pelanggan){
+                $pelanggan = Pelanggan::create([
+                    'id_pelanggan' => 'PLG'.(int)substr($id_pelanggan->id_pelanggan,3)+(int)1,
+                    'id_user' => 'USR'.$id_userbaru,
+                    'nama_pelanggan' => $request->nama_pelanggan,
+                    'alamat' => $request->alamat,
+                    'no_telepon' => $request->no_telepon,
+                    'jenis_kelamin'=>$request->jenis_kelamin
+                ]);
+            }
+            else{
+                $pelanggan=Pelanggan::create([
+                    'id_pelanggan' => 'PLG1',
+                    'id_user' => 'USR'.$id_userbaru,
+                    'nama_pelanggan' => $request->nama_pelanggan,
+                    'alamat' => $request->alamat,
+                    'no_telepon' => $request->no_telepon,
+                    'jenis_kelamin'=>$request->jenis_kelamin
+                ]);
+            }
         }
-        }
-
-        // User::create($validatedData);
 
         return redirect('/login');
     }

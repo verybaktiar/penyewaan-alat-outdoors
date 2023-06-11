@@ -53,6 +53,14 @@ class PenyewaanController extends Controller
         return response()->json($get_alatoutdoor);
     }
 
+    public function check_confirm(Request $request)
+    {
+        $id_transaksi = $request->post('id_transaksi');
+        $get_transaksi = Transaksi::where(['id_transaksi'=>$id_transaksi])->first();
+
+        return response()->json($get_transaksi);
+    }
+
     public function confirm_payment(Request $request)
     {
         $id_transaksi = $request->post('id_transaksi');

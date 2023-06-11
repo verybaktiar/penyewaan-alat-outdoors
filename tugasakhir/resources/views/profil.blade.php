@@ -40,11 +40,8 @@
 	</div>
 	<div class="row">
 		@if (session('status_input'))
-			<div class="done">
-				<div class="alert alert-success">
-					<button type="button" class="close" data-dismiss="alert">X</button>
-					OK Gann
-				</div>
+			<div class="alert alert-success">
+				{{ session('status_input') }}
 			</div>
 		@endif
 		<div class="col-lg-8 col-lg-offset-2">

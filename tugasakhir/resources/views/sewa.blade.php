@@ -85,11 +85,11 @@
 			    	    	<input class="attr-id-rental" type="hidden" name="id_alatoutdoor"/>
 			    	    	<div class="col-md-1 text-center">Dari</div>
 			    	    	<div class="col-md-4">
-			    	    		<input type="date" class="form-control datepicker" name="mulai_sewa"/>
+			    	    		<input type="text" id="mulai_sewa" class="form-control datepicker" name="mulai_sewa"/>
 			    	    	</div>
 			    	    	<div class="col-md-2 text-center">Sampai </div>
 			    	    	<div class="col-md-4">
-			    	    		<input type="date" class="form-control datepicker" name="akhir_sewa"/>
+			    	    		<input type="text" id="akhir_sewa" class="form-control datepicker" name="akhir_sewa"/>
 			    	    	</div>
 			    	    </div>
 			        </form>

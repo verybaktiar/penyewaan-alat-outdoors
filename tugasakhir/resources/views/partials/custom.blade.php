@@ -1,6 +1,16 @@
 <!-- CUSTOMSCRIPTS =============================-->
 <script>  
 jQuery(document).ready(function ($) {
+
+	$('.datepicker').datepicker({
+        dateFormat : 'dd-mm-yy',
+        setDate : new Date(),
+        minDate : 0,
+        autoclose : true
+    });
+
+    $('#mulai_sewa').datepicker('setDate','today');
+
 	$('.select2').select2();
 
 	$('#filterKategori').on('select2:select', function (e) {

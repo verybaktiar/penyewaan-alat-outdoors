@@ -15,6 +15,7 @@ use App\Http\Controllers\OpenTripViewController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
@@ -66,6 +67,7 @@ Route::controller(PenyewaanController::class)->group(function(){
     Route::post('get_alatoutdoor', 'get_alatoutdoor')->name('penyewaan.get_alatoutdoor');
     Route::post('list_item', 'list_item')->name('penyewaan.list_item');
     Route::post('ambil_item', 'ambil_item')->name('penyewaan.ambil_item');
+    Route::post('check_confirm', 'check_confirm')->name('penyewaan.check_confirm');
     Route::post('confirm_payment', 'confirm_payment')->name('penyewaan.confirm_payment');
 });
 
@@ -73,6 +75,10 @@ Route::controller(PengembalianController::class)->group(function(){
     Route::get('pengembalian', 'index');
     Route::post('list_item_kembali', 'list_item')->name('pengembalian.list_item_kembali');
     Route::post('kembalikan_item', 'kembalikan_item')->name('pengembalian.kembalikan_item');
+});
+
+Route::controller(CommentController::class)->group(function(){
+    Route::get('komentar', 'index');
 });
 
 Route::resource('/alatoutdoor', Alatoutdoorcontroller::class);

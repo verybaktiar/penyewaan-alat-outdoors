@@ -55,8 +55,8 @@ class HomeController extends Controller
                 'id_keranjang' => 'KRJ'. $id_keranjang,
                 'id_pelanggan' => $id_pelanggan,
                 'id_alatoutdoor' => $request->post('id_alatoutdoor'),
-                'mulai_sewa' => $request->post('mulai_sewa'),
-                'akhir_sewa' => $request->post('akhir_sewa'),
+                'mulai_sewa' => date('Y-m-d',strtotime($request->post('mulai_sewa'))),
+                'akhir_sewa' => date('Y-m-d',strtotime($request->post('akhir_sewa'))),
                 'total_sewa' => $get_total_sewa,
                 'status_checkout' => 'N'
             ];

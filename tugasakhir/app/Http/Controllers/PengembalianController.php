@@ -20,6 +20,7 @@ class PengembalianController extends Controller
         $pengembalian = DB::table('transaksis')
                             ->select('transaksis.*','pelanggans.nama_pelanggan')
                             ->join('pelanggans', 'pelanggans.id_pelanggan', '=', 'transaksis.id_pelanggan')
+                            ->where(['transaksis.status_bayar'=>'Sudah'])
                             ->get();
         //render view with posts
         return view('dashboard.pengembalian.index', compact('pengembalian'));
