@@ -71,7 +71,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Stok</label>
-                                <input type="text" class="form-control @error('stok') is-invalid @enderror" name="stok" value="{{ old('stok', $alatoutdoor->stok) }}" placeholder="Stok">
+                                <input type="text" class="form-control @error('stok') is-invalid @enderror" name="stok" value="{{ old('stok', $alatoutdoor->stok) }}" placeholder="Stok" readonly>
                             
                                 <!-- error message untuk title -->
                                 @error('stok')

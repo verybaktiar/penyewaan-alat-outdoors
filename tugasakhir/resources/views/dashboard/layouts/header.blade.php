@@ -22,7 +22,7 @@
         <div class="header">    
             <div class="header-content clearfix">
                 
-                <div class="nav-control">
+                <div class="nav-control noprint">
                     <div class="hamburger">
                         <span class="toggle-icon"><i class="icon-menu"></i></span>
                     </div>

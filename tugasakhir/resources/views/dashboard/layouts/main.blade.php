@@ -69,7 +69,7 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">PNM</a> </p>
+                <p>Copyright &copy; Designed & Developed by <a href="#">PNM</a> </p>
             </div>
         </div>
         <!--**********************************

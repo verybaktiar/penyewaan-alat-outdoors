@@ -16,6 +16,8 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,10 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::controller(HomeController::class)->group(function(){
     Route::get('home', 'index');
     Route::post('home', 'store')->name('home.store');
+});
+
+Route::controller(DashboardController::class)->group(function(){
+    Route::get('dashboard', 'index');
 });
 
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
@@ -81,18 +87,12 @@ Route::controller(CommentController::class)->group(function(){
     Route::get('komentar', 'index');
 });
 
+Route::controller(ReportController::class)->group(function(){
+    Route::get('report', 'index');
+    Route::post('filter_penjualan', 'filter_penjualan')->name('report.filter_penjualan');
+});
+
 Route::resource('/alatoutdoor', Alatoutdoorcontroller::class);
 Route::resource('/opentrip', OpentripController::class);
 Route::resource('/kategori', KategoriController::class);
 Route::resource('/datauser', UserController::class);
-
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
-})->name('dashboard');
-
-Route::get('/logtransaksi', function () {
-    return view('dashboard.logtransaksi.index', [
-        "title" => "transaksi"
-    ]);
-});
-

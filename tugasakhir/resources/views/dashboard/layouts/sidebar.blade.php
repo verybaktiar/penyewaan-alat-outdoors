@@ -1,7 +1,7 @@
  <!--**********************************
     Sidebar start
 ***********************************-->
-<div class="nk-sidebar">           
+<div class="nk-sidebar noprint">           
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label">Dashboard</li>
@@ -39,6 +39,11 @@
             <li>
                 <a href="/komentar" aria-expanded="false">
                     <i class="fa fa-quote-right menu-icon"></i><span class="nav-text">Kritik & Saran</span>
+                </a>
+            </li>
+            <li>
+                <a href="/report" aria-expanded="false">
+                    <i class="fa fa-print menu-icon"></i><span class="nav-text">Report</span>
                 </a>
             </li>
         </ul>

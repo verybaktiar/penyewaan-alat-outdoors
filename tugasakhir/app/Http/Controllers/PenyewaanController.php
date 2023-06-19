@@ -101,6 +101,13 @@ class PenyewaanController extends Controller
                 'tgl_ambil' => date('Y-m-d',strtotime($value_form['tgl_ambil-'.$keranjang_id])),
                 'status_sewa' => 'Berjalan'
             ]);
+
+            $get_keranjang = Keranjang::where(['id_keranjang'=>$keranjang_id])->first();
+            $get_alatoutdoor = Alatoutdoor::where(['id_alatoutdoor'=>$get_keranjang->id_alatoutdoor])->first();
+
+            Alatoutdoor::where(['id_alatoutdoor'=>$get_keranjang->id_alatoutdoor])->update([
+                'stok' => $get_alatoutdoor->stok - $get_keranjang->total_sewa
+            ]);
         }
     }
 }
