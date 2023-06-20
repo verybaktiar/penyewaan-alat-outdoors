@@ -76,7 +76,8 @@
 							?>
 						</td>
 						<td>
-							<button type="button" class="btn btn-primary detail-trans-{{ $item_transaksi->id_transaksi }}" id-trans="{{ $item_transaksi->id_transaksi }}">Detail</button>
+							<button type="button" class="btn btn-sm btn-primary detail-trans-{{ $item_transaksi->id_transaksi }}" id-trans="{{ $item_transaksi->id_transaksi }}"><i class="fa fa-exclamation"></i> Detail</button>
+							<a href="{{ route('home.get_invoice', 'id='.$item_transaksi->id_transaksi) }}" class="btn btn-sm btn-warning invoice-trans-{{ $item_transaksi->id_transaksi }}" id-trans="{{ $item_transaksi->id_transaksi }}" target="_blank"><i class="fa fa-book"></i> Invoice</a>
 						</td>
 					</tr>
 					@endforeach

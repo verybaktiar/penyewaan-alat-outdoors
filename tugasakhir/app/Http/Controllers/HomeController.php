@@ -102,4 +102,30 @@ class HomeController extends Controller
 
         return response()->json($get_keranjang);
     }
+
+    public function get_invoice(Request $request)
+    {
+        $arr_data = array();
+
+        $arr_data['title'] = 'Invoice Pelanggan';
+        $id_transaksi = $request->id;
+
+        $get_transaksi = Transaksi::where(['id_transaksi'=>$id_transaksi])->first();
+        $get_pelanggan = Pelanggan::where(['id_pelanggan'=>$get_transaksi->id_pelanggan])->first();
+
+        $arr_data['transaksi'] = $get_transaksi;
+        $arr_data['pelanggan'] = $get_pelanggan;
+
+        $list_keranjang = explode(',',$get_transaksi->list_id_keranjang);
+        foreach($list_keranjang as $item_keranjang){
+            $get_keranjang[] = DB::table('keranjangs')
+                                  ->select('keranjangs.*','alatoutdoors.*')
+                                  ->join('alatoutdoors', 'alatoutdoors.id_alatoutdoor', '=', 'keranjangs.id_alatoutdoor')
+                                  ->where(['id_keranjang'=>$item_keranjang])
+                                  ->first();
+        }
+        $arr_data['list_item'] = $get_keranjang;
+
+        return view('invoice', $arr_data);
+    }
 }
