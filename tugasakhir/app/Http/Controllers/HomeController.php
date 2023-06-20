@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Alatoutdoor;
 use App\Models\Keranjang;
+use App\Models\Transaksi;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -69,5 +71,35 @@ class HomeController extends Controller
         }
 
         return response()->json(['status'=>'warning','message'=>'Anda harus login terlebih dahulu']);
+    }
+
+    public function list_trans()
+    {
+        $arr_data = array();
+
+        $arr_data['title'] = 'Home';
+        
+        $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();
+        $arr_data['total_keranjang'] = Keranjang::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan,'status_checkout'=>'N'])->get()->count();
+        $arr_data['total_transaksi'] = Transaksi::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])->get()->count();
+        $arr_data['list_transaksi'] = Transaksi::where(['id_pelanggan'=>$get_pelanggan->id_pelanggan])->get();
+
+        return view('transaksi', $arr_data);
+    }
+
+    public function get_trans(Request $request){
+        $id_transaksi = $request->post('id_transaksi');
+        $get_transaksi = Transaksi::where(['id_transaksi'=>$id_transaksi])->first();
+
+        $list_keranjang = explode(',',$get_transaksi->list_id_keranjang);
+        foreach($list_keranjang as $item_keranjang){
+            $get_keranjang[] = DB::table('keranjangs')
+                                  ->select('keranjangs.*','alatoutdoors.*')
+                                  ->join('alatoutdoors', 'alatoutdoors.id_alatoutdoor', '=', 'keranjangs.id_alatoutdoor')
+                                  ->where(['id_keranjang'=>$item_keranjang])
+                                  ->first();
+        }
+
+        return response()->json($get_keranjang);
     }
 }

@@ -160,6 +160,49 @@ jQuery(document).ready(function ($) {
         });
 	});
 
+	$('[class*=detail-trans-]').click(function() {
+		var idTransaksi = $(this).attr('id-trans');
+
+		$.ajax({
+	        url: "{{ route('home.get_trans') }}" ,
+	        type: 'POST',
+	        dataType: 'JSON',
+	        data: {
+	        	_token : '{{csrf_token()}}',
+	        	id_transaksi : idTransaksi
+	        },
+	        success: function (response) {
+	        	var output = '';
+	        	$('.table-detail tbody').empty();
+
+	        	$.each(response,function(i,v){
+	        		var start = moment(v.akhir_sewa, 'YYYY-MM-DD');
+					var end = moment(v.mulai_sewa, 'YYYY-MM-DD');
+					var dateDiff = moment.duration(start.diff(end)).asDays();
+
+	        		output += '<tr>';
+	        		output += '<td>' + v.nama_alat + '</td>';
+	        		output += '<td>' + formatRupiah(v.harga_sewa,',') + '</td>';
+	        		output += '<td>' + moment(v.mulai_sewa).format('DD-MM-YYYY') + '</td>';
+	        		output += '<td>' + moment(v.akhir_sewa).format('DD-MM-YYYY') + '</td>';
+	        		output += '<td>' + dateDiff + '</td>';
+	        		output += '<td>' + formatRupiah((v.harga_sewa * dateDiff).toString(),',') + '</td>';
+	        		output += '</tr>';
+	        	})
+
+	        	$('.table-detail tbody').append(output);
+    			$('#modal-detail-trans').modal('toggle');
+	        },
+	        error: function(xhr, status, error) {
+	        	Swal.fire('Gagal !', 'Terjadi Kesalahan', 'error');
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+	        }
+	    });
+	});
+
+
 	function formatRupiah(angka, prefix) {
 
         var number_string = angka.replace(/[^,\d]/g, '').toString(),

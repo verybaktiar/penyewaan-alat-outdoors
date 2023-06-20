@@ -23,6 +23,7 @@
 					  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: 0%;right:0%">
 						<li class="dropdown-item nav-link" ><a href="/account">Profile</a></li>
 						<li class="dropdown-item nav-link" ><a href="/logout">Logout</a></li>
+						<li class="dropdown-item nav-link" ><a href="/list_trans">List Transaksi</a></li>
 					  </div>	
 					@if (!empty(auth()->user()->username))
 					<li>

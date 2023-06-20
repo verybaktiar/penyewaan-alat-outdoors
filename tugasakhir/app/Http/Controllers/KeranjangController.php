@@ -129,7 +129,8 @@ class KeranjangController extends Controller
                 'jaminan' => $request->post('jaminan'),
                 'foto_jaminan'=> $img_jaminan_name,
                 'total_bayar'=> $total_harga,
-                'bukti_bayar' => $img_payment_name
+                'bukti_bayar' => $img_payment_name,
+                'created_at' => date('Y-m-d H:i:s')
             ];
 
             // Insert data & validasi jika ada error

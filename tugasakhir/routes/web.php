@@ -42,6 +42,8 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::controller(HomeController::class)->group(function(){
     Route::get('home', 'index');
     Route::post('home', 'store')->name('home.store');
+    Route::get('list_trans', 'list_trans')->name('home.list_trans');
+    Route::post('get_trans', 'get_trans')->name('home.get_trans');
 });
 
 Route::controller(DashboardController::class)->group(function(){
