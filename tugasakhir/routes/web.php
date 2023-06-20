@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
@@ -32,12 +33,24 @@ use App\Http\Controllers\ReportController;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::controller(LoginController::class)->group(function(){
+    Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+    Route::get('/logout', [LoginController::class, 'logout']);
+});
 
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store']);
+Route::controller(RegisterController::class)->group(function(){
+    Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+    Route::post('/register', [RegisterController::class, 'store']);
+});
+
+Route::controller(AdminLoginController::class)->group(function(){
+    Route::get('/admin_login', [AdminLoginController::class, 'index'])->name('admin_login');
+    Route::post('/admin_login', [AdminLoginController::class, 'authenticate']);
+    Route::get('/admin_logout', [AdminLoginController::class, 'logout']);
+});
+
+Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 
 Route::controller(HomeController::class)->group(function(){
     Route::get('home', 'index');
@@ -50,16 +63,13 @@ Route::controller(DashboardController::class)->group(function(){
     Route::get('dashboard', 'index');
 });
 
-Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
-Route::get('/profil', [ProfileController::class, 'index']);
-
 Route::controller(OpenTripViewController::class)->group(function(){
     Route::get('opentripview', 'index');
     Route::post('get_opentrip', 'get_opentrip')->name('opentripview.get_opentrip');
 });
 
 Route::controller(ProfileController::class)->group(function(){
-    Route::get('profile', 'index');
+    Route::get('profil', 'index');
     Route::post('user_comment', 'user_comment')->name('profile.user_comment');
 });
 
