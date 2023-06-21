@@ -5,12 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="login1/css/style.css">
-
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="login1/css/style.css">
 	</head>
 
 	
@@ -33,13 +30,12 @@
 					<div class="login-wrap p-0">
 		      	<b><h3 class="mb-4 text-center">Admin Login</h3></b>
 		      	<form action="/admin_login" method="post" class="signin-form">
-					@csrf
+						@csrf
 		      	<div class="form-group">
-		      		<input type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username" required 
-					name="username" id="username" value="{{ old('username') }}">
-					  @error('username')
-					  <div class="invalid-feedback">{{ $message }}</div>
-				   @enderror
+		      		<input type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username" required name="username" id="username" value="{{ old('username') }}">
+					  	@error('username')
+					  	<div class="invalid-feedback">{{ $message }}</div>
+				   		@enderror
 		      	</div>
 	            <div class="form-group">
 	              <input id="password-field" type="password" class="form-control" placeholder="Password" required name="password" id="password">
@@ -60,10 +56,6 @@
 								</div>
 	            </div>
 	          </form>
-	          <p class="w-100 text-center">&mdash; Haven't account? &mdash;</p>
-	          <div class="social d-flex text-center">
-				<a href="/register" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span>Register</a>
-	          </div>
 		      </div>
 				</div>
 			</div>

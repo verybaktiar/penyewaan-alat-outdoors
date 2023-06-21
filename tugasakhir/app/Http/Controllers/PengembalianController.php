@@ -61,6 +61,13 @@ class PengembalianController extends Controller
                 'tgl_kembali' => date('Y-m-d',strtotime($value_form['tgl_kembali-'.$keranjang_id])),
                 'status_sewa' => 'Berakhir'
             ]);
+
+            $get_keranjang = Keranjang::where(['id_keranjang'=>$keranjang_id])->first();
+            $get_alatoutdoor = Alatoutdoor::where(['id_alatoutdoor'=>$get_keranjang->id_alatoutdoor])->first();
+
+            Alatoutdoor::where(['id_alatoutdoor'=>$get_keranjang->id_alatoutdoor])->update([
+                'stok' => $get_alatoutdoor->stok + $get_keranjang->total_sewa
+            ]);
         }
     }
 }
