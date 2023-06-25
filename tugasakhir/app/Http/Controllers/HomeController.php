@@ -6,6 +6,7 @@ use App\Models\Alatoutdoor;
 use App\Models\Keranjang;
 use App\Models\Transaksi;
 use App\Models\Pelanggan;
+use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -128,4 +129,48 @@ class HomeController extends Controller
 
         return view('invoice', $arr_data);
     }
+
+    public function send_chat(Request $request)
+    {
+        $data = $request->validate([
+            'chat_message' => 'required'
+        ]);
+
+
+        if(!empty(Auth::user()->id_user)){
+            $get_id_chat=DB::select('SELECT * FROM chats ORDER BY LENGTH(id_chat) DESC, id_chat DESC LIMIT 1');
+            if(!empty($get_id_chat)){
+                $id_chat=(int)substr($get_id_chat[0]->id_chat,4)+(int)1;
+            }else{
+                $id_chat=1;
+            }
+            
+            $data_chat=[
+                'id_chat' => 'CHAT'. $id_chat,
+                'id_user' => Auth::user()->id_user,
+                'chat_message' => $request->post('chat_message'),
+                'status_read' => 'Belum'
+            ];
+
+            if(Chat::create($data_chat)){
+                $message_list = Chat::where(['id_user'=>Auth::user()->id_user])->latest()->take(4)->get();
+                return response()->json(['status'=>'success','message_list'=>$message_list]);
+            }
+
+            return response()->json(['status'=>'error','message'=>'Terjadi kesalahan']);
+        }
+
+        return response()->json(['status'=>'warning','message'=>'Anda harus login terlebih dahulu']);
+    }
+
+    public function load_chat()
+    {
+        if(!empty(Auth::user()->id_user)){
+            $message_list = Chat::where(['id_user'=>Auth::user()->id_user])->latest()->take(4)->get();
+            return response()->json(['status'=>'success','message_list'=>$message_list]);
+        }
+
+        return response()->json(['status'=>'warning','message'=>'Anda harus login terlebih dahulu']);
+    }
+
 }
