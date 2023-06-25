@@ -24,20 +24,19 @@
                         if(response.status == 'success'){
                             var userReply = '';
                             $.each(response.message_list.reverse(),function(i,v){
-                                console.log(v.id_user);
-                                if(v.id_user == 'USR7'){
-                                    userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
-                                    userReply += '<div class="message-data text-left">'
-                                    userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
-                                    userReply += '</div>'
-                                    userReply += '<div class="message my-message float-left">'+ v.chat_message +'</div>'
-                                    userReply += '</li>';
-                                }else{
+                                if(v.role == 'admin'){
                                     userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
                                     userReply += '<div class="message-data text-right">'
                                     userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
                                     userReply += '</div>'
                                     userReply += '<div class="message other-message float-right">'+ v.chat_message +'</div>'
+                                }else{
+                                    userReply += '</li>';
+                                    userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
+                                    userReply += '<div class="message-data text-left">'
+                                    userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
+                                    userReply += '</div>'
+                                    userReply += '<div class="message my-message float-left">'+ v.chat_message +'</div>'
                                     userReply += '</li>';
                                 }
                             })
@@ -65,19 +64,19 @@
                     if(response.status == 'success'){
                         var userReply = '';
                         $.each(response.message_list.reverse(),function(i,v){
-                            if(v.id_user == 'USR7'){
-                                userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
-                                userReply += '<div class="message-data text-left">'
-                                userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
-                                userReply += '</div>'
-                                userReply += '<div class="message my-message float-left">'+ v.chat_message +'</div>'
-                                userReply += '</li>';
-                            }else{
+                            if(v.role == 'admin'){
                                 userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
                                 userReply += '<div class="message-data text-right">'
                                 userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
                                 userReply += '</div>'
                                 userReply += '<div class="message other-message float-right">'+ v.chat_message +'</div>'
+                            }else{
+                                userReply += '</li>';
+                                userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
+                                userReply += '<div class="message-data text-left">'
+                                userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
+                                userReply += '</div>'
+                                userReply += '<div class="message my-message float-left">'+ v.chat_message +'</div>'
                                 userReply += '</li>';
                             }
                         })

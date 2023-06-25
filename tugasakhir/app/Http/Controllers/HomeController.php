@@ -166,7 +166,12 @@ class HomeController extends Controller
             ];
 
             if(Chat::create($data_chat)){
-                $message_list = Chat::where(['sesi_chat'=>$sesi_chat])->latest()->take(4)->get();
+                $message_list = DB::table('chats')
+                                ->select('chats.*','users.role')
+                                ->join('users', 'users.id_user', '=', 'chats.id_user')
+                                ->where(['chats.sesi_chat'=>$sesi_chat])
+                                ->latest()->take(4)->get();
+
                 return response()->json(['status'=>'success','message_list'=>$message_list]);
             }
 
@@ -183,7 +188,12 @@ class HomeController extends Controller
 
             if(!empty($get_user->sesi_chat)){
                 $sesi_chat = $get_user->sesi_chat;
-                $message_list = Chat::where(['sesi_chat'=>$sesi_chat])->latest()->take(4)->get();
+                $message_list = DB::table('chats')
+                                ->select('chats.*','users.role')
+                                ->join('users', 'users.id_user', '=', 'chats.id_user')
+                                ->where(['chats.sesi_chat'=>$sesi_chat])
+                                ->latest()->take(4)->get();
+                                
                 return response()->json(['status'=>'success','message_list'=>$message_list]);
             }
 

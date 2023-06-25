@@ -24,8 +24,7 @@
                         if(response.status == 'success'){
                             var userReply = '';
                             $.each(response.message_list.reverse(),function(i,v){
-                                console.log(v.id_user);
-                                if(v.id_user == 'USR7'){
+                                if(v.role == 'admin'){
                                     userReply += '<li class="clearfix message-id-'+ v.id_chat +'">';
                                     userReply += '<div class="message-data text-left">'
                                     userReply += '<span class="message-data-time">'+ moment(v.created_at).format('DD-MM-YYYY HH:mm:ss') +'</span>'
