@@ -1,6 +1,9 @@
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
-        loadChat();
+
+        $('#modal-live-chat').on('shown.bs.modal', function () {
+            loadChat();
+        })
 
         $('.live_chat').click(function() {
             $('#modal-live-chat').modal('toggle');
