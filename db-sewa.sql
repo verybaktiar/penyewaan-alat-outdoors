@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Jun 2023 pada 11.10
+-- Waktu pembuatan: 25 Jun 2023 pada 13.45
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -83,18 +83,12 @@ INSERT INTO `alatoutdoors` (`id_alatoutdoor`, `nama_alat`, `id_kategori`, `spesi
 CREATE TABLE `chats` (
   `id_chat` varchar(50) NOT NULL,
   `id_user` varchar(8) DEFAULT NULL,
-  `chat_message` varchar(100) DEFAULT NULL,
+  `sesi_chat` varchar(100) DEFAULT NULL,
+  `chat_message` text DEFAULT NULL,
   `status_read` enum('Sudah','Belum') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `chats`
---
-
-INSERT INTO `chats` (`id_chat`, `id_user`, `chat_message`, `status_read`, `created_at`, `updated_at`) VALUES
-('CHAT1', 'USR7', 'test', 'Belum', '2023-06-25 09:08:39', '2023-06-25 09:08:39');
 
 -- --------------------------------------------------------
 
@@ -340,6 +334,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `role` enum('admin','pelanggan') NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
+  `sesi_chat` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -348,14 +343,14 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id_user`, `username`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-('USR1', 'admin1', 'admin1@gmail.com', NULL, '$2y$10$Mi.62YpeDBUXXrZ0zfdLFObLfvtOHoVW319wIMYlyDnVnwC.6UYWu', 'admin', NULL, '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
-('USR2', 'admin2', 'admin2@gmail.com', NULL, '$2y$10$oj9JozR1SA7v83TH9dn93uw1PyNE7Y65rsYSIYXEcxfqziMcawb7C', 'admin', NULL, '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
-('USR3', 'rida', 'ridaa@gmail.com', NULL, '$2y$10$MPQZxPJxF2QTZl0XLP8A8OmF7wTbaxBhkhNw5uR.asKGcQ7fdoc..', 'pelanggan', NULL, '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
-('USR4', 'sulisrhyu', 'sulisrahayu@gmail.com', NULL, '$2y$10$Nw5Sgu/3Mjhao0NQ0NUn..557q7s7FsXamTflAD1cfS9T8WVU7gMq', 'pelanggan', NULL, '2023-04-23 21:28:44', '2023-04-23 21:28:44'),
-('USR5', 'dekapramesta', 'dekapramesta@gmail.com', NULL, '$2y$10$BE0LPI7tzxh4LpSZQaipsutDCcjqc83iuGDu.VWjBLDywAUTVYYP2', 'pelanggan', NULL, '2023-04-24 07:16:29', '2023-04-24 07:16:29'),
-('USR6', 'firmanadi', 'firmanadi@gmail.com', NULL, '$2y$10$G2Mfnc/m8QAPzBTWBw7/yewSkDlVTm8ql9IZF8swGVRrk3k5z1t2C', 'pelanggan', NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
-('USR7', 'ucup99', 'ucup@email.com', NULL, '$2y$10$fMaN1x9GmWX6UjocdeUhx.yIqAT0j9Gl2.nJxUOwLb5TzrvVPMz8.', 'admin', NULL, '2023-05-18 12:42:33', '2023-05-18 12:42:33');
+INSERT INTO `users` (`id_user`, `username`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `sesi_chat`, `created_at`, `updated_at`) VALUES
+('USR1', 'admin1', 'admin1@gmail.com', NULL, '$2y$10$Mi.62YpeDBUXXrZ0zfdLFObLfvtOHoVW319wIMYlyDnVnwC.6UYWu', 'admin', NULL, NULL, '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
+('USR2', 'admin2', 'admin2@gmail.com', NULL, '$2y$10$oj9JozR1SA7v83TH9dn93uw1PyNE7Y65rsYSIYXEcxfqziMcawb7C', 'admin', NULL, NULL, '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
+('USR3', 'rida', 'ridaa@gmail.com', NULL, '$2y$10$MPQZxPJxF2QTZl0XLP8A8OmF7wTbaxBhkhNw5uR.asKGcQ7fdoc..', 'pelanggan', NULL, NULL, '2023-04-23 21:26:02', '2023-04-23 21:26:02'),
+('USR4', 'sulisrhyu', 'sulisrahayu@gmail.com', NULL, '$2y$10$Nw5Sgu/3Mjhao0NQ0NUn..557q7s7FsXamTflAD1cfS9T8WVU7gMq', 'pelanggan', NULL, NULL, '2023-04-23 21:28:44', '2023-04-23 21:28:44'),
+('USR5', 'dekapramesta', 'dekapramesta@gmail.com', NULL, '$2y$10$BE0LPI7tzxh4LpSZQaipsutDCcjqc83iuGDu.VWjBLDywAUTVYYP2', 'pelanggan', NULL, NULL, '2023-04-24 07:16:29', '2023-04-24 07:16:29'),
+('USR6', 'firmanadi', 'firmanadi@gmail.com', NULL, '$2y$10$G2Mfnc/m8QAPzBTWBw7/yewSkDlVTm8ql9IZF8swGVRrk3k5z1t2C', 'pelanggan', NULL, NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
+('USR7', 'ucup99', 'ucup@email.com', NULL, '$2y$10$fMaN1x9GmWX6UjocdeUhx.yIqAT0j9Gl2.nJxUOwLb5TzrvVPMz8.', 'admin', NULL, NULL, '2023-05-18 12:42:33', '2023-05-18 12:42:33');
 
 -- --------------------------------------------------------
 

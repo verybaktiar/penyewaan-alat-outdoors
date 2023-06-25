@@ -6,6 +6,7 @@ use App\Models\Alatoutdoor;
 use App\Models\Keranjang;
 use App\Models\Transaksi;
 use App\Models\Pelanggan;
+use App\Models\User;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -144,16 +145,28 @@ class HomeController extends Controller
             }else{
                 $id_chat=1;
             }
+
+            $sesi_chat = md5(mt_rand()); // Random String untuk keperluan membuat sesi chat baru
+            $get_user=User::where(['id_user'=>Auth::user()->id_user])->first();
+
+            if(!empty($get_user->sesi_chat)){
+                $sesi_chat = $get_user->sesi_chat;
+            }else{
+                // Jika ada sesi chat user baru, update user 
+                $data_sesi = ['sesi_chat' => $sesi_chat];
+                User::where(['id_user'=>Auth::user()->id_user])->update($data_sesi);
+            }
             
             $data_chat=[
                 'id_chat' => 'CHAT'. $id_chat,
                 'id_user' => Auth::user()->id_user,
+                'sesi_chat' => $sesi_chat,
                 'chat_message' => $request->post('chat_message'),
                 'status_read' => 'Belum'
             ];
 
             if(Chat::create($data_chat)){
-                $message_list = Chat::where(['id_user'=>Auth::user()->id_user])->latest()->take(4)->get();
+                $message_list = Chat::where(['sesi_chat'=>$sesi_chat])->latest()->take(4)->get();
                 return response()->json(['status'=>'success','message_list'=>$message_list]);
             }
 
@@ -166,8 +179,15 @@ class HomeController extends Controller
     public function load_chat()
     {
         if(!empty(Auth::user()->id_user)){
-            $message_list = Chat::where(['id_user'=>Auth::user()->id_user])->latest()->take(4)->get();
-            return response()->json(['status'=>'success','message_list'=>$message_list]);
+            $get_user=User::where(['id_user'=>Auth::user()->id_user])->first();
+
+            if(!empty($get_user->sesi_chat)){
+                $sesi_chat = $get_user->sesi_chat;
+                $message_list = Chat::where(['sesi_chat'=>$sesi_chat])->latest()->take(4)->get();
+                return response()->json(['status'=>'success','message_list'=>$message_list]);
+            }
+
+            return response()->json(['status'=>'empty']);
         }
 
         return response()->json(['status'=>'warning','message'=>'Anda harus login terlebih dahulu']);

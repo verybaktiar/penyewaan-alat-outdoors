@@ -1,6 +1,3 @@
- <!--**********************************
-    Sidebar start
-***********************************-->
 <div class="nk-sidebar noprint">           
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
@@ -49,6 +46,3 @@
         </ul>
     </div>
 </div>
-<!--**********************************
-    Sidebar end
-***********************************-->

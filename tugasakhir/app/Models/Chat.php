@@ -13,8 +13,8 @@ class Chat extends Model
     protected $fillable = [
         'id_chat',
         'id_user',
+        'sesi_chat',
         'chat_message',
-        'chat_time',
         'status_read' 
     ];
    
