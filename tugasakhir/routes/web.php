@@ -63,9 +63,10 @@ Route::controller(HomeController::class)->group(function(){
 
 Route::controller(ChatController::class)->group(function(){
     Route::post('send_chat', 'send_chat')->name('chat.send_chat');
-    Route::get('list_user', 'list_user')->name('chat.list_user');
     Route::get('load_chat', 'load_chat')->name('chat.load_chat');
-    Route::get('load_chat_by_user', 'load_chat_by_user')->name('chat.load_chat_by_user');
+    Route::get('list_user', 'list_user')->name('chat.list_user');
+    Route::post('load_chat_by_user', 'load_chat_by_user')->name('chat.load_chat_by_user');
+    Route::post('send_chat_admin', 'send_chat_admin')->name('chat.send_chat_admin');
 });
 
 Route::controller(DashboardController::class)->group(function(){

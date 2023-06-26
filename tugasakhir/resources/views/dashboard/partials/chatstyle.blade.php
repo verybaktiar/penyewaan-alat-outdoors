@@ -94,7 +94,7 @@
     }
 
     .chat .chat-header {
-        padding: 15px 20px;
+        padding: 30px 20px;
         border-bottom: 2px solid #f4f7f6
     }
 

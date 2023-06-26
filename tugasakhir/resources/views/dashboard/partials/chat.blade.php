@@ -19,22 +19,14 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-search"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <input type="text" class="form-control search-user-chat" placeholder="Search...">
                                 </div>
                                 <ul class="list-unstyled chat-list mt-2 mb-0 list-user"></ul>
                             </div>
                             <div class="chat">
                                 <div class="chat-header clearfix">
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                            </a>
-                                            <div class="chat-about">
-                                                <h6 class="m-b-0">Admin</h6>
-                                                <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                            </div>
-                                        </div>
+                                        <div class="col-lg-6 header-chat-user"></div>
                                     </div>
                                 </div>
                                 <div class="chat-history">
@@ -45,6 +37,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-send"></i></span>
                                         </div>
+                                        <input type="text" class="sesi-chat" style="display: none;">                                 
                                         <input type="text" class="form-control text-chat" placeholder="Enter text here...">                                 
                                     </div>
                                 </div>
