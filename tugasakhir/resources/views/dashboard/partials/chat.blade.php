@@ -16,53 +16,12 @@
                         <div class="card chat-app">
                             <div id="plist" class="people-list">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                </div> 
-                                <ul class="list-unstyled chat-list mt-2 mb-0">
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                                        <div class="about">
-                                            <div class="name">Vincent Porter</div>
-                                            <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
-                                        </div>
-                                    </li>
-                                    <li class="clearfix active">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                        <div class="about">
-                                            <div class="name">Aiden Chavez</div>
-                                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                                        <div class="about">
-                                            <div class="name">Mike Thomas</div>
-                                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                        </div>
-                                    </li>                                    
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                        <div class="about">
-                                            <div class="name">Christian Kelly</div>
-                                            <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">
-                                        <div class="about">
-                                            <div class="name">Monica Ward</div>
-                                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                                        <div class="about">
-                                            <div class="name">Dean Henry</div>
-                                            <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                </div>
+                                <ul class="list-unstyled chat-list mt-2 mb-0 list-user"></ul>
                             </div>
                             <div class="chat">
                                 <div class="chat-header clearfix">
@@ -82,11 +41,11 @@
                                     <ul class="m-b-0 list-message"></ul>
                                 </div>
                                 <div class="chat-message clearfix">
-                                    <div class="input-group mb-0" style="width: 100%;">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control text-chat" placeholder="Enter text here...">
-                                            <span class="input-group-addon"><i class="fa fa-send"></i></span>
-                                        </div>                            
+                                    <div class="input-group mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-send"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control text-chat" placeholder="Enter text here...">                                 
                                     </div>
                                 </div>
                             </div>

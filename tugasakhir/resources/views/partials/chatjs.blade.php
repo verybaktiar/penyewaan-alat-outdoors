@@ -14,7 +14,7 @@
             if(key == 13){
                 var chatMessage = $('.text-chat').val();
                 $.ajax({
-                    url: "{{ route('home.send_chat') }}" ,
+                    url: "{{ route('chat.send_chat') }}" ,
                     type: 'POST',
                     data: {
                         _token : '{{csrf_token()}}',
@@ -58,7 +58,7 @@
 
         function loadChat(){
             $.ajax({
-                url: "{{ route('home.load_chat') }}" ,
+                url: "{{ route('chat.load_chat') }}" ,
                 type: 'GET',
                 success: function (response) {
                     if(response.status == 'success'){

@@ -33,16 +33,6 @@
     }
 </style>
 <style type="text/css">
-    .card {
-        background: #fff;
-        transition: .5s;
-        border: 0;
-        margin-bottom: 30px;
-        border-radius: .55rem;
-        position: relative;
-        width: 100%;
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-    }
     .chat-app .people-list {
         width: 280px;
         position: absolute;

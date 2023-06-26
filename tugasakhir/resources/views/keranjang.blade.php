@@ -131,7 +131,7 @@
 			</fieldset>
 			<fieldset>
 				<div class="container mt-5 mb-5 d-flex justify-content-center">
-					<div class="card p-5">
+					<div class="container p-5">
 					  	<div>
 					    	<h4 class="heading">Detail Pembayaran</h4>
 					    	<p class="text">Please make the payment as soon as possible</p>

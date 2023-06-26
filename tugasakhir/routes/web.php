@@ -19,6 +19,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,8 +59,13 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('list_trans', 'list_trans')->name('home.list_trans');
     Route::post('get_trans', 'get_trans')->name('home.get_trans');
     Route::get('get_invoice', 'get_invoice')->name('home.get_invoice');
-    Route::post('send_chat', 'send_chat')->name('home.send_chat');
-    Route::get('load_chat', 'load_chat')->name('home.load_chat');
+});
+
+Route::controller(ChatController::class)->group(function(){
+    Route::post('send_chat', 'send_chat')->name('chat.send_chat');
+    Route::get('list_user', 'list_user')->name('chat.list_user');
+    Route::get('load_chat', 'load_chat')->name('chat.load_chat');
+    Route::get('load_chat_by_user', 'load_chat_by_user')->name('chat.load_chat_by_user');
 });
 
 Route::controller(DashboardController::class)->group(function(){
