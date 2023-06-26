@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Jun 2023 pada 13.45
+-- Waktu pembuatan: 26 Jun 2023 pada 11.11
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.1.12
 
@@ -81,11 +81,11 @@ INSERT INTO `alatoutdoors` (`id_alatoutdoor`, `nama_alat`, `id_kategori`, `spesi
 --
 
 CREATE TABLE `chats` (
-  `id_chat` varchar(50) NOT NULL,
-  `id_user` varchar(8) DEFAULT NULL,
-  `sesi_chat` varchar(100) DEFAULT NULL,
-  `chat_message` text DEFAULT NULL,
-  `status_read` enum('Sudah','Belum') DEFAULT NULL,
+  `id_chat` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_user` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sesi_chat` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `chat_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status_read` enum('Sudah','Belum') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -128,7 +128,8 @@ INSERT INTO `kategoris` (`id_kategori`, `nama_kategori`, `created_at`, `updated_
 ('KT2', 'Sleeping Bag', '2023-04-24 07:15:17', '2023-04-24 07:15:17'),
 ('KT3', 'Tas Carrier', '2023-04-24 07:15:27', '2023-04-24 07:15:27'),
 ('KT4', 'Sepatu Ganas', '2023-04-24 07:15:37', '2023-05-29 06:21:43'),
-('KT5', 'Cooking Set', '2023-05-29 06:22:07', '2023-05-29 06:22:07');
+('KT5', 'Cooking Set', '2023-05-29 06:22:07', '2023-05-29 06:22:07'),
+('KT6', 'Test', '2023-06-25 19:24:19', '2023-06-25 19:24:19');
 
 -- --------------------------------------------------------
 
@@ -242,7 +243,9 @@ INSERT INTO `pelanggans` (`id_pelanggan`, `id_user`, `nama_pelanggan`, `alamat`,
 ('PLG2', 'USR4', 'Sulis', NULL, NULL, NULL, '2023-04-23 21:28:44', '2023-04-23 21:28:44'),
 ('PLG3', 'USR5', 'deka', NULL, NULL, NULL, '2023-04-24 07:16:29', '2023-04-24 07:16:29'),
 ('PLG4', 'USR6', 'Firman', NULL, '085749252096', NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
-('PLG5', 'USR7', 'ucup william hutchinson', 'wlkk', '085749252096', 'perempuan', '2023-05-18 12:42:33', '2023-05-18 12:42:33');
+('PLG5', 'USR7', 'ucup william hutchinson', 'wlkk', '085749252096', 'perempuan', '2023-05-18 12:42:33', '2023-05-18 12:42:33'),
+('PLG6', 'USR8', 'kino', NULL, NULL, NULL, '2023-06-25 06:23:26', '2023-06-25 06:23:26'),
+('PLG7', 'USR9', 'asep', NULL, NULL, NULL, '2023-06-25 23:43:50', '2023-06-25 23:43:50');
 
 -- --------------------------------------------------------
 
@@ -350,7 +353,9 @@ INSERT INTO `users` (`id_user`, `username`, `email`, `email_verified_at`, `passw
 ('USR4', 'sulisrhyu', 'sulisrahayu@gmail.com', NULL, '$2y$10$Nw5Sgu/3Mjhao0NQ0NUn..557q7s7FsXamTflAD1cfS9T8WVU7gMq', 'pelanggan', NULL, NULL, '2023-04-23 21:28:44', '2023-04-23 21:28:44'),
 ('USR5', 'dekapramesta', 'dekapramesta@gmail.com', NULL, '$2y$10$BE0LPI7tzxh4LpSZQaipsutDCcjqc83iuGDu.VWjBLDywAUTVYYP2', 'pelanggan', NULL, NULL, '2023-04-24 07:16:29', '2023-04-24 07:16:29'),
 ('USR6', 'firmanadi', 'firmanadi@gmail.com', NULL, '$2y$10$G2Mfnc/m8QAPzBTWBw7/yewSkDlVTm8ql9IZF8swGVRrk3k5z1t2C', 'pelanggan', NULL, NULL, '2023-04-24 07:17:10', '2023-04-24 07:17:10'),
-('USR7', 'ucup99', 'ucup@email.com', NULL, '$2y$10$fMaN1x9GmWX6UjocdeUhx.yIqAT0j9Gl2.nJxUOwLb5TzrvVPMz8.', 'admin', NULL, NULL, '2023-05-18 12:42:33', '2023-05-18 12:42:33');
+('USR7', 'ucup99', 'ucup@email.com', NULL, '$2y$10$fMaN1x9GmWX6UjocdeUhx.yIqAT0j9Gl2.nJxUOwLb5TzrvVPMz8.', 'admin', NULL, NULL, '2023-05-18 12:42:33', '2023-06-26 01:25:43'),
+('USR8', 'kino99', 'kino@email.com', NULL, '$2y$10$AtaMhms5jE3la3GNPB2D9eGasGIWS3PhvyCsg3nGzJkB97tUPdSx.', 'pelanggan', NULL, NULL, '2023-06-25 06:23:26', '2023-06-26 01:27:44'),
+('USR9', 'asep99', 'asep@email.com', NULL, '$2y$10$RIyMp9H2mbQuk7u238b62.GQrg/s4sEHQYUQbhRa27/VQ/RZIeKYm', 'pelanggan', NULL, NULL, '2023-06-25 23:43:50', '2023-06-26 01:45:33');
 
 -- --------------------------------------------------------
 
