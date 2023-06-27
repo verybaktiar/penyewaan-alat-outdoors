@@ -20,6 +20,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\NotifDendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,7 @@ Route::controller(PengembalianController::class)->group(function(){
     Route::get('pengembalian', 'index');
     Route::post('list_item_kembali', 'list_item')->name('pengembalian.list_item_kembali');
     Route::post('kembalikan_item', 'kembalikan_item')->name('pengembalian.kembalikan_item');
+    Route::post('notifikasi_denda', 'notifikasi_denda')->name('pengembalian.notifikasi_denda');
 });
 
 Route::controller(CommentController::class)->group(function(){

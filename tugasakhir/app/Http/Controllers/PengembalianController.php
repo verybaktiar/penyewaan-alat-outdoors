@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Mail;
+use App\Mail\NotifDendaMail;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,5 +73,47 @@ class PengembalianController extends Controller
                 'stok' => $get_alatoutdoor->stok + $get_keranjang->total_sewa
             ]);
         }
+    }
+
+    public function notifikasi_denda(Request $request)
+    {
+        $id_transaksi = $request->post('id_transaksi');
+        $get_transaksi = Transaksi::where(['id_transaksi'=>$id_transaksi])->first();
+
+        $get_user = DB::table('transaksis')
+                    ->select('users.email')
+                    ->join('pelanggans', 'pelanggans.id_pelanggan', '=', 'transaksis.id_pelanggan')
+                    ->join('users', 'pelanggans.id_user', '=', 'users.id_user')
+                    ->first();
+
+        $arr_data = array();
+        $list_keranjang = explode(',',$get_transaksi->list_id_keranjang);
+        foreach($list_keranjang as $keranjang_id){
+            $get_keranjang = Keranjang::where(['id_keranjang'=>$keranjang_id])->first();
+            $get_alatoutdoor = Alatoutdoor::where(['id_alatoutdoor'=>$get_keranjang->id_alatoutdoor])->first();
+            
+            if (date('Y-m-d') > $get_keranjang->akhir_sewa){ // Hanya notifikasi user dgn barang yang telat pengembaliannya
+                $akhir_sewa = new \DateTime($get_keranjang->akhir_sewa);
+                $tanggal_sekarang = new DateTime(date('Y-m-d'));
+                $lama_telat = $akhir_sewa->diff($tanggal_sekarang)->d;
+
+                $arr_data[] = [
+                    'nama_item' => $get_alatoutdoor->nama_alat,
+                    'tanggal_sewa' => date('d-m-Y',strtotime($get_keranjang->created_at)),
+                    'akhir_sewa' => date('d-m-Y',strtotime($get_keranjang->akhir_sewa)),
+                    'lama_telat' => $lama_telat,
+                    'denda' => $lama_telat * $get_alatoutdoor->harga_sewa
+                ];
+            }
+        }
+
+        $mailData = [
+            'title' => 'Harap Segera lakukan pengembalian',
+            'body' => 'Pengembalian item yang dimaksud sebagai berikut : ',
+            'data_email' => $arr_data
+        ];
+         
+        Mail::to($get_user->email)->send(new NotifDendaMail($mailData));
+        return response()->json(['status'=>'sucess']);
     }
 }
