@@ -85,6 +85,8 @@ jQuery(document).ready(function ($) {
 	        success: function (response) {
     			if(response.status == 'success'){
                     Swal.fire('Berhasil !', response.message, response.status);
+                    
+                    $('#form-profile-user')[0].reset();
                     $('#modal-profile-user').modal('toggle');
                 }else{
                     Swal.fire('Gagal !',response.message, response.status);
