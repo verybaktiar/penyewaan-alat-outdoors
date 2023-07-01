@@ -60,6 +60,8 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('list_trans', 'list_trans')->name('home.list_trans');
     Route::post('get_trans', 'get_trans')->name('home.get_trans');
     Route::get('get_invoice', 'get_invoice')->name('home.get_invoice');
+    Route::post('get_user', 'get_user')->name('home.get_user');
+    Route::post('update_user', 'update_user')->name('home.update_user');
 });
 
 Route::controller(ChatController::class)->group(function(){

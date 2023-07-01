@@ -185,27 +185,39 @@
 
 	        		<form id="edd_form_upload_payment" class="edd_form" action="{{ route('keranjang.upload_payment') }}" method="POST" enctype="multipart/form-data">
 	        			@csrf
-				        <div class="form-group">
-				        	<label for="file_upload_payment">Bukti Pembayaran</label> *
-				            <input type="file" name="file_upload_payment" id="file_upload_payment" class="form-control">
-				            <small id="emailHelp" class="form-text text-muted">Data mu aman bersama kami !</small>
-				        </div>
+	        			<div class="row">
+	        				<div class="col-md-12">
+						        <div class="form-group">
+						        	<label for="file_upload_payment">Bukti Pembayaran</label> *<br>
+						            <input type="file" name="file_upload_payment" id="file_upload_payment" class="form-control" required>
+						            <small id="help" class="form-text text-muted">Data mu aman bersama kami !</small>
+						        </div>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-md-12">
+								<div class="form-group">
+						        	<label for="jaminan">Jaminan</label> *<br>
+						            <select class="form-control select2" name="jaminan" required>
+						            	<option value="KTP">KTP</option>
+						            	<option value="SIM">SIM</option>
+						            </select>
+						        </div>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-md-12">
+		    					<div class="form-group">
+						        	<label for="file_upload_jaminan">Foto Jaminan</label> *<br>
+						            <input type="file" name="file_upload_jaminan" id="file_upload_jaminan" class="form-control" required>
+						            <small id="help" class="form-text text-muted">Data mu aman bersama kami !</small>
+						        </div>
+	        				</div>
+	        			</div>
 
-				        <div class="form-group">
-				        	<label for="jaminan">Jaminan</label> *
-				            <select class="form-control select2" name="jaminan">
-				            	<option value="KTP">KTP</option>
-				            	<option value="SIM">SIM</option>
-				            </select>
+				        <div class="row">
+				        	<div class="col-md-12 text-center"><button type="submit" class="btn btn-info" id="btn-upload"><i class="fa fa-upload"></i> Upload</button></div>
 				        </div>
-
-				        <div class="form-group">
-				        	<label for="file_upload_jaminan">Foto Jaminan</label> *
-				            <input type="file" name="file_upload_jaminan" id="file_upload_jaminan" class="form-control">
-				            <small id="emailHelp" class="form-text text-muted">Data mu aman bersama kami !</small>
-				        </div>
-
-				        <button type="submit" class="btn btn-info" id="btn-upload">Upload</button>
     		      	</form>
     		      	
 		      	</div>

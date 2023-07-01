@@ -131,4 +131,43 @@ class HomeController extends Controller
         return view('invoice', $arr_data);
     }
 
+    public function get_user(Request $request){
+        $id_user = $request->post('id_user');
+        $get_user = DB::table('users')
+                      ->select('*')
+                      ->join('pelanggans', 'pelanggans.id_user', '=', 'users.id_user')
+                      ->where(['users.id_user'=>$id_user])
+                      ->first();
+
+        return response()->json($get_user);
+    }
+
+    public function update_user(Request $request)
+    {
+        if(!empty(Auth::user()->id_user)){
+            $id_user = $request->post('id_user');
+
+            $data_user = [
+                'username' => $request->post('username'),
+                'email' => $request->post('email'),
+                'password' => bcrypt($request->post('password'))
+            ];
+            
+            $data_pelanggan = [
+                'nama_pelanggan' => $request->post('nama_lengkap'),
+                'no_telepon' => $request->post('no_telepon'),
+                'alamat' => $request->post('alamat')
+            ];
+
+            if(User::where(['users.id_user'=>$id_user])->update($data_user)){
+                Pelanggan::where(['pelanggans.id_user'=>$id_user])->update($data_pelanggan);
+                return response()->json(['status'=>'success','message'=>'Data mu berhasil di Update !']);
+            }
+
+            return response()->json(['status'=>'error','message'=>'Terjadi kesalahan']);
+        }
+
+        return response()->json(['status'=>'warning','message'=>'Anda harus login terlebih dahulu']);
+    }
+
 }

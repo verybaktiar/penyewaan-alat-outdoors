@@ -2,6 +2,9 @@
 <script>  
 jQuery(document).ready(function ($) {
 
+	// Plugin Init
+
+	// Datepicker
 	$('.datepicker').datepicker({
         dateFormat : 'dd-mm-yy',
         setDate : new Date(),
@@ -11,6 +14,7 @@ jQuery(document).ready(function ($) {
 
     $('#mulai_sewa').datepicker('setDate','today');
 
+    // Select2
 	$('.select2').select2();
 
 	$('#filterKategori').on('select2:select', function (e) {
@@ -22,6 +26,7 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	// Animasi item Barang on hover : alat outdoor / opentrip
 	$('.fadeshop').hover(
 		function(){
 			$(this).find('.captionshop').fadeIn(150);
@@ -31,6 +36,7 @@ jQuery(document).ready(function ($) {
 		}
 	);
 
+	// Buka modal masa sewa alat outdoor
 	$('[class*=add-item-]').click(function() {
 		var idAlatOutdoor = $(this).attr('id-product');
 		$('.attr-id-rental').val(idAlatOutdoor);
@@ -38,6 +44,62 @@ jQuery(document).ready(function ($) {
 		$('#modal-rental-period').modal('toggle');
 	});
 
+	// Load data user untuk kebutuhan update user profile
+	$('.profile_user').on('click',function(){
+		var idUser = $(this).attr('attr-id-user');
+
+		$.ajax({
+	        url: "{{ route('home.get_user') }}" ,
+	        type: 'POST',
+	        dataType: 'JSON',
+	        data: {
+	        	_token : '{{csrf_token()}}',
+	        	id_user : idUser
+	        },
+	        success: function (response) {
+	        	$('#id_user').val(response.id_user);
+	        	$('#username').val(response.username);
+	        	$('#nama_lengkap').val(response.nama_pelanggan);
+	        	$('#email').val(response.email);
+	        	$('#no_telepon').val(response.no_telepon);
+	        	$('#alamat').val(response.alamat);
+
+    			$('#modal-profile-user').modal('toggle');
+	        },
+	        error: function(xhr, status, error) {
+	        	Swal.fire('Gagal !', 'Terjadi Kesalahan', 'error');
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+	        }
+	    });
+	});
+
+	// Update user profile
+	$('.btn-update-user').click(function(){
+		var itemData = $('#form-profile-user').serialize();
+		$.ajax({
+	        url: "{{ route('home.update_user') }}" ,
+	        type: 'POST',
+	        data: itemData,
+	        success: function (response) {
+    			if(response.status == 'success'){
+                    Swal.fire('Berhasil !', response.message, response.status);
+                    $('#modal-profile-user').modal('toggle');
+                }else{
+                    Swal.fire('Gagal !',response.message, response.status);
+                }
+	        },
+	        error: function(xhr, status, error) {
+	        	Swal.fire('Gagal !', 'Terjadi Kesalahan', 'error');
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+	        }
+	    });
+	})
+
+	// Load data alat outdoor
 	$('[class*=detail-item-]').click(function() {
 		var idAlatOutdoor = $(this).attr('id-product');
 
@@ -66,6 +128,7 @@ jQuery(document).ready(function ($) {
 	    });
 	});
 
+	// Load data opentrip
 	$('[class*=detail-opentrip-]').click(function() {
 		var idOpentrip = $(this).attr('id-product');
 
@@ -94,6 +157,7 @@ jQuery(document).ready(function ($) {
 	    });
 	});
 
+	// Tambahkan item ke keranjang
 	$('.input-to-cart').click(function(){
 		var itemData = $('#rental-period').serialize();
 		$.ajax({
@@ -120,6 +184,7 @@ jQuery(document).ready(function ($) {
 	    });
 	})
 
+	// Hapus item dari keranjang
 	$('.remove_item_btn').click(function() {
 		var idKeranjang = $(this).attr('id-keranjang');
 
@@ -160,6 +225,7 @@ jQuery(document).ready(function ($) {
         });
 	});
 
+	// List Transaksi
 	$('[class*=detail-trans-]').click(function() {
 		var idTransaksi = $(this).attr('id-trans');
 
@@ -203,6 +269,9 @@ jQuery(document).ready(function ($) {
 	});
 
 
+	// Custom Function //
+
+	// Format angka ke Rupiah
 	function formatRupiah(angka, prefix) {
 
         var number_string = angka.replace(/[^,\d]/g, '').toString(),
