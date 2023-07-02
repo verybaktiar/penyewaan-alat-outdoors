@@ -34,9 +34,10 @@
                                     <td><b>{{ $item->id_transaksi }}</b></td>
                                     <td>{{ $item->nama_pelanggan }} <b>({{ $item->id_pelanggan }})</b></td>
                                     <td>{{ ke_rupiah($item->total_bayar) }}</td>
-                                    <td>
+                                    <td class="button-action">
                                         <button class="btn btn-sm btn-success list-item-trans" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-eye"></i> Item Kembali</button>
                                         <button class="btn btn-sm btn-warning notif-denda" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-exclamation"></i> Notif Denda</button>
+                                        <button class="btn btn-sm btn-warning loading" attr-value="{{ $item->id_transaksi }}" style="display: none;pointer-events: none;"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
                                     </td>
                                 </tr>
                             @empty
@@ -222,6 +223,8 @@
 
         $('.notif-denda').on('click',function(){
             var idTransaksi = $(this).attr('attr-value');
+            $('.notif-denda').hide();
+            $('.loading').show();
 
             $.ajax({
                 url: "{{ route('pengembalian.notifikasi_denda') }}" ,
@@ -231,6 +234,9 @@
                     id_transaksi : idTransaksi
                 },
                 success: function (response) {
+                    $('.notif-denda').show();
+                    $('.loading').hide();
+
                     Swal.fire('Berhasil !', 'Notifikasi denda berhasil terkirim !', 'success');
                 },
                 error: function(xhr, status, error) {
