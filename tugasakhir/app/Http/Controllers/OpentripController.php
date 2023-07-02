@@ -46,7 +46,8 @@ class OpentripController extends Controller
 
         //upload image
         $image = $request->file('image');
-        $image->storeAs('public/opentrip1', $image->hashName());
+        $imageName = time() . '.' . $image->getClientOriginalName();
+        $image->move('opentrip1', $imageName);
 
         //create post
         Opentrip::create([
@@ -55,7 +56,7 @@ class OpentripController extends Controller
             'deskripsi'=>$request->deskripsi,
             'fasilitas'=>$request->fasilitas,
             'harga'=>$request->harga,
-            'image' => $image->hashName(),
+            'image' => $imageName,
         ]);
 
         //redirect to index
@@ -84,7 +85,8 @@ class OpentripController extends Controller
 
             //upload new image
             $image = $request->file('image');
-            $image->storeAs('public/opentrip1', $image->hashName());
+            $imageName = time() . '.' . $image->getClientOriginalName();
+            $image->move('opentrip1', $imageName);
 
             //delete old image
             Storage::delete('public/opentrip1/'.$opentrip->image);
@@ -95,7 +97,7 @@ class OpentripController extends Controller
                 'deskripsi'=>$request->deskripsi,
                 'fasilitas'=>$request->fasilitas,
                 'harga'=>$request->harga,
-                'image' => $image->hashName(),
+                'image' => $imageName,
             ]);
 
         } else {
