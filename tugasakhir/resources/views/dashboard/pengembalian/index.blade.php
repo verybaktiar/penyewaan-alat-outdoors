@@ -36,8 +36,8 @@
                                     <td>{{ ke_rupiah($item->total_bayar) }}</td>
                                     <td class="button-action">
                                         <button class="btn btn-sm btn-success list-item-trans" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-eye"></i> Item Kembali</button>
-                                        <button class="btn btn-sm btn-warning notif-denda" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-exclamation"></i> Notif Denda</button>
-                                        <button class="btn btn-sm btn-warning loading" attr-value="{{ $item->id_transaksi }}" style="display: none;pointer-events: none;"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+                                        <button class="btn btn-sm btn-warning notif-denda-{{ $item->id_transaksi }}" attr-value="{{ $item->id_transaksi }}"><i class="fa fa-exclamation"></i> Notif Denda</button>
+                                        <button class="btn btn-sm btn-warning loading-{{ $item->id_transaksi }}" attr-value="{{ $item->id_transaksi }}" style="display: none;pointer-events: none;"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
                                     </td>
                                 </tr>
                             @empty
@@ -131,7 +131,7 @@
                     id_transaksi : idTransaksi
                 },
                 success: function (response) {
-                    var output = ''; var totalBayarDenda = '';
+                    var output = ''; var totalBayarDenda = 0;
                     $.each(response, function (index,value) {
 
                         var tanggalKembali = !!value.tgl_kembali ? 
@@ -142,15 +142,11 @@
                         var lamaSewa = getDateDiff(value.akhir_sewa,value.mulai_sewa);
 
                         //  Jika tgl kembali SUDAH ada
-                        var lamaDenda = '';
+                        var lamaDenda = ''; var totalDenda = 0;
                         if(!!value.tgl_kembali){
                             lamaDenda = getDateDiff(value.tgl_kembali,value.akhir_sewa);
-                            totalBayarDenda = lamaDenda * value.harga_sewa;
-                        }
-
-                        if(lamaDenda < 0){
-                            lamaDenda = 0;
-                            totalBayarDenda = 0;
+                            totalDenda = lamaDenda * value.harga_sewa;
+                            totalBayarDenda += totalDenda;
                         }
 
                         output += '<tr>';
@@ -159,7 +155,7 @@
                         output += '<td>'+ lamaSewa +' Hari</td>';
                         output += '<td>'+ lamaDenda +' Hari</td>';
                         output += '<td>'+ formatRupiah(value.harga_sewa,',') +'</td>';
-                        output += '<td>'+ formatRupiah(totalBayarDenda.toString(),',') +'</td>';
+                        output += '<td>'+ formatRupiah(totalDenda.toString(),',') +'</td>';
                         output +=  tanggalKembali;
                         output += '</tr>';
 
@@ -221,10 +217,10 @@
         })
 
 
-        $('.notif-denda').on('click',function(){
+        $('[class*=notif-denda-]').on('click',function(){
             var idTransaksi = $(this).attr('attr-value');
-            $('.notif-denda').hide();
-            $('.loading').show();
+            $('.notif-denda-' + idTransaksi).hide();
+            $('.loading-' + idTransaksi).show();
 
             $.ajax({
                 url: "{{ route('pengembalian.notifikasi_denda') }}" ,
@@ -234,8 +230,8 @@
                     id_transaksi : idTransaksi
                 },
                 success: function (response) {
-                    $('.notif-denda').show();
-                    $('.loading').hide();
+                    $('.notif-denda-' + idTransaksi).show();
+                    $('.loading-' + idTransaksi).hide();
 
                     Swal.fire('Berhasil !', 'Notifikasi denda berhasil terkirim !', 'success');
                 },
