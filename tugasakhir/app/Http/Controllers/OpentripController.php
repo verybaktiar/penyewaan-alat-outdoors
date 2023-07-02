@@ -32,7 +32,7 @@ class OpentripController extends Controller
         $opentrip = Opentrip::all();
         
         // Get ID opentrip
-        $get_id_opentrip=Opentrip::orderBy('id_opentrip', 'DESC')->first();
+        $get_id_opentrip=DB::select('SELECT id_opentrip FROM opentrips ORDER BY LENGTH(id_opentrip) DESC, id_opentrip DESC LIMIT 1');
         if(!empty($get_id_opentrip)){
             $id_opentrip=(int)substr($get_id_opentrip->id_opentrip,2)+(int)1;
         }else{

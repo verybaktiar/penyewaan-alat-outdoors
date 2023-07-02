@@ -20,7 +20,7 @@ class ChatController extends Controller
 
 
         if(!empty(Auth::user()->id_user)){
-            $get_id_chat=DB::select('SELECT * FROM chats ORDER BY LENGTH(id_chat) DESC, id_chat DESC LIMIT 1');
+            $get_id_chat=DB::select('SELECT id_chat FROM chats ORDER BY LENGTH(id_chat) DESC, id_chat DESC LIMIT 1');
             if(!empty($get_id_chat)){
                 $id_chat=(int)substr($get_id_chat[0]->id_chat,4)+(int)1;
             }else{
@@ -104,7 +104,7 @@ class ChatController extends Controller
         ]);
 
         if(!empty(Auth::user()->id_user)){
-            $get_id_chat=DB::select('SELECT * FROM chats ORDER BY LENGTH(id_chat) DESC, id_chat DESC LIMIT 1');
+            $get_id_chat=DB::select('SELECT id_chat FROM chats ORDER BY LENGTH(id_chat) DESC, id_chat DESC LIMIT 1');
             if(!empty($get_id_chat)){
                 $id_chat=(int)substr($get_id_chat[0]->id_chat,4)+(int)1;
             }else{

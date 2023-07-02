@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $get_pelanggan = Pelanggan::where(['id_user'=>Auth::user()->id_user])->first();
 
         // Get ID Comment
-        $get_id_comment = Profile::orderBy('id_comment', 'DESC')->first();
+        $get_id_comment = DB::select('SELECT id_comment FROM user_comments ORDER BY LENGTH(id_comment) DESC, id_comment DESC LIMIT 1');
         if(!empty($get_id_comment)){
             $id_comment = (int)substr($get_id_comment->id_comment,4) + (int)1;
         }else{

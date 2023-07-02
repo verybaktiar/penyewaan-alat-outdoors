@@ -22,7 +22,7 @@ class RegisterController extends Controller
             'password_confirm' => 'required|same:password'
         ]);
 
-        $id_user = User::orderBy('id_user', 'DESC')->first();
+        $id_user = DB::select('SELECT id_user FROM users ORDER BY LENGTH(id_user) DESC, id_user DESC LIMIT 1');
         $id_userbaru = (int)substr($id_user->id_user,3)+(int)1;
         
         $user = User::create([

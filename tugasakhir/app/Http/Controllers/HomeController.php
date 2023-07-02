@@ -40,7 +40,7 @@ class HomeController extends Controller
 
 
         if(!empty(Auth::user()->id_user)){
-            $get_id_keranjang=Keranjang::orderBy('id_keranjang', 'DESC')->first();
+            $get_id_keranjang=DB::select('SELECT id_keranjang FROM keranjangs ORDER BY LENGTH(id_keranjang) DESC, id_keranjang DESC LIMIT 1');
             if(!empty($get_id_keranjang)){
                 $id_keranjang=(int)substr($get_id_keranjang->id_keranjang,3)+(int)1;
             }else{

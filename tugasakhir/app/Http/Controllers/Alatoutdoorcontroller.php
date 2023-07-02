@@ -33,7 +33,7 @@ class Alatoutdoorcontroller extends Controller
         $alatoutdoor = Alatoutdoor::all();
 
         // Get ID alatoutdoor
-        $get_id_alatoutdoor=Alatoutdoor::orderBy('id_alatoutdoor', 'DESC')->first();
+        $get_id_alatoutdoor=DB::select('SELECT id_alatoutdoor FROM alatoutdoors ORDER BY LENGTH(id_alatoutdoor) DESC, id_alatoutdoor DESC LIMIT 1');
         if(!empty($get_id_alatoutdoor)){
             $id_alatoutdoor=(int)substr($get_id_alatoutdoor->id_alatoutdoor,2)+(int)1;
         }else{

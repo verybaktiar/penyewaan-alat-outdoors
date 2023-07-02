@@ -84,7 +84,7 @@ class KeranjangController extends Controller
                 }
 
                 // Get ID Sewa
-                $get_id_sewa=Penyewaan::orderBy('id_sewa', 'DESC')->first();
+                $get_id_sewa=DB::select('SELECT id_sewa FROM penyewaans ORDER BY LENGTH(id_sewa) DESC, id_sewa DESC LIMIT 1');
                 if(!empty($get_id_sewa)){
                     $id_sewa=(int)substr($get_id_sewa->id_sewa,3) + (int)1 + $idx_keranjang;
                 }else{
@@ -114,7 +114,7 @@ class KeranjangController extends Controller
             }
 
             // Get ID Transaksi
-            $get_id_trans=Transaksi::orderBy('id_transaksi', 'DESC')->first();
+            $get_id_trans=DB::select('SELECT id_transaksi FROM transaksis ORDER BY LENGTH(id_transaksi) DESC, id_transaksi DESC LIMIT 1');
             if(!empty($get_id_trans)){
                 $id_trans=(int)substr($get_id_trans->id_transaksi,4)+(int)1;
             }else{
