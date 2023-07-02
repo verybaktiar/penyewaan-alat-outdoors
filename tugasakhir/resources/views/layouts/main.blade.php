@@ -8,8 +8,8 @@
 @include('partials.navbar')
 <div class="container mt-4">
     @yield('container')
+    @include('partials.profile')
 </div>
-
 @include('partials.chat')
 @include('partials.footer')
 @include('partials.script')
