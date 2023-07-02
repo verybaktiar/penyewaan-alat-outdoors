@@ -28,7 +28,7 @@ class KategoriController extends Controller
         // Get ID kategori
         $get_id_kategori=DB::select('SELECT id_kategori FROM kategoris ORDER BY LENGTH(id_kategori) DESC, id_kategori DESC LIMIT 1');
         if(!empty($get_id_kategori)){
-            $id_kategori=(int)substr($get_id_kategori->id_kategori,2)+(int)1;
+            $id_kategori=(int)substr($get_id_kategori[0]->id_kategori,2)+(int)1;
         }else{
             $id_kategori=1;
         }

@@ -35,7 +35,7 @@ class Alatoutdoorcontroller extends Controller
         // Get ID alatoutdoor
         $get_id_alatoutdoor=DB::select('SELECT id_alatoutdoor FROM alatoutdoors ORDER BY LENGTH(id_alatoutdoor) DESC, id_alatoutdoor DESC LIMIT 1');
         if(!empty($get_id_alatoutdoor)){
-            $id_alatoutdoor=(int)substr($get_id_alatoutdoor->id_alatoutdoor,2)+(int)1;
+            $id_alatoutdoor=(int)substr($get_id_alatoutdoor[0]->id_alatoutdoor,2)+(int)1;
         }else{
             $id_alatoutdoor=1;
         }

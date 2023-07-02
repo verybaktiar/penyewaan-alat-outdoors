@@ -23,7 +23,7 @@ class RegisterController extends Controller
         ]);
 
         $id_user = DB::select('SELECT id_user FROM users ORDER BY LENGTH(id_user) DESC, id_user DESC LIMIT 1');
-        $id_userbaru = (int)substr($id_user->id_user,3)+(int)1;
+        $id_userbaru = (int)substr($id_user[0]->id_user,3)+(int)1;
         
         $user = User::create([
             'id_user' => 'USR'.$id_userbaru,
