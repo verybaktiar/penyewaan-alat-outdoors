@@ -25,6 +25,14 @@ class AdminLoginController extends Controller
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
+
+            $data_session = [
+                'is_admin' => TRUE,
+                'is_logged_in' => TRUE
+            ];
+            
+            session($data_session);
+
             return redirect()->intended('/dashboard');
         }
 

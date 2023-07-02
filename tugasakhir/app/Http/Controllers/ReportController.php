@@ -10,7 +10,15 @@ class Reportcontroller extends Controller
 {
     public function index()
     {
-        return view('dashboard.report.index');
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                return view('dashboard.report.index');
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 
     public function filter_penjualan(Request $request)

@@ -22,8 +22,17 @@ class PenyewaanController extends Controller
                             ->select('transaksis.*','pelanggans.nama_pelanggan')
                             ->join('pelanggans', 'pelanggans.id_pelanggan', '=', 'transaksis.id_pelanggan')
                             ->get();
-        //render view with posts
-        return view('dashboard.penyewaan.index', compact('penyewaan'));
+
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                //render view with posts
+                return view('dashboard.penyewaan.index', compact('penyewaan'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 
     public function sewa()

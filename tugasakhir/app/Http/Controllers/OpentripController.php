@@ -15,8 +15,16 @@ class OpentripController extends Controller
         $opentrip = Opentrip::latest()->simplePaginate(5);
         $navbar = 'active';
 
-        //render view with posts
-        return view('dashboard.opentrip.index', compact('opentrip','navbar'));
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                //render view with posts
+                return view('dashboard.opentrip.index', compact('opentrip','navbar'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 
     public function create()
@@ -65,7 +73,15 @@ class OpentripController extends Controller
 
     public function edit(Opentrip $opentrip)
     {
-        return view('dashboard.opentrip.edit', compact('opentrip'));
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                return view('dashboard.opentrip.edit', compact('opentrip'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('forbidden');
+        }
     }
  
     public function update(Request $request, Opentrip $opentrip)

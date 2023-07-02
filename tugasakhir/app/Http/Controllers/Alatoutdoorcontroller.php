@@ -15,8 +15,16 @@ class Alatoutdoorcontroller extends Controller
         $alatoutdoor = Alatoutdoor::latest()->simplePaginate(5);
         $navbar = 'active';
 
-        //render view with data alat outdoor
-        return view('dashboard.alatoutdoor.index', compact('alatoutdoor','navbar'));
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                //render view with data alat outdoor
+                return view('dashboard.alatoutdoor.index', compact('alatoutdoor','navbar'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 
     public function create(){
@@ -76,7 +84,16 @@ class Alatoutdoorcontroller extends Controller
     public function edit(Alatoutdoor $alatoutdoor)
     {
         $kategori = Kategori::get();
-        return view('dashboard.alatoutdoor.edit', compact('alatoutdoor'), ['kategori'=>$kategori]);
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                // Render view with data
+                return view('dashboard.alatoutdoor.edit', compact('alatoutdoor'), ['kategori'=>$kategori]);
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('forbidden');
+        }
     }
 
     public function update(Request $request, Alatoutdoor $alatoutdoor)

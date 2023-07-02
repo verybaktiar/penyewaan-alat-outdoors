@@ -11,7 +11,16 @@ class KategoriController extends Controller
     {
         $kategori = Kategori::get();
 
-        return view('dashboard.kategori.index', ['kategori' => $kategori]);
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                // Render view with data
+                return view('dashboard.kategori.index', ['kategori' => $kategori]);
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 
     public function create()
@@ -41,7 +50,16 @@ class KategoriController extends Controller
 
     public function edit(Kategori $kategori)
     {
-        return view('dashboard.kategori.edit', compact('kategori'));
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                // Render view with data
+                return view('dashboard.kategori.edit', compact('kategori'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('forbidden');
+        }
     }
 
     public function update(Request $request, Kategori $kategori)

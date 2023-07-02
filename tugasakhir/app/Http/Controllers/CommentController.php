@@ -16,6 +16,15 @@ class CommentController extends Controller
                             ->join('users', 'users.id_user', '=', 'pelanggans.id_user')
                             ->get();
 
-        return view('dashboard.komentar.index', ['komentar' => $komentar]);
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                //render view with data alat outdoor
+                return view('dashboard.komentar.index', ['komentar' => $komentar]);
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 }

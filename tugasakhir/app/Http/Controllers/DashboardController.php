@@ -22,7 +22,15 @@ class Dashboardcontroller extends Controller
         $data['total_pelanggan'] = Pelanggan::get()->count();
         $data['total_komentar'] = Profile::get()->count();
 
-        //render view with data
-        return view('dashboard.dashboard', compact('data'));
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                // Render view with data
+                return view('dashboard.dashboard', compact('data')); 
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 };

@@ -26,8 +26,17 @@ class PengembalianController extends Controller
                             ->join('pelanggans', 'pelanggans.id_pelanggan', '=', 'transaksis.id_pelanggan')
                             ->where(['transaksis.status_bayar'=>'Sudah'])
                             ->get();
-        //render view with posts
-        return view('dashboard.pengembalian.index', compact('pengembalian'));
+
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                //render view with posts
+                return view('dashboard.pengembalian.index', compact('pengembalian'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 
     public function list_item(Request $request)

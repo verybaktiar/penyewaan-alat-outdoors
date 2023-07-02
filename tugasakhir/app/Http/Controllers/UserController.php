@@ -13,7 +13,15 @@ class UserController extends Controller
         $user = User::all();
          
       
-        //render view with posts
-        return view('dashboard.datauser.datauser', compact('user'));
+        if(session('is_logged_in')){
+            if(session('is_admin')){
+                //render view with posts
+                return view('dashboard.datauser.datauser', compact('user'));
+            }else{
+                return view('forbidden');
+            }
+        }else{
+            return view('adminlogin.index');
+        }
     }
 }
