@@ -93,6 +93,7 @@ class PengembalianController extends Controller
                     ->select('users.email')
                     ->join('pelanggans', 'pelanggans.id_pelanggan', '=', 'transaksis.id_pelanggan')
                     ->join('users', 'pelanggans.id_user', '=', 'users.id_user')
+                    ->where(['pelanggans.id_pelanggan'=>$get_transaksi->id_pelanggan])
                     ->first();
 
         $arr_data = array();
