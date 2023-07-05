@@ -145,7 +145,7 @@
                         var lamaDenda = ''; var totalDenda = 0;
                         if(!!value.tgl_kembali){
                             lamaDenda = getDateDiff(value.tgl_kembali,value.akhir_sewa);
-                            totalDenda = lamaDenda * value.harga_sewa;
+                            totalDenda = ((20 / 100) * value.harga_sewa) * lamaDenda ;
                             totalBayarDenda += totalDenda;
                         }
 
